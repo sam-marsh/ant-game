@@ -1,4 +1,4 @@
-# This file lists all the files that we want Git to ignore and not keep track of.
+# This file lists all the files that we want Git to ignore (not keep track of).
 
 *.class
 
