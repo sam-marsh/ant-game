@@ -1,22 +1,22 @@
 # Meeting Minutes
 
-## Meeting Type
+##### Meeting Type
 
 Initial meeting
 
-## Meeting Date
+##### Meeting Date
 
 18/02/16
 
-## Meeting Start Time:
+##### Meeting Start Time:
 
 15:09
 
-## Meeting End Time
+##### Meeting End Time
 
 15:52
 
-## Attendance
+##### Attendance
 
 - Regan Ware
 - Sam Marsh
@@ -24,26 +24,26 @@ Initial meeting
 - Arsalan Sadeghpour
 - Kea Tossavainen
 
-## Absence
+##### Absence
 
 - Jeremiah Oluwakanmi
 
-## Progress
+##### Progress
 
 First meeting, everyone had quickly read the project brief.
 
-## Actions
+##### Actions
 
 All:
 - Read project description, write notes, split it into major tasks
 - PERT-chart done by 28/02/2016
 - Read about Git and GitHub
 
-## Next Meeting
+##### Next Meeting
 
 23/02/2016 14:00
 
-## Additional Comments
+##### Additional Comments
 
 - Decided to test, comment and document the project as we go
 - Talked about timetable, 3 weeks to get all requirements done, 6 weeks for coding and testing
