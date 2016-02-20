@@ -1,8 +1,10 @@
 # Project Plan
 
-## Project Outline
+## Introduction
 
-## Project Schedule
+### Project Outline
+
+### Project Schedule
 
 ## Conflict Resolution Plan
 
