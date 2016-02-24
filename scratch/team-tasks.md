@@ -6,7 +6,7 @@ Arranged at seminar on 23/02/2015.
 | **Project Plan**                                                                                             |               |
 | [Phase plan](http://users.sussex.ac.uk/~mfb21/se/project/plan.html)                                          | Jeremiah      |
 | [Organisation plan](http://users.sussex.ac.uk/~mfb21/se/project/plan.html)                                   | Sal           |
-| [Project plan - conflict resolution, peer assessment](http://users.sussex.ac.uk/~mfb21/se/project/plan.html) | Dan           |
+| [Conflict resolution, peer assessment](http://users.sussex.ac.uk/~mfb21/se/project/plan.html)                | Dan           |
 | **Requirements**                                                                                             |               |
 | [Functional requirements](http://users.sussex.ac.uk/~mfb21/se/project/reqspec.html)                          | Kea, Regan    |
 | [Non-functional, domain requirements](http://users.sussex.ac.uk/~mfb21/se/project/reqspec.html)              | Sam           |
