@@ -16,9 +16,6 @@ cache:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
 
-notifications:
-  slack: ant-game:EcZMFzf7uCl0GBgNH2o7cQuk
-
 env:
   global:
     - COVERALLS_REPO_TOKEN=zm9SVdMMz5DtmEBUIV6fNPaW3AG5WOoYu
