@@ -8,3 +8,6 @@ cache:
   directories:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
+
+notifications:
+  slack: ant-game:EcZMFzf7uCl0GBgNH2o7cQuk
