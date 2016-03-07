@@ -1,6 +1,4 @@
-# ant-game
-
-[![Build Status](https://travis-ci.com/sam-marsh/ant-game.svg?token=CCrKyBuYvjm5pmqE92zK&branch=master)](https://travis-ci.com/sam-marsh/ant-game)
+# ant-game [![Build Status](https://travis-ci.com/sam-marsh/ant-game.svg?token=CCrKyBuYvjm5pmqE92zK&branch=master)](https://travis-ci.com/sam-marsh/ant-game)
 
 Software Engineering project.
 
