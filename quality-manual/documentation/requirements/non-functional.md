@@ -53,7 +53,7 @@ written to the program's working directory, titled "ant-game-crash-[current unix
 	2. Slack chat - message archive
 	3. In-person - meeting minutes
 3. JUnit 4.12 shall be used as the testing library across all development and testing systems.
-4. Gradle 2.9 shall be used as the build automaton system across all development and testing systems.
+4. Gradle 2.5+ shall be used as the build automaton system across all development and testing systems.
 5. All project-related documents, source code, tests and builds shall be kept on the team’s GitHub repository, with new versions being committed and pushed to the repository on a regular basis and as soon as a major change/refactoring occurs.
 6. The software’s source code shall be documented extensively, defined as follows:
 	1. The [Javadoc comment structure](http://www.oracle.com/technetwork/java/javase/documentation/index-jsp-135444.html) shall be used to document every field, method and class.
@@ -62,6 +62,7 @@ written to the program's working directory, titled "ant-game-crash-[current unix
 	4. For fragments of incomplete code which are pushed to the project’s GitHub repository or left to complete later, a
     single line comment starting with "//TODO: " shall be used to briefly describe the task to complete.
 7. A copy of all project documents and source code shall be stored independently on each team member’s personal computer, regularly pulled from the central team GitHub repository. In addition, an up-to-date backup of the GitHub repository shall be kept in one or more of the team’s personal Dropbox repositories.
+8. Travis CI shall be used as the continuous integration service.
 
 ### External
 
