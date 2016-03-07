@@ -6,6 +6,6 @@ public class Example {
 		System.out.print("Test");
 	}
 
-	public void exampleMethod() { }
+	public int exampleMethod() { return 1; }
 
 }
