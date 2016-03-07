@@ -11,6 +11,6 @@ public class ExampleTest {
 
     @Test
     public void testExampleMethod() throws Exception {
-
+        assertEquals(1, 2);
     }
 }

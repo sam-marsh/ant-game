@@ -9,3 +9,15 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
+
+plugins {
+    id "jacoco"
+    id "com.github.kt3k.coveralls" version "2.5.0"
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled = true // coveralls plugin depends on xml format report
+        html.enabled = true
+    }
+}
