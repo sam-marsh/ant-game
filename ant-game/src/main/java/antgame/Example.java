@@ -1,9 +1,11 @@
 package antgame;
 
-public class Test {
+public class Example {
 
 	public static void main(String[] args) {
 		System.out.print("Test");
 	}
+
+	public void exampleMethod() { }
 
 }
