@@ -62,7 +62,7 @@ written to the program's working directory, titled "ant-game-crash-[current unix
 	4. For fragments of incomplete code which are pushed to the project’s GitHub repository or left to complete later, a
     single line comment starting with "//TODO: " shall be used to briefly describe the task to complete.
 7. A copy of all project documents and source code shall be stored independently on each team member’s personal computer, regularly pulled from the central team GitHub repository. In addition, an up-to-date backup of the GitHub repository shall be kept in one or more of the team’s personal Dropbox repositories.
-8. Travis CI shall be used as the continuous integration service.
+8. The Jacoco code coverage analysis tool shall be used by the testing/validation team to ensure maximum code coverage. The final submitted system shall have 100% code coverage.
 
 ### External
 
