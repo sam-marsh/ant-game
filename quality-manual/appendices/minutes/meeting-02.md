@@ -31,7 +31,7 @@ Review meeting to merge work on high-level project model
 
 ##### Progress
 
-First meeting, everyone had quickly read the project brief.
+Had each created a basic high-level model for the system.
 
 ##### Actions
 
