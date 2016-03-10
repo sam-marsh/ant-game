@@ -2,7 +2,7 @@
 
 ##### Meeting Type
 
-Review meeting to merge work on high-level project model
+Review meeting to merge work on high-level project model.
 
 ##### Meeting Date
 
