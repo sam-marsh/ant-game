@@ -10,6 +10,48 @@
 
 ## Phase Plan
 
+### Planning/Documentation
+
+This phase of the project will involve the writing up and compilation of multiple different documents, plans and reviews that will detail relevant information and specifications relating to the project team; the ‘client’; and the project itself. It is also fair to assume some documentation may need to be completed or be updated over the course of the project but the majority should be produced at this stage. The main documents to be produced at this stage should include the following:
+-	Organisation Plan
+-	Phase Plan
+-	Requirements Document/Specification (Functional, Non-Functional & Domain)
+-	Risk Assessment
+-	Conflict Resolution Plan
+-	Project Plan
+-	Peer Assessment Plan
+-	PERT Chart
+
+Other documentation includes:
+-	User Documentation
+-	Acceptance Criteria
+
+### Design
+
+The design phase of the project will involve drawing up, analysing and deciding upon the design of the Ant Game, within the confines of the requirements given in the Requirements Document. As a result, this part of the project will lead to useful diagrams (e.g. UML Diagrams, Flowcharts etc.) and other documents being produced at this stage such as: 
+-	Detailed Design Specification
+-	High-Level Design Specification
+The design phase will be very important for trying to implement a successful Ant Game and at least understanding the fundamentals of how our team will go about making the game and the different aspects of it (e.g. Ant Brain, World Viewer, GUI, etc.).
+
+### Coding (Implementation)
+
+This phase of the project will involve writing up the code for and implementation of the Ant Game, based on the specifications given from the Design phase and the Requirements Document. The elements to be coded for and implemented are as follows:
+-	Ant Brain
+-	Ant Brain Parser
+-	Ant World Parser
+-	Ant World Viewer
+-	Random Ant World Generator
+-	Two Player Mode
+-	Tournament Mode
+This stage in the project will have the members of the team working in part, both individually and together on programming the code for the mentioned elements, where some easier elements to be coded for can be done individually and the harder elements/parts to code for can be worked on in pairs/subgroups.
+
+### Testing
+The Testing Phase of the project will most likely run simultaneously alongside coding; to make the coding process run more smoothly and to identify problems and errors early, preventing potentially more difficult complications (allowing time to be saved that would otherwise be spent looking for errors) down the line. Of course this phase will have to be run according to a:
+-	Test Specification 
+that will highlight how the tests should work.
+
+###	Evaluation:
+
 ### Phases
 
 ### Milestones
