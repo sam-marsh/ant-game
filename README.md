@@ -2,7 +2,7 @@
 
 Software Engineering project.
 
-[This is an excellent guide to learning about Git and GitHub](http://www.learnenough.com/git-tutorial).
+Download the [GitHub Desktop](https://desktop.github.com) client.
 
 Links:
 - [The Ant Game](https://studydirect.sussex.ac.uk/mod/resource/view.php?id=893702)
