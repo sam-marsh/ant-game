@@ -54,6 +54,7 @@ The team shall create an ant game and an ant brain which will take part in a com
 - Scales with world dimensions (x,y)
 - Ideally a swing GUI interface
 - Can be text based due to time constraints (Print to IDE output)
+- The UI will show the state of the game every *n* frames, customisable by the user.
 
 ## Functions the program shall have:
 ### Ant functions:
