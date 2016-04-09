@@ -21,15 +21,14 @@ This document gives an approximate optimistic-realistic-pessimistic estimation f
 | Non-Functional           | 3          | 6         | 9           |
 | Domain                   | 1          | 2         | 3           |
 | __Design__               |            |           |             |
-| High-Level               | 4          | 6         | 9           |
-| Low-Level                | 9          | 11        | 14          |
+| High -> Low-Level        | 20         | 22        | 24          |
 | __Development__          |            |           |             |
 | Programming              | 20         | 25        | 30          |
 | Documentation            | 5          | 7         | 9           |
 | Unit Testing             | 10         | 12        | 14          |
 | __Validation__           |            |           |             |
-| Component Testing        | 2          | 3         | 5           |
-| __Finalisation__         |            |           |             |
+| Component Testing        | 7          | 9         | 11          |
+| __Other__                |            |           |             |
 | User Documentation       | 7          | 9         | 11          |
 | Report                   | 2          | 3         | 4           |
 
@@ -39,6 +38,20 @@ The PERT chart below shows the main phases of the project. It is assumed that th
 
 ![pert-chart](pert.png)
 
-The project was started by the group on 18/02/2016. This means, assuming each phase on the critical path is completed in exactly the above 'realistic' number of days, the completion date of the project should be 11/04/2016. This gives `TODO` days of freedom in the critical path before the project deadline.
+The project was started by the group on 18/02/2016. This means, assuming each phase on the critical path is completed in exactly the above 'realistic' number of days, the completion date of the project should be 28/05/2016. This gives 8 days of freedom in the critical path before the project deadline.
 
-//TODO: probably overly optimistic with completion times, re-calculate with longer time estimates.
+## Milestones
+
+From the above PERT chart, milestone goals are:
+
+| Task                              | Date               |
+| ----------------------------------|--------------------|
+| Preparation Complete              | 28/02/2016         |
+| Plan Complete                     | 07/03/2016         |
+| Requirements Complete             | 07/03/2016         |
+| Design Complete                   | 29/03/2016         |
+| Protocols Complete                | 29/03/2016         |
+| Development Complete              | 23/04/2016         |
+| Validation Complete               | 02/05/2016         |
+| User Documentation Complete       | 02/05/2016         |
+| Report/Finalisation Complete      | 05/05/2016         |
