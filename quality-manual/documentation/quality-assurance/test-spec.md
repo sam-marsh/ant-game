@@ -12,6 +12,16 @@ Tests shall also enforce program behaviours described by the UML diagrams and se
 
 The continuous integration software used in the remote Git repository, Travis CI, runs code coverage and automatics tests upon pushes to the repository (regression testing). The status of these operations, displayed in `README.md` in the root project directory, shall be monitored to ensure test coverage is up-to-date and that code is  in line with the requirements.
 
+When a test fails, the programmers shall be alerted to the location of the error, pertinent details, and the related functional requirement. This will allow the developers to adjust the program to suit the user's requirements. Where the source of an error cannot be found, breakpoints shall be used for debugging.
+
+Tests shall have extensive documentation. Unit test classes shall contain class-level documentation including a link to the class being tested. For example: 
+
+`This class is testing: {@link antgame.core.Ant}`
+
+In addition, each test method shall contain links to each method that is being tested. It shall also describe the functional requirement that the test is written to validate. For example:
+
+`This method tests that an ant is not able to move onto an already-occupied cell: {@link antgame.core.Ant#move(int)}`
+
 ## Test Phases
 
 #### Phase 1 - Unit Testing
