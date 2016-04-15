@@ -31,6 +31,7 @@ This document gives an approximate optimistic-realistic-pessimistic estimation f
 | __Other__                |            |           |             |
 | User Documentation       | 7          | 9         | 11          |
 | Report                   | 2          | 3         | 4           |
+| Custom Ant Brain         | 2          | 4         | 6           |
 
 ## PERT Chart
 
