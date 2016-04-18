@@ -9,11 +9,20 @@ import java.util.stream.Collectors;
  */
 public class SenseInstruction extends Instruction {
 
-    public SenseInstruction() {
+    private final Direction direction;
+    private final int st1;
+    private final int st2;
+    private final Condition condition;
 
+    public SenseInstruction(int insn, Direction direction, int st1, int st2, Condition condition) {
+        super(insn);
+        this.direction = direction;
+        this.st1 = st1;
+        this.st2 = st2;
+        this.condition = condition;
     }
 
-    public enum Type {
+    public enum Direction {
 
         HERE("Here"),
         AHEAD("Ahead"),
@@ -22,7 +31,7 @@ public class SenseInstruction extends Instruction {
 
         private final String token;
 
-        Type(String token) {
+        Direction(String token) {
             this.token = token;
         }
 
@@ -31,16 +40,16 @@ public class SenseInstruction extends Instruction {
             return token;
         }
 
-        public static Type from(String token, int line) throws ParseException {
-            for (Type type : values()) {
-                if (type.token.equals(token)) {
-                    return type;
+        public static Direction from(String token, int line) throws ParseException {
+            for (Direction direction : values()) {
+                if (direction.token.equals(token)) {
+                    return direction;
                 }
             }
             throw new ParseException(
                     String.format(
                             "expected [%s], got %s",
-                            Arrays.asList(values()).stream().map(Type::toString).collect(Collectors.joining("|")),
+                            Arrays.asList(values()).stream().map(Direction::toString).collect(Collectors.joining("|")),
                             token
                     ),
                     line
