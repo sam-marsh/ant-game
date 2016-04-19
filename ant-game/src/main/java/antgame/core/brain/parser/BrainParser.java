@@ -7,50 +7,93 @@ import java.text.ParseException;
 import java.util.*;
 
 /**
+ * Parses a list of instructions represented by strings, and returns an ant-brain finite state machine which acts as
+ * specified by the instructions.
+ *
+ * To parse a {@link List} of strings into a {@link Brain}, use the static {@link BrainParser#parse(List)} method.
+ *
  * @author Sam Marsh
  */
 public class BrainParser {
 
+    private static final int MAXIMUM_NUM_LINES = 10000;
+
+    //keep a list of the lines
     private final List<String> lines;
+
+    //also track the already-parsed instructions
     private final Set<Instruction> insns;
 
+    /**
+     * Creates a new parser to read an ant-brain as specified by the lines in the given list.
+     *
+     * @param lines the lines representing instructions
+     */
     private BrainParser(List<String> lines) {
         this.lines = lines;
         this.insns = new HashSet<>();
     }
 
-    private Brain parseInstruction() throws ParseException {
-        int num = -1;
-        if (lines.size() > 10000) {
-            throw new ParseException("brain file has more than 10,000 lines: " + lines.size(), num);
+    /**
+     * The main method to read a brain from the list of instructions.
+     *
+     * @return a brain representing the finite-state machine specified by the instruction strings
+     * @throws ParseException if the instructions are not well-formed
+     */
+    private Brain parse() throws ParseException {
+        //ensure file is not too large
+        if (lines.size() > MAXIMUM_NUM_LINES) {
+            throw new ParseException(String.format(
+                    "brain file has more than %d lines: %d", MAXIMUM_NUM_LINES, lines.size()
+            ), 0);
         }
 
+        //return a new brain with the initial instruction as instruction-0
         return new Brain(parseInstruction(0));
     }
 
+    /**
+     * This is a generally recursive method which parses an instruction line , and by proxy all instructions which this
+     * instruction depends on.
+     *
+     * @param insn the instruction number to parse (i.e. index in the list)
+     * @return an instruction as specified by the instruction string in the list
+     * @throws ParseException if the instruction is not well-formed
+     */
     private Instruction parseInstruction(int insn) throws ParseException {
+        if (insn < 0 || insn >= lines.size()) {
+            throw new ParseException("no such instruction", insn);
+        }
+
         //if we've already parsed the instruction, return it
         Optional<Instruction> check = insns.parallelStream().filter(i -> i.getInstruction() == insn).findAny();
         if (check.isPresent()) {
             return check.get();
         }
 
+        //retrieve the specified instruction
         String line = lines.get(insn);
 
+        //chop off the comment part
         int semicolonIndex = line.indexOf(';');
         if (semicolonIndex != -1)
             line = line.substring(0, semicolonIndex);
 
+        //split into tokens by whitespace
         String[] tokens = line.split(" ");
 
+        //as per requirements, instruction n is on line n, so line cannot be empty
         if (tokens.length < 1) {
             throw new ParseException("expected instruction but got empty line", insn);
         }
 
+        //get the instruction type from the first token (will throw an exception if not well-formed)
         Instruction.Type type = Instruction.Type.parse(tokens[0], insn);
 
+        //will hold this instruction
         Instruction instruction;
 
+        //parse based on the type
         switch (type) {
             case SENSE:
                 instruction = parseSenseInstruction(tokens, insn);
@@ -80,6 +123,7 @@ public class BrainParser {
                 throw new AssertionError("internal error: unhandled type in parser: " + type);
         }
 
+        //add to the instruction set and return
         insns.add(instruction);
         return instruction;
     }
@@ -195,8 +239,8 @@ public class BrainParser {
         }
     }
 
-    public static Brain parseInstruction(ArrayList<String> lines) throws ParseException {
-        return new BrainParser(lines).parseInstruction();
+    public static Brain parse(List<String> lines) throws ParseException {
+        return new BrainParser(lines).parse();
     }
 
 }
