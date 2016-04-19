@@ -49,10 +49,13 @@ public class RandomNumberGenerator {
      * @return a pseudo-random number
      */
     public int next(int n) {
+        if (n < 0) {
+            throw new IllegalArgumentException("require n > 0, was " + n);
+        }
         //step the sequence forward one
         nextSequence();
-        //for some reason only get correct numbers when treating as unsigned, so all arithmetic following is done by
-        // treating the values as unsigned integers
+        //for some reason (probably overflow) only get correct numbers when treating as unsigned, so all arithmetic
+        // following is done by treating the values as unsigned integers
         int val = Integer.divideUnsigned(sequence, SEQ_DIV);
         return Integer.remainderUnsigned(Integer.remainderUnsigned(val, SEQ_MOD), n);
     }
