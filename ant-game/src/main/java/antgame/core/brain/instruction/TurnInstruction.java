@@ -7,37 +7,26 @@ import java.util.stream.Collectors;
 /**
  * @author Sam Marsh
  */
-public class SenseInstruction extends Instruction {
+public class TurnInstruction extends Instruction {
 
     private final Direction direction;
-    private final Instruction st1;
-    private final Instruction st2;
-    private final Condition condition;
+    private final Instruction st;
 
-    public SenseInstruction(int insn, Direction direction, Instruction st1, Instruction st2, Condition condition) {
+    public TurnInstruction(int insn, Direction direction, Instruction st) {
         super(insn);
         this.direction = direction;
-        this.st1 = st1;
-        this.st2 = st2;
-        this.condition = condition;
+        this.st = st;
     }
 
     public enum Direction {
 
-        HERE("Here"),
-        AHEAD("Ahead"),
-        LEFT_AHEAD("LeftAhead"),
-        RIGHT_AHEAD("RightAhead");
+        LEFT("Left"),
+        RIGHT("Right");
 
-        private final String token;
+        private String token;
 
         Direction(String token) {
             this.token = token;
-        }
-
-        @Override
-        public String toString() {
-            return token;
         }
 
         public static Direction from(String token, int insn) throws ParseException {
@@ -54,8 +43,6 @@ public class SenseInstruction extends Instruction {
                     ),
                     insn
             );
-
         }
     }
-
 }

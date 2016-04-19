@@ -13,6 +13,15 @@ public abstract class Instruction {
         this.insn = insn;
     }
 
+    public int getInstruction() {
+        return insn;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof Instruction && ((Instruction) o).insn == insn;
+    }
+
     public enum Type {
 
         SENSE("Sense"),
