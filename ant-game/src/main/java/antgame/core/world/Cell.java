@@ -1,5 +1,7 @@
 package antgame.core.world;
 
+import antgame.core.Ant;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -8,11 +10,18 @@ import java.util.Set;
  */
 public class Cell {
 
-    //holds the chemical markers in the cell
-    private Set<Marker> markers;
+    private final Type type;
 
-    public Cell() {
+    //holds the chemical markers in the cell
+    private final Set<Marker> markers;
+    private Ant ant;
+    private int food;
+
+    public Cell(Type type) {
+        this.type = type;
         this.markers = new HashSet<>();
+        this.ant = null;
+        this.food = 0;
     }
 
     /**
@@ -43,6 +52,37 @@ public class Cell {
      */
     public boolean marked(Marker marker) {
         return markers.contains(marker);
+    }
+
+    public boolean hasAnt() {
+        return ant != null;
+    }
+
+    public Ant getAnt() {
+        return ant;
+    }
+
+    public boolean hasFood() {
+        return food > 0;
+    }
+
+    public int getFoodAmount() {
+        return food;
+    }
+
+    public void setFood(int food) {
+        this.food = food;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public enum Type {
+        CLEAR,
+        ROCK,
+        ANTHILL_RED,
+        ANTHILL_BLACK
     }
 
 }

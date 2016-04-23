@@ -15,7 +15,7 @@ public enum Condition {
     FOE_WITH_FOOD("FoeWithFood"),
     FOOD("Food"),
     ROCK("Rock"),
-    MARKER("Marker"), //TODO how to implement 'Marker i'?
+    MARKER("Marker"),
     FOE_MARKER("FoeMarker"),
     HOME("Home"),
     FOE_HOME("FoeHome");

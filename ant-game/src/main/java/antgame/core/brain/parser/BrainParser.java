@@ -3,6 +3,9 @@ package antgame.core.brain.parser;
 import antgame.core.brain.Brain;
 import antgame.core.brain.instruction.*;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.text.ParseException;
 import java.util.*;
 
@@ -130,8 +133,7 @@ public class BrainParser {
 
     private Instruction parseSenseInstruction(String[] tokens, int insn) throws ParseException {
         if (tokens.length != 5) {
-            //TODO more informative error message
-            throw new ParseException("invalid syntax", insn);
+            throw new ParseException("invalid syntax: incorrect number of arguments", insn);
         }
 
         SenseInstruction.Direction direction = SenseInstruction.Direction.from(tokens[1], insn);
@@ -146,7 +148,7 @@ public class BrainParser {
 
     private Instruction parseMarkInstruction(String[] tokens, int insn) throws ParseException {
         if (tokens.length != 3) {
-            throw new ParseException("invalid syntax", insn);
+            throw new ParseException("invalid syntax: incorrect number of arguments", insn);
         }
 
         int marker = parseInt(tokens[1], insn);
@@ -162,7 +164,7 @@ public class BrainParser {
 
     private Instruction parseUnmarkInstruction(String[] tokens, int insn) throws ParseException {
         if (tokens.length != 3) {
-            throw new ParseException("invalid syntax", insn);
+            throw new ParseException("invalid syntax: incorrect number of arguments", insn);
         }
 
         int marker = parseInt(tokens[1], insn);
@@ -178,7 +180,7 @@ public class BrainParser {
 
     private Instruction parsePickUpInstruction(String[] tokens, int insn) throws ParseException {
         if (tokens.length != 3) {
-            throw new ParseException("invalid syntax", insn);
+            throw new ParseException("invalid syntax: incorrect number of arguments", insn);
         }
 
         Instruction st1 = parseInstruction(parseInt(tokens[1], insn));
@@ -189,7 +191,7 @@ public class BrainParser {
 
     private Instruction parseDropInstruction(String[] tokens, int insn) throws ParseException {
         if (tokens.length != 2) {
-            throw new ParseException("invalid syntax", insn);
+            throw new ParseException("invalid syntax: incorrect number of arguments", insn);
         }
 
         Instruction st = parseInstruction(parseInt(tokens[1], insn));
@@ -199,7 +201,7 @@ public class BrainParser {
 
     private Instruction parseTurnInstruction(String[] tokens, int insn) throws ParseException {
         if (tokens.length != 3) {
-            throw new ParseException("invalid syntax", insn);
+            throw new ParseException("invalid syntax: incorrect number of arguments", insn);
         }
 
         TurnInstruction.Direction direction = TurnInstruction.Direction.from(tokens[1], insn);
@@ -210,7 +212,7 @@ public class BrainParser {
 
     private Instruction parseMoveInstruction(String[] tokens, int insn) throws ParseException {
         if (tokens.length != 3) {
-            throw new ParseException("invalid syntax", insn);
+            throw new ParseException("invalid syntax: incorrect number of arguments", insn);
         }
 
         Instruction st1 = parseInstruction(parseInt(tokens[1], insn));
@@ -221,7 +223,7 @@ public class BrainParser {
 
     private Instruction parseFlipInstruction(String[] tokens, int insn) throws ParseException {
         if (tokens.length != 4) {
-            throw new ParseException("invalid syntax", insn);
+            throw new ParseException("invalid syntax: incorrect number of arguments", insn);
         }
 
         int n = parseInt(tokens[1], insn);
@@ -237,6 +239,10 @@ public class BrainParser {
         } catch (NumberFormatException nfe) {
             throw new ParseException("expected integer, got " + token, line);
         }
+    }
+
+    public static Brain parse(File file) throws ParseException, IOException {
+        return new BrainParser(Files.readAllLines(file.toPath())).parse();
     }
 
     public static Brain parse(List<String> lines) throws ParseException {

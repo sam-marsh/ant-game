@@ -1,11 +1,15 @@
 package antgame.core;
 
+import antgame.core.brain.instruction.Instruction;
+
 /**
  * @author Sam Marsh
  */
 public class Ant {
 
     private final Colony colony;
+    private final Instruction state;
+    private boolean hasFood;
 
     /**
      * Creates a new ant belonging to the specified colony.
@@ -14,6 +18,8 @@ public class Ant {
      */
     public Ant(Colony colony) {
         this.colony = colony;
+        this.state = colony.getBrain().getInstruction();
+        this.hasFood = false;
     }
 
     /**
@@ -21,6 +27,10 @@ public class Ant {
      */
     public Colony getColony() {
         return colony;
+    }
+
+    public boolean hasFood() {
+        return hasFood;
     }
 
 }
