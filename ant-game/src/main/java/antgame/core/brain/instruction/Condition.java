@@ -7,44 +7,71 @@ import java.util.stream.Collectors;
 /**
  * @author Sam Marsh
  */
-public enum Condition {
+public class Condition {
 
-    FRIEND("Friend"),
-    FOE("Foe"),
-    FRIEND_WITH_FOOD("FriendWithFood"),
-    FOE_WITH_FOOD("FoeWithFood"),
-    FOOD("Food"),
-    ROCK("Rock"),
-    MARKER("Marker"),
-    FOE_MARKER("FoeMarker"),
-    HOME("Home"),
-    FOE_HOME("FoeHome");
+    private final Type type;
+    private final int marker;
 
-    private final String token;
-
-    Condition(String token) {
-        this.token = token;
+    public Condition(Type type) {
+        this.type = type;
+        this.marker = -1;
     }
 
-    @Override
-    public String toString() {
-        return token;
+    public Condition(int marker) {
+        this.type = Type.MARKER;
+        this.marker = marker;
     }
 
-    public static Condition from(String token, int line) throws ParseException {
-        for (Condition condition : values()) {
-            if (condition.token.equals(token)) {
-                return condition;
-            }
+    public Type getType() {
+        return type;
+    }
+
+    public int getMarker() {
+        if (type != Type.MARKER) {
+            throw new AssertionError("internal error: calling getMarker() on non-marker condition");
         }
-        throw new ParseException(
-                String.format(
-                        "expected [%s], got %s",
-                        Arrays.asList(values()).stream().map(Condition::toString).collect(Collectors.joining("|")),
-                        token
-                ),
-                line
-        );
+        return marker;
+    }
 
+    public enum Type {
+
+        FRIEND("Friend"),
+        FOE("Foe"),
+        FRIEND_WITH_FOOD("FriendWithFood"),
+        FOE_WITH_FOOD("FoeWithFood"),
+        FOOD("Food"),
+        ROCK("Rock"),
+        MARKER("Marker"),
+        FOE_MARKER("FoeMarker"),
+        HOME("Home"),
+        FOE_HOME("FoeHome");
+
+        private final String token;
+
+        Type(String token) {
+            this.token = token;
+        }
+
+        @Override
+        public String toString() {
+            return token;
+        }
+
+        public static Type from(String token, int line) throws ParseException {
+            for (Type condition : values()) {
+                if (condition.token.equals(token)) {
+                    return condition;
+                }
+            }
+            throw new ParseException(
+                    String.format(
+                            "expected [%s], got %s",
+                            Arrays.asList(values()).stream().map(Type::toString).collect(Collectors.joining("|")),
+                            token
+                    ),
+                    line
+            );
+
+        }
     }
 }

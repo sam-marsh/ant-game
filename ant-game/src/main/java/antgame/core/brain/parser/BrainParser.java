@@ -132,7 +132,7 @@ public class BrainParser {
     }
 
     private Instruction parseSenseInstruction(String[] tokens, int insn) throws ParseException {
-        if (tokens.length != 5) {
+        if (tokens.length != 5 && tokens.length != 6) {
             throw new ParseException("invalid syntax: incorrect number of arguments", insn);
         }
 
@@ -140,8 +140,20 @@ public class BrainParser {
         Instruction st1 = parseInstruction(parseInt(tokens[2], insn));
         Instruction st2 = parseInstruction(parseInt(tokens[3], insn));
 
-        //TODO how to represent condition better?
-        Condition condition = Condition.from(tokens[4], insn);
+        Condition.Type type = Condition.Type.from(tokens[4], insn);
+        Condition condition;
+
+        if (type == Condition.Type.MARKER) {
+            if (tokens.length != 6) {
+                throw new ParseException("invalid syntax: incorrect number of arguments", insn);
+            }
+            condition = new Condition(parseInt(tokens[5], insn));
+        } else {
+            if (tokens.length != 5) {
+                throw new ParseException("invalid syntax: incorrect number of arguments", insn);
+            }
+            condition = new Condition(type);
+        }
 
         return new SenseInstruction(insn, direction, st1, st2, condition);
     }
