@@ -17,6 +17,10 @@ public abstract class Instruction {
         return insn;
     }
 
+    public abstract Instruction success();
+
+    public abstract Instruction failure();
+
     @Override
     public boolean equals(Object o) {
         return o instanceof Instruction && ((Instruction) o).insn == insn;

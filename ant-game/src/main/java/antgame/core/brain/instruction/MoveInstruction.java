@@ -14,4 +14,14 @@ public class MoveInstruction extends Instruction {
         this.st2 = st2;
     }
 
+    @Override
+    public Instruction success() {
+        return st1;
+    }
+
+    @Override
+    public Instruction failure() {
+        return st2;
+    }
+
 }

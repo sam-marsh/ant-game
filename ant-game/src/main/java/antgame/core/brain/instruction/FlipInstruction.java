@@ -1,5 +1,7 @@
 package antgame.core.brain.instruction;
 
+import antgame.GlobalConfiguration;
+
 /**
  * @author Sam Marsh
  */
@@ -14,6 +16,16 @@ public class FlipInstruction extends Instruction {
         this.n = n;
         this.st1 = st1;
         this.st2 = st2;
+    }
+
+    @Override
+    public Instruction success() {
+        return st1;
+    }
+
+    @Override
+    public Instruction failure() {
+        return st2;
     }
 
 }

@@ -22,6 +22,24 @@ public class SenseInstruction extends Instruction {
         this.condition = condition;
     }
 
+    public Direction getDirection() {
+        return direction;
+    }
+
+    public Condition getCondition() {
+        return condition;
+    }
+
+    @Override
+    public Instruction success() {
+        return st1;
+    }
+
+    @Override
+    public Instruction failure() {
+        return st2;
+    }
+
     public enum Direction {
 
         HERE("Here"),

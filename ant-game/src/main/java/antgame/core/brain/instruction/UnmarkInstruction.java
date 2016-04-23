@@ -14,4 +14,18 @@ public class UnmarkInstruction extends Instruction {
         this.st = st;
     }
 
+    public int getMarker() {
+        return marker;
+    }
+
+    @Override
+    public Instruction success() {
+        return st;
+    }
+
+    @Override
+    public Instruction failure() {
+        return st;
+    }
+
 }

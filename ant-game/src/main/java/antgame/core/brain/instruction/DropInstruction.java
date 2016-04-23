@@ -12,4 +12,14 @@ public class DropInstruction extends Instruction {
         this.st = st;
     }
 
+    @Override
+    public Instruction success() {
+        return st;
+    }
+
+    @Override
+    public Instruction failure() {
+        return st;
+    }
+
 }

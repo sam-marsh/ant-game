@@ -18,6 +18,20 @@ public class TurnInstruction extends Instruction {
         this.st = st;
     }
 
+    public Direction getDirection() {
+        return direction;
+    }
+
+    @Override
+    public Instruction success() {
+        return st;
+    }
+
+    @Override
+    public Instruction failure() {
+        return st;
+    }
+
     public enum Direction {
 
         LEFT("Left"),
