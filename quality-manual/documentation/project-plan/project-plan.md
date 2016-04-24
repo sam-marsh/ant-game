@@ -136,12 +136,6 @@ This stage in the project will have the members of the team working, both in som
 
 The Testing Phase of the project will for the most part run simultaneously alongside coding. This will make the coding process run more smoothly and identify problems and errors early, which should aid to prevent potentially more difficult complications (allowing time to be saved that would otherwise be spent looking for errors) further down the line. This phase will have to be run according to a test specification that will highlight how the tests should work.
 
-###	Evaluation:
-
-### Phases
-
-### Milestones
-
 ## Organisation Plan
 
 ### Staff Organisation
