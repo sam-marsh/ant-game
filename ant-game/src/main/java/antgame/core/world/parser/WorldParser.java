@@ -10,10 +10,33 @@ import java.text.ParseException;
 import java.util.List;
 
 /**
+ * Parses a user world file. The world file is made up of the following:
+ * <ol>
+ *     <li>The size of the world in the x-direction</li>
+ *     <li>The size of the world in the y-direction</li>
+ *     <li>y world-describing lines, each made up of the x tokens, separated by spaces. The tokens can be: </li>
+ *     <li>
+ *         <ol>
+ *             <li># - describing a rock</li>
+ *             <li>. - describing a clear cell</li>
+ *             <li>+ - describing a red anthill cell</li>
+ *             <li>- - describing a black anthill cell</li>
+ *             <li>1-9 - describing a clear cell with a number of food particles</li>
+ *         </ol>
+ *     </li>
+ * </ol>
+ *
  * @author Sam Marsh
  */
 public class WorldParser {
 
+    /**
+     * Parses a world from an ordered list of lines.
+     *
+     * @param lines the list of strings making up a user world specification
+     * @return a world with the representation described by the passed argument
+     * @throws ParseException if the user world specification is invalid
+     */
     public static World parse(List<String> lines) throws ParseException {
         int sizex;
         int sizey;
@@ -78,6 +101,14 @@ public class WorldParser {
         return new World(cells);
     }
 
+    /**
+     * Parses a world file from a file.
+     *
+     * @param file the file to read the world from
+     * @return a world representing the layout specification described in the file
+     * @throws ParseException if the world specification in the file is invalid
+     * @throws IOException if an I/O exception occurred in reading the file contents
+     */
     public static World parse(File file) throws ParseException, IOException {
         return parse(Files.readAllLines(file.toPath()));
     }
