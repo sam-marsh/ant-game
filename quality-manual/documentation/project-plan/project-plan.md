@@ -113,27 +113,28 @@ Other documentation includes:
 
 ### Design
 
-The design phase of the project will involve drawing up, analysing and deciding upon the design of the Ant Game, within the confines of the requirements given in the Requirements Document. As a result, this part of the project will lead to useful diagrams (e.g. UML Diagrams, Flowcharts etc.) and other documents being produced at this stage such as: 
--	Detailed Design Specification
--	High-Level Design Specification
-The design phase will be very important for trying to implement a successful Ant Game and at least understanding the fundamentals of how our team will go about making the game and the different aspects of it (e.g. Ant Brain, World Viewer, GUI, etc.).
+The design phase of the project will involve drawing up, analysing and deciding upon the design of the ant game within the confines of the requirements (given in the requirements document). As a result, this part of the project will lead to useful documents, specifically containing UML and sequence diagrams. The documents to be produced are:
+-	First, a high-level design specification
+-	Then, a detailed design specification
+The design phase will be very important for trying to implement a successful ant game and, in particular, understanding the fundamentals of how our team will go about making the game and the different aspects of it (e.g. ant brain, world viewer, GUI).
 
 ### Coding (Implementation)
 
-This phase of the project will involve writing up the code for and implementation of the Ant Game, based on the specifications given from the Design phase and the Requirements Document. The elements to be coded for and implemented are as follows:
--	Ant Brain
--	Ant Brain Parser
--	Ant World Parser
--	Ant World Viewer
--	Random Ant World Generator
--	Two Player Mode
--	Tournament Mode
-This stage in the project will have the members of the team working in part, both individually and together on programming the code for the mentioned elements, where some easier elements to be coded for can be done individually and the harder elements/parts to code for can be worked on in pairs/subgroups.
+This phase of the project will involve writing up the code for and implementation of the ant game, based on the specifications given from the design phase and the requirements document. The elements to be coded for and implemented are as follows:
+
+-	Ant brain
+-	Ant brain parser
+-	Ant world parser
+-	Ant world viewer
+-	Random ant world generator
+-	Two-player mode
+-	Tournament mode
+
+This stage in the project will have the members of the team working, both in some parts individually and in other parts together, on programming the code for the mentioned elements. Simpler elements to be coded for can be done individually, whereas harder components to code for will be worked on in pairs/subgroups.
 
 ### Testing
-The Testing Phase of the project will most likely run simultaneously alongside coding; to make the coding process run more smoothly and to identify problems and errors early, preventing potentially more difficult complications (allowing time to be saved that would otherwise be spent looking for errors) down the line. Of course this phase will have to be run according to a:
--	Test Specification 
-that will highlight how the tests should work.
+
+The Testing Phase of the project will for the most part run simultaneously alongside coding. This will make the coding process run more smoothly and identify problems and errors early, which should aid to prevent potentially more difficult complications (allowing time to be saved that would otherwise be spent looking for errors) further down the line. This phase will have to be run according to a test specification that will highlight how the tests should work.
 
 ###	Evaluation:
 
@@ -147,27 +148,27 @@ that will highlight how the tests should work.
 
 #### Roles
 
-The team consists of Sam, Kea, Jeremiah, Regan and Arsalan. The Project Manager and Technical Leader will be Sam and he will be responsible for critical technical decisions, however the team structure is democractic therefore decisions are formulated as a team. Kea, Dan and Jeremiah will take part in Analysis formulating ideas with the Design team composed of Arsalan and Dan who will communicate with the programming team composed of Regan and Sam to discuss feasible design aspects. Finally Jeremiah and Arsalan will be part of quality assurance working with Regan and Sam to discuss solutions to problems. The PERT Chart and the management of documentation will be managed by Kea, Jeremiah and Sam who will work the rest of the team to ensure the project is on track.
+The team consists of Sam, Kea, Jeremiah, Regan and Arsalan. The project manager and technical leader will be Sam, who will be responsible for critical technical decisions. However the team structure is democractic therefore decisions are primarily formulated as a team. Kea, Dan and Jeremiah will take part in analysis, who will formualate ideas with the design team composed of Arsalan and Dan. Arsalan and Dan will communicate with the programming team composed of Regan and Sam to discuss feasible design aspects. Finally, Jeremiah and Arsalan will be part of quality assurance working with Regan and Sam to discuss solutions to potential or exposed problems. The PERT chart and the management of documentation will be managed by Kea, Jeremiah and Sam who will work with the rest of the team to ensure the project is on track.
 
 #### Communication, Configuration and Change Mangement
 
-The main communication channel will be Slack where discussions will take place, whereas for information sharing of technical documents Github will be used as it includes version control procedures making it easier to make changes. The team will each store a Project Log keeping track of documents they upload and edit, each document will consist of it's name, author, auditor, version number and last modification date and when a document is uploaded and edited it is communicated across in Slack and reviewed at the next meeting before being approved as further changes may be required. If changes are required this is communicated in Slack or in a team meeting and is later implemented.  
+The main communication channel will be Slack where discussions will take place, whereas for information sharing of technical documents Github will be used as it includes version control procedures making it easier to make changes. There is a strict requirement for each member to record documents they upload and edit, consisting of the document name, author, auditor, version number and last modification date. This requirement will be satisfied by using the Git version control system. When a document is uploaded or edited, it is automatically communicated across in Slack. Edited and uploaded documents shall be reviewed at the next meeting before being marked as completed by the team as further changes may be required. If changes are required this shall be communicated in Slack or in a team meeting and will be later implemented.  
 
 ### Analysis Team Responsibilities
 
-The overall responsibilities of Analysis will be to read the project brief in detail and work on the requirements engineering document which will denote of the required functionality of the system and it's constraints. The next step is to communicate this across to the design team who will read the specification and use it as an aid to the design process. The final step is to make any required changes/clarifications to the design team if a requirement is not fully understood.
+The overall responsibilities of the analysis team will be to read the project brief in detail and work on the requirements engineering document. This requirements documet will denote all required functionality of the system and its constraints. The next step will be to communicate this across to the design team, who will read the specification and use it as an aid to the design process. The final step is to make any required changes/clarifications to the design team if a requirement is not fully understood.
 
 ### Design Team Responsibilities
 
-The overall responsibilities of Design will be to meet the software specification outlined by the analysis team. The team will establish an overall architecture for the system by implementing a high level and detailed design by providing appropriate design documentation in UML visually representing the abstractions identifed by the analysis team and will formulate these into relationships which are later used by the programming team as aids to the implementation of the project. The next step is to refactor the design for the case of the programming team identifying design flaws.
+The overall responsibilities of the design group will be to meet the software specification outlined by the analysis team. The team will establish an overall architecture for the system by implementing a high level and detailed design by providing appropriate design documentation in UML. In addition, detailed sequence diagrams will be developed. The produced documents will represent the abstractions identifed by the analysis team and will formulate these into relationships, which will later be used by the programming team as aids to the implementation of the project. The next step is to refactor the design for the case of the programming team identifying design flaws.
 
 ### Programming Team Responsibilities
 
-The overall responsibilities of Programming will be to implement the design effectively using the supplied documentation, whilst also communicating with the design team any potential flaws in the design. The programming team will also work with quality assurance by helping to supply an effective test plan. The programming team will also have an ongoing of step of refactoring any code for the case of design changes communicated by the design team.
+The overall responsibilities of the programming team will be to implement the design effectively using the supplied documentation, whilst also communicating with the design team any potential flaws in the design. The programming team will also work with quality assurance by helping to supply an effective test plan. The programming team will also have an ongoing of step of refactoring any code for the case of design changes communicated by the design team.
 
 ### Quality Assurance Team Responsibilities
 
-Quality Assurance will ensure the programming team's implemented solution is thoroughly tested against the requirements identified by the analysis team and communicate any errors which fail to meet these requirements up to the programming team who will make the required changes if necessary. QA will first implement a test plan whilst working with the programming team and design team and then will physically conduct various forms of testing.
+Quality Assurance will ensure the programming team's implemented solution is thoroughly tested against the requirements identified by the analysis team. They will communicate any errors which fail to meet these requirements up to the programming team, who will make the required changes if necessary. QA will first implement a test plan whilst working with the programming team and design team. They will then will physically carry out various forms of testing.
 
 ## Peer Assessment Plan
 
