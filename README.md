@@ -10,15 +10,15 @@ Software Engineering project.
 - [x] Project Plan
 - [x] Meeting Minutes
 - [ ] Requirements
-  - [ ] Functional
+  - [ ] Functional (need to convert natural language to structured)
   - [x] Non-functional
 - [ ] Modelling
   - [x] High-level
   - [ ] Low-level
-    - [ ] UML
+    - [ ] UML (need class diagrams)
     - [x] Sequence diagrams
 - [ ] Software
 - [ ] Testing
   - [x] Specification
   - [ ] Tests
-- [ ] Report
+- [ ] Report (at end)
