@@ -4,6 +4,21 @@
 
 ### Project Outline
 
+The primary aim for this software project is to develop a competitive strategy game to between two or more players.
+Each of the players design an *ant brain*, which is a file containing instructions for ants to carry out in a simulated ant world. The ant brains will contain instructions on how the ants will react based on their current state and the local environment. Once loaded into
+the program, two colonies of ants compete in a simulated ant-world to bring as much food as possible back to their anthill. The ant world contains obstacles, food, and the two opposing anthills. Ants are able to leave markers for other ants to sense, and can also kill opponent ants by surrounding them. The game is won by the ant colony which obtains the most food.
+
+
+As specified by the client, the produced software must have the ability to:
+- check if an ant-brain supplied by a player is syntactically well-formed.
+- check if a given description of an ant world is syntactically well-formed and meets the requirements for ant worlds used in tournaments.
+- visualise a given ant world.
+- generate random but well-formed ant worlds.
+- simulate an ant-world: that is, enable two players to upload their ant-brains and choose an ant-world, and then run the game in the ant world, taking statistics and determining the winner of the game.
+- play tournaments, where an arbitrary number of players can upload ant-brains, who are all paired up to play against each other.
+
+In addition, a custom ant-brain should be designed.
+
 ### Project Schedule
 
 ## Conflict Resolution Plan
