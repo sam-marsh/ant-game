@@ -19,11 +19,81 @@ As specified by the client, the produced software must have the ability to:
 
 In addition, a custom ant-brain should be designed.
 
-### Project Schedule
+## Phase Plan
+
+### Phase Summary
+
+The first week of the project shall involve preparation of organisational documents and team organisation. In addition, development environments and general project configuration shall be set up - this includes version control and communication channels. The preparation phase should be complete by 28/02/2016 at the latest.
+
+In the next week, the project plan shall be developed by the team. The primary components of the project plan shall include a protocol for conflict resolution, a full and detailed phase plan (including PERT chart), and an assessment plan. Alongside the plan, he team shall work in parallel to identify the functional, non-functional and domain requirements. Where any domain requirements are discovered, they shall be filtered into functional/non-functional requirements after discussion with the group. This phase shall be completed by 07/03/2016 at the latest.
+
+Once the requirements are complete, the design phase will begin. This is the longest (and most challenging) phase, and shall be split up amongst the team based on the categories of functional (and non-functional) requirements. The first stage of the design phase shall be to identify key components of the software and identify the associations between them, forming a high-level design. Next, a lower level design shall be developed through the use of class diagrams (UML) and sequence diagrams. The design should be complete by 29/03/2016.
+
+Next is the development phase. Again, the team will split into groups to work in parallel - with some members mainly focused on development and others focused on writing tests. The development shall follow the design specification as closely as possible, and where any ambiguities arise both the requirements and design will be revised where necessary. The development should be complete by 23/04/2016.
+
+After development is complete, there shall be a final validation and completion phase. This will involve performing checks on the software (unit testing, verification, validation, release testing). In addition, user documentation for the program will be finalised, a custom ant-brain shall be designed, and a team report shall be written. These final tasks must be completed before the project deadline, 05/05/2016.
+
+### Task Allocation & Time Estimation 
+
+This table gives an approximate optimistic-realistic-pessimistic estimation for the time spent on each task in the project. All times are given in days.
+
+| Task                     | Optimistic | Realistic | Pessimistic | Allocated 
+| ------------------------ | ---------- | --------- | ----------- | ---------
+| __Preparation__          |            |           |             | 
+| Team Organisation        | 1          | 2         | 3           | Sal
+| Configuration Management | 2          | 3         | 5           | Sam
+| __Plan__                 |            |           |             |
+| Conflict Resolution      | 1          | 2         | 3           | Dan
+| Phase Plan               | 4          | 7         | 10          | Jeremiah
+| Organisation Plan        | 3          | 5         | 7           | Sal
+| Peer Assessment Plan     | 1          | 2         | 3           | Dan
+| __Protocols__            |            |           |             |
+| Acceptance Criteria      | 2          | 3         | 4           | Dan
+| Development Protocols    | 1          | 2         | 3           | Sam
+| Test Specification       | 4          | 5         | 7           | Sam, Sal
+| __Requirements__         |            |           |             |
+| Functional               | 5          | 8         | 11          | Kea, Regan
+| Non-Functional           | 3          | 6         | 9           | Sam
+| Domain                   | 1          | 2         | 3           | Sam
+| __Design__               |            |           |             |
+| High -> Low-Level        | 20         | 22        | 24          | All
+| __Development__          |            |           |             |
+| Programming              | 20         | 25        | 30          | Regan, Sam
+| Documentation            | 5          | 7         | 9           | Dan
+| Unit Testing             | 10         | 12        | 14          | Sal, Jeremiah
+| __Validation__           |            |           |             |
+| Component Testing        | 7          | 9         | 11          | Sal, Jeremiah
+| __Other__                |            |           |             |
+| User Documentation       | 7          | 9         | 11          | Dan
+| Report                   | 2          | 3         | 4           | All
+| Custom Ant Brain         | 2          | 4         | 6           | Jeremiah
+
+### PERT Chart
+
+The PERT chart below shows the main phases of the project. It is assumed that the subtasks of each phase (as in the above table) can be worked on asynchronously by the team, so the longest sub-task for each phase has been used to characterise the total completion time of each phase. In the chart the `(x, y, z)` tuple below each node is the optimistic, realistic and pessimistic completion time in days. The realistic completion time has been used to calculate the critical path (the path marked with red arrows).
+
+![pert-chart](pert.png)
+
+The project was started by the group on 18/02/2016. This means, assuming each phase on the critical path is completed in exactly the above 'realistic' number of days, the completion date of the project should be 28/04/2016. This gives 8 days of freedom in the critical path before the project deadline.
+
+### Deadlines
+
+From the above PERT chart, to finish the project on time the strict completion deadlines are:
+
+| Task                              | Date               |
+| ----------------------------------|--------------------|
+| Preparation Complete              | 28/02/2016         |
+| Plan Complete                     | 07/03/2016         |
+| Requirements Complete             | 07/03/2016         |
+| Design Complete                   | 29/03/2016         |
+| Protocols Complete                | 29/03/2016         |
+| Development Complete              | 23/04/2016         |
+| Validation Complete               | 02/05/2016         |
+| User Documentation Complete       | 02/05/2016         |
+| Report/Finalisation Complete      | 05/05/2016         |
 
 ## Conflict Resolution Plan
 
-## Phase Plan
 
 ### Planning/Documentation
 
