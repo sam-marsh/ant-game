@@ -3,22 +3,44 @@ package antgame.core.brain.instruction;
 import java.text.ParseException;
 
 /**
+ * Represents an abstract instruction, i.e. an 'order' for an ant to do something. These instructions
+ * are specified by ant-brain files, and the instances of this class (or more specifically, the subclasses)
+ * are produced from parsing this file using {@link antgame.core.brain.parser.BrainParser}. Each instruction
+ * is identified by an integer, which is the line number in the file. Generally each instruction also includes
+ * a reference to either one or two other instructions, which the ant (holding a finite state machine) will
+ * transition to after the instruction is executed.
+ *
  * @author Sam Marsh
  */
 public abstract class Instruction {
 
+    //the instruction number
     private int insn;
 
+    /**
+     * Creates a new instruction with the given instruction number.
+     *
+     * @param insn the instruction identifier (line number)
+     */
     public Instruction(int insn) {
         this.insn = insn;
     }
 
+    /**
+     * @return the instruction identified for this instruction
+     */
     public int getInstruction() {
         return insn;
     }
 
+    /**
+     * @return the next instruction for a particular ant to transition to if the instruction was successful
+     */
     public abstract Instruction success();
 
+    /**
+     * @return the next instruction for a particular ant to transition to if the instruction failed
+     */
     public abstract Instruction failure();
 
     @Override
@@ -26,6 +48,9 @@ public abstract class Instruction {
         return o instanceof Instruction && ((Instruction) o).insn == insn;
     }
 
+    /**
+     * Represents an instruction type.
+     */
     public enum Type {
 
         SENSE("Sense"),
@@ -37,8 +62,15 @@ public abstract class Instruction {
         MOVE("Move"),
         FLIP("Flip");
 
+        //the token used to describe the type - used in the parser
         private final String token;
 
+        /**
+         * Creates a new instruction type. Case insensitive.
+         *
+         * @param token the token used to describe the type, which can be specified in the ant-brain file by
+         *              users
+         */
         Type(String token) {
             this.token = token;
         }
@@ -48,6 +80,15 @@ public abstract class Instruction {
             return token;
         }
 
+        /**
+         * Finds the instruction type associated with a particular token. Case insensitive.
+         *
+         * @param token the token to interpret as an instruction type
+         * @param insn the line number of the token (the instruction identifier) - used in the exception
+         *             if a {@link ParseException} is thrown
+         * @return the type associated with the token
+         * @throws ParseException if the token is not associated with any instruction type
+         */
         public static Type parse(String token, int insn) throws ParseException {
             for (Type type : values()) {
                 if (type.token.equalsIgnoreCase(token)) {
