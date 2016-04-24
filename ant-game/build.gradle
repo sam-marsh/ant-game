@@ -21,3 +21,8 @@ jacocoTestReport {
         html.enabled = true
     }
 }
+
+task documentation(type: Javadoc) {
+    source = sourceSets.main.allJava
+    destinationDir = new File('../quality-manual/documentation/source-code/javadoc/')
+}
