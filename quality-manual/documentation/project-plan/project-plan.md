@@ -118,7 +118,7 @@ The design phase of the project will involve drawing up, analysing and deciding 
 -	Then, a detailed design specification
 The design phase will be very important for trying to implement a successful ant game and, in particular, understanding the fundamentals of how our team will go about making the game and the different aspects of it (e.g. ant brain, world viewer, GUI).
 
-### Coding (Implementation)
+### Implementation
 
 This phase of the project will involve writing up the code for and implementation of the ant game, based on the specifications given from the design phase and the requirements document. The elements to be coded for and implemented are as follows:
 
