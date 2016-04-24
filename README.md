@@ -2,8 +2,23 @@
 
 Software Engineering project.
 
-Download the [GitHub Desktop](https://desktop.github.com) client.
-
-Links:
+## Links
 - [The Ant Game](https://studydirect.sussex.ac.uk/mod/resource/view.php?id=893702)
 - [Quality Manual](http://users.sussex.ac.uk/~mfb21/se/project/quality.html)
+
+## Deliverables
+- [x] Project Plan
+- [x] Meeting Minutes
+- [ ] Requirements
+  - [ ] Functional
+  - [x] Non-functional
+- [ ] Modelling
+  - [x] High-level
+  - [ ] Low-level
+    - [ ] UML
+    - [x] Sequence diagrams
+- [ ] Software
+- [ ] Testing
+  - [x] Specification
+  - [ ] Tests
+- [ ] Report
