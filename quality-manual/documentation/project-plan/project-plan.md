@@ -97,25 +97,26 @@ From the above PERT chart, to finish the project on time the strict completion d
 
 ### Planning/Documentation
 
-This phase of the project will involve the writing up and compilation of multiple different documents, plans and reviews that will detail relevant information and specifications relating to the project team; the ‘client’; and the project itself. It is also fair to assume some documentation may need to be completed or be updated over the course of the project but the majority should be produced at this stage. The main documents to be produced at this stage should include the following:
--	Organisation Plan
--	Phase Plan
--	Requirements Document/Specification (Functional, Non-Functional & Domain)
--	Risk Assessment
--	Conflict Resolution Plan
--	Project Plan
--	Peer Assessment Plan
--	PERT Chart
+This phase of the project will involve the writing up and compilation of multiple different documents, plans and reviews that will detail relevant information and specifications relating to the project team, the client, and the project itself. It is also fair to assume some documentation may need to be completed or be updated over the course of the project. However, the majority should be produced at this stage. The main documents to be produced at this stage should include the following:
+-	Organisation plan
+-	Phase plan
+-	Requirements specification (functional, non-functional and domain)
+-	Risk assessment
+-	Conflict resolution plan
+-	Project plan
+-	Peer assessment plan
+-	PERT chart
 
 Other documentation includes:
--	User Documentation
--	Acceptance Criteria
+-	User documentation
+-	Acceptance criteria
 
 ### Design
 
 The design phase of the project will involve drawing up, analysing and deciding upon the design of the ant game within the confines of the requirements (given in the requirements document). As a result, this part of the project will lead to useful documents, specifically containing UML and sequence diagrams. The documents to be produced are:
 -	First, a high-level design specification
 -	Then, a detailed design specification
+
 The design phase will be very important for trying to implement a successful ant game and, in particular, understanding the fundamentals of how our team will go about making the game and the different aspects of it (e.g. ant brain, world viewer, GUI).
 
 ### Implementation
