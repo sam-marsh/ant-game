@@ -12,9 +12,9 @@ it is automatically communicated across in Slack. Edited and uploaded documents 
 reviewed at the next meeting before being marked as completed by the team as further changes 
 may be required. If changes are required this shall be communicated in Slack or in a team meeting 
 and will be later implemented. Team communication relevant to the product-related aspects of the project (planning, development, testing) shall be recorded for future reference:
-	1. Facebook chat - message archive
-	2. Slack chat - message archive
-	3. In-person - meeting minutes
+1. Facebook chat - message archive
+2. Slack chat - message archive
+3. In-person - meeting minutes
 
 ## Development
 
