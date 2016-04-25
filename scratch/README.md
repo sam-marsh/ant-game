@@ -1,3 +1,3 @@
 # Scratch Directory
 
-Not sure where a file goes? Put it here.
+Temporary files go here.
