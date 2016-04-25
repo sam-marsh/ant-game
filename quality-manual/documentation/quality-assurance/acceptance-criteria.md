@@ -18,7 +18,7 @@ These program environments are specified in the non-functional requirements (see
 document). This will essentially cover user and release testing, wherein the program shall be used by the team as if they
 were a user.
 
-In particular, the system should be tested each of the three main operating systems as identified in the non-functional requirements.
+In particular, the system should be tested on each of the three main operating systems as identified in the non-functional requirements.
 
 ## Acceptance Tests
 
