@@ -41,7 +41,7 @@ Release testing shall be undertaken by the entire team.
 
 It shall involve running the entire system, interacting through the GUI, and examining the system's response to both typical and edge cases (e.g. attempting to load an empty ant brain, or adding no teams to a tournament).
 
-## Overhead Software/Libraries
+##### Overhead Software/Libraries
 
 - JUnit 4.2 - external library, managed with Gradle
 - JaCoCo - external library, managed with Gradle
