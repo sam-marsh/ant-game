@@ -11,7 +11,21 @@ will be satisfied by using the Git version control system. When a document is up
 it is automatically communicated across in Slack. Edited and uploaded documents shall be 
 reviewed at the next meeting before being marked as completed by the team as further changes 
 may be required. If changes are required this shall be communicated in Slack or in a team meeting 
-and will be later implemented.
+and will be later implemented. Team communication relevant to the product-related aspects of the project (planning, development, testing) shall be recorded for future reference:
+	1. Facebook chat - message archive
+	2. Slack chat - message archive
+	3. In-person - meeting minutes
+
+## Development
+
+The below is relevant configuration information which has been extracted from the non-functional requirements document.
+
+All development and testing shall be undertaken in either the Netbeans IDE, Eclipse IDE, or IntelliJ IDE.
+JUnit 4.12 shall be used as the testing library across all development and testing systems.
+Gradle 2.5+ shall be used as the build automaton system across all development and testing systems.
+All project-related documents, source code, tests and builds shall be kept on the team’s GitHub repository, with new versions being committed and pushed to the repository on a regular basis and as soon as a major change/refactoring occurs.
+A copy of all project documents and source code shall be stored independently on each team member’s personal computer, regularly pulled from the central team GitHub repository. In addition, an up-to-date backup of the GitHub repository shall be kept in one or more of the team’s personal Dropbox repositories. The Jacoco code coverage analysis tool shall be used by the testing/validation team to ensure maximum code coverage. The Jacoco and JUnit tools are automatically set up using Gradle and the gradle build file, which is stored
+on the central repository.
 
 ## Build Automaton
 
