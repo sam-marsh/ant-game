@@ -33,7 +33,7 @@ This phase is to be worked on concurrently while the programming sub-team produc
 
 JUnit 4.2 shall be used as the testing suite on all the tester's platforms.
 
-#### Phase 2 - Release Testing
+##### Phase 2 - Release Testing
 
 This phase takes place after development is complete. As per the project plan, this should take approximately one week to complete thoroughly.
 
