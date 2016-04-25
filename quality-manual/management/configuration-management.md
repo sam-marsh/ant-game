@@ -19,7 +19,7 @@ Gradle is a build automation system (see week 6 lectures). Gradle was chosen for
 simple. In addition, Eclipse IntelliJ and Netbeans support importing Gradle projects without too much hassle.
 
 In the root code directory, there are two files 'gradlew' (for OS X and Linux) and 'gradlew.bat' (Windows).
-You can run these scripts in the command line to execute Gradle 'tasks'.
+These scripts can be run in the command line to execute Gradle 'tasks'.
 
 There are built-in tasks including (from `./gradlew tasks`):
 
