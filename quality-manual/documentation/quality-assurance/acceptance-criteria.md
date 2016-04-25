@@ -13,7 +13,7 @@ The two main procedures to be considered in ensuring the acceptance of the compl
 ## Test Environment
 
 For this final testing stage, the test environment shall be made as 'realistic' as possible. That is, unless debugging,
-the tests shall be carried out in a program environment that is similar to that which the client will use the program.
+the tests shall be carried out in a program environment that is similar to the environment in which the client will use the program.
 These program environments are specified in the non-functional requirements (see supported systems in the non-functional requirements
 document). This will essentially cover user and release testing, wherein the program shall be used by the team as if they
 were a user.
