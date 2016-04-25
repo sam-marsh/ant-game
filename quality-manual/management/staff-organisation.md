@@ -1,11 +1,7 @@
 # Staff Organisation
 
-## Project Manager
-
-## Analysis
-
-## Design
-
-## Programming
-
-## Quality Assurance
+- Technical Leader: Sam
+- Analysis: Kea, Dan, Jeremiah
+- Design: Arsalan, Dan
+- Programming: Regan, Sam
+- Quality Assurance: Arsalan, Jeremiah
