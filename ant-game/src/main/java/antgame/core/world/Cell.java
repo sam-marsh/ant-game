@@ -1,6 +1,7 @@
 package antgame.core.world;
 
 import antgame.core.Ant;
+import antgame.core.Colony;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -54,6 +55,16 @@ public class Cell {
      */
     public boolean unmark(Marker marker) {
         return markers.remove(marker);
+    }
+
+    /**
+     * Checks if the cell is marked the foe. The parameter is the colony that is asking.
+     *
+     * @param asking the colony asking
+     * @return true if marked by the enemy
+     */
+    public boolean foeMarked(Colony asking) {
+        return markers.parallelStream().anyMatch(m -> !m.getColony().equals(asking));
     }
 
     /**
@@ -117,10 +128,12 @@ public class Cell {
      * Represents a type of cell.
      */
     public enum Type {
+
         CLEAR,
         ROCK,
         ANTHILL_RED,
         ANTHILL_BLACK
+
     }
 
 }

@@ -1,7 +1,9 @@
 package antgame.core.brain.parser;
 
+import antgame.core.Colony;
 import antgame.core.brain.Brain;
 import antgame.core.brain.instruction.*;
+import antgame.core.world.Marker;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,6 +23,9 @@ public class BrainParser {
 
     private static final int MAXIMUM_NUM_LINES = 10000;
 
+    //also keep the colony for use with markers
+    private final Colony colony;
+
     //keep a list of the lines
     private final List<String> lines;
 
@@ -32,7 +37,8 @@ public class BrainParser {
      *
      * @param lines the lines representing instructions
      */
-    private BrainParser(List<String> lines) {
+    private BrainParser(Colony colony, List<String> lines) {
+        this.colony = colony;
         this.lines = lines;
         this.insns = new HashSet<>();
     }
@@ -147,7 +153,11 @@ public class BrainParser {
             if (tokens.length != 6) {
                 throw new ParseException("invalid syntax: incorrect number of arguments", insn);
             }
-            condition = new Condition(parseInt(tokens[5], insn));
+            int marker = parseInt(tokens[5], insn);
+            if (marker < 0 || marker > 5) {
+                throw new ParseException("marker must be in the range 0..5, was " + marker, insn);
+            }
+            condition = new Condition(new Marker(colony, marker));
         } else {
             if (tokens.length != 5) {
                 throw new ParseException("invalid syntax: incorrect number of arguments", insn);
@@ -171,7 +181,7 @@ public class BrainParser {
 
         Instruction st = parseInstruction(parseInt(tokens[2], insn));
 
-        return new MarkInstruction(insn, marker, st);
+        return new MarkInstruction(insn, new Marker(colony, marker), st);
     }
 
     private Instruction parseUnmarkInstruction(String[] tokens, int insn) throws ParseException {
@@ -187,7 +197,7 @@ public class BrainParser {
 
         Instruction st = parseInstruction(parseInt(tokens[2], insn));
 
-        return new UnmarkInstruction(insn, marker, st);
+        return new UnmarkInstruction(insn, new Marker(colony, marker), st);
     }
 
     private Instruction parsePickUpInstruction(String[] tokens, int insn) throws ParseException {
@@ -253,12 +263,12 @@ public class BrainParser {
         }
     }
 
-    public static Brain parse(File file) throws ParseException, IOException {
-        return new BrainParser(Files.readAllLines(file.toPath())).parse();
+    public static Brain parse(Colony colony, File file) throws ParseException, IOException {
+        return new BrainParser(colony, Files.readAllLines(file.toPath())).parse();
     }
 
-    public static Brain parse(List<String> lines) throws ParseException {
-        return new BrainParser(lines).parse();
+    public static Brain parse(Colony colony, List<String> lines) throws ParseException {
+        return new BrainParser(colony, lines).parse();
     }
 
 }

@@ -1,5 +1,7 @@
 package antgame.core.brain.instruction;
 
+import antgame.core.world.Marker;
+
 /**
  * Represents a mark instruction. A mark instruction is an order for an ant to mark the cell with a
  * sense marker.
@@ -9,7 +11,7 @@ package antgame.core.brain.instruction;
 public class MarkInstruction extends Instruction {
 
     //the integer marker to mark the cell with, in the range 0..5
-    private final int marker;
+    private final Marker marker;
 
     //the state to transition to after the cell is marked
     private final Instruction st;
@@ -21,7 +23,7 @@ public class MarkInstruction extends Instruction {
      * @param marker the marker to mark the cell with, in the range 0..5
      * @param st the state to transition to after marking the cell
      */
-    public MarkInstruction(int insn, int marker, Instruction st) {
+    public MarkInstruction(int insn, Marker marker, Instruction st) {
         super(insn);
         this.marker = marker;
         this.st = st;
@@ -30,7 +32,7 @@ public class MarkInstruction extends Instruction {
     /**
      * @return the integer to mark the cell with, in the range 0..5
      */
-    public int getMarker() {
+    public Marker getMarker() {
         return marker;
     }
 

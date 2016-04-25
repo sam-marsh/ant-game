@@ -1,5 +1,7 @@
 package antgame.core.brain.instruction;
 
+import antgame.core.world.Marker;
+
 import java.text.ParseException;
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -18,18 +20,18 @@ public class Condition {
     private final Type type;
 
     //only relevant for a MARKER-type condition - holds the marker integer, which can range from 0..5
-    private final int marker;
+    private final Marker marker;
 
     /**
      * Creates a new condition of the given type. This constructor is used for creating all conditions
-     * except for those of type {@link Type#MARKER}, for {@link Condition#Condition(int)} must be used
+     * except for those of type {@link Type#MARKER}, for {@link Condition#Condition(Marker)} must be used
      * instead.
      *
      * @param type the type, e.g. {@link Type#FOE}
      */
     public Condition(Type type) {
         this.type = type;
-        this.marker = -1;
+        this.marker = null;
         if (type == Type.MARKER) {
             throw new AssertionError("internal error: creating marker type using wrong constructor");
         }
@@ -42,12 +44,9 @@ public class Condition {
      *
      * @param marker the marker index, ranging from 0..5
      */
-    public Condition(int marker) {
+    public Condition(Marker marker) {
         this.type = Type.MARKER;
         this.marker = marker;
-        if (marker < 0 || marker > 5) {
-            throw new IllegalArgumentException("marker index not in range 0..5");
-        }
     }
 
     /**
@@ -62,7 +61,7 @@ public class Condition {
      *
      * @return the marker index
      */
-    public int getMarker() {
+    public Marker getMarker() {
         if (type != Type.MARKER) {
             throw new AssertionError("internal error: calling getMarker() on non-marker condition");
         }

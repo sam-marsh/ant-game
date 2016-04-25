@@ -1,5 +1,7 @@
 # This file lists all the files that we want Git to ignore (not keep track of).
 
+.texpadtmp/
+
 *.class
 
 # Mobile Tools for Java (J2ME)
