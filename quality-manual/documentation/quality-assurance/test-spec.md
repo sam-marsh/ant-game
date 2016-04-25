@@ -1,5 +1,6 @@
 # Test Specification
 
+## Scope
 The tests will cover all possible control flow in the program. This will be examined by [JaCoCo](http://eclemma.org/jacoco/), a code coverage library for Java. JaCoCo examines the bytecode of the program, and produces percentages of the statements covered by existing tests for each method, each class, and overall.
 
 Tests shall aim to keep code coverage above 80% at all times. As discussed in the project plan, this will be managed by splitting the team into two groups for the development stage - one group to write code, and the other to write tests for it.
@@ -22,9 +23,11 @@ In addition, each test method shall contain links to each method that is being t
 
 `This method tests that an ant is not able to move onto an already-occupied cell: {@link antgame.core.Ant#move(int)}`
 
-## Test Phases
+## Test Plan
 
-#### Phase 1 - Unit Testing
+### Test Phases
+
+##### Phase 1 - Unit Testing
 
 This phase is to be worked on concurrently while the programming sub-team produces code. As described above, code coverage should be maintained at above 80% at all times.
 
@@ -42,3 +45,11 @@ It shall involve running the entire system, interacting through the GUI, and exa
 
 - JUnit 4.2 - external library, managed with Gradle
 - JaCoCo - external library, managed with Gradle
+
+
+
+## Test Procedures
+
+
+
+## Test Results
