@@ -101,7 +101,7 @@ From the above PERT chart, to finish the project on time the strict completion d
 | Members are unable to meet a deadline	                                | 3	  | Moderate	  | Serious	      | People
 | The customer changes the requirements mid-process	                    | 4	  | High	      | Serious	      | Requirements
 | A piece of software is buggy, unable to work accordingly	            | 5	  | Moderate	  | Serious	      | Tools
-| There is conflict in the team that requires management of some sort	  | 6	  | Moderate	  | Serious	      | People
+| There is conflict in the team that requires management            	  | 6	  | Moderate	  | Serious	      | People
 | Peer Assessment is not unanimous 	                                    | 7	  | Moderate	  | Serious	      | People
 | The time to complete an objective was underestimated	                | 8	  | Moderate	  | Serious	      | Estimation
 | The size/difficulty of a task was underestimated	                    | 9	  | High	      | Tolerable 	  | Estimation
@@ -114,26 +114,22 @@ From the above PERT chart, to finish the project on time the strict completion d
 ### Risk Planning
 
 | Key | Plan for risk                                                               
-| --- | --------------------------------------------------------------------- 
-|	1   | For a file/piece of code, as soon as a sizeable update is made to it, can be backed up via an external memory device, |     |     as well as uploaded to sharing software ie GitHub.             
-|	2   | As all members are involved in various degrees in all areas, a void in one area can be filled by a combination of the |     |    others.                    	  
-| 3	  | The democratic decentralised nature of the organization allows members to switch to other areas if someone is unable | |     |     to undertake their task on time.                                   
-| 4   | Derive traceability information to assess how the change impacts the project, impact; as well as maximize information |     |   hiding in the design to limit the effect of any change.                    	  
+| --- | --------------------------------------------------------------------------------------------------------------------- 
+|	1   | For a file/piece of code, as soon as a sizeable update is made to it, can be backed up via an external memory device, as well as uploaded to sharing software ie GitHub.             
+|	2   | As all members are involved in various degrees in all areas, a void in one area can be filled by a combination of the others.                    	  
+| 3	  | The democratic decentralised nature of the organization allows members to switch to other areas if someone is unable to undertake their task on time.                                   
+| 4   | Derive traceability information to assess how the change impacts the project, impact; as well as maximize information hiding in the design to limit the effect of any change.                    	  
 | 5	  | Make a list of several systems/software per usage, so if one fails then there are others known that can replace it.   
 | 6	  | 1. Arrange a team meeting to settle any disputes, more civilised general request.
 |     | 2. Senior/other member speak to each involved individual separately to gather information to make a decision, or to   |     |     manage them separately.
 |     | 3. Forcefully request members to solve dispute/
 |     | 4. Ask for outside aid, either from ‘customer’ or higher management to put the conflicting members back into place. 
-| 7   | The member in question should first speak to a single member to display grievances. They can then talk to the
-|     | rest of the team.  An overall team discussion can then take place, where people can give their honest opinions as to  why they put forward the score in question.  An honest conversation, where each person’s views are put forward will           |     | most likely dissolve the argument. Any further quarrelling will require the input of the ‘client’, who can be told of |     | each person’s views,  and express their thoughts on how the score shall be assigned.  	 
-| 8/9	| If code is taking longer, prioritise certain aspects, to focus on the vital elements, with parts ie the GUI created in |     |   simpler formats. 
-|     | If a certain piece of documentation is obstructing the start/continuation of the coding, perhaps leave it till later  |     | if not vital to the design/later implementation or testing phases. 
-|     | Once more, the organization of the team allows small shifts in focus if necessary. 
-| 10	| If time isn’t at a premium, focus more on the testing, as that can show how well the code runs the game, and how 
-|     |   much, if any tinkering with the code is needed. 	                      
-| 11  | Either via testing, or by looking back at the designs, focus on improving code incrementally, slowly building it up to |     |   what it should be.
-|     | Look at code comments to see if something is missing that prevents full operation of that class/method ect. 
-| 12  | The team layout means there is little affect, as people know at least the basic of each area of the project, requiring |     |only a little update, perhaps by looking back at previous documentation, to get a full scope of the area. 	          
+| 7   | The member in question should first speak to a single member to display grievances. They can then talk to the rest of the team.  An overall team discussion can then take place, where people can give their honest opinions as to  why they put forward the score in question.  An honest conversation, where each person’s views are put forward will                        most likely dissolve the argument. Any further quarrelling will require the input of the ‘client’, who can be told of each person’s views,  and express their thoughts on how the score shall be assigned.  	 
+| 8/9	| If code is taking longer, prioritise certain aspects, to focus on the vital elements, with parts ie the GUI created in simpler formats. 
+If a certain piece of documentation is obstructing the start/continuation of the coding, perhaps leave it till later if not vital to the design/later implementation or testing phases.Once more, the organization of the team allows small shifts in focus if necessary. 
+| 10	| If time isn’t at a premium, focus more on the testing, as that can show how well the code runs the game, and how much, if any tinkering with the code is needed. 	                      
+| 11  | Either via testing, or by looking back at the designs, focus on improving code incrementally, slowly building it up to what it should be. Look at code comments to see if something is missing that prevents full operation of that class/method ect.
+| 12  | The team layout means there is little affect, as people know at least the basic of each area of the project, requiring only a little update, perhaps by looking back at previous documentation, to get a full scope of the area. 	          
 | 13  | The ‘minutes’ of the meetings are recorded, so little vital information is ever missed. 	                    	
 | 14  | The contents of a meeting are noted, and then uploaded, allowing for absentees to catch up.	                                    	
 
