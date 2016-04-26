@@ -124,7 +124,7 @@ From the above PERT chart, to finish the project on time the strict completion d
 |     | 2. Senior/other member speak to each involved individual separately to gather information to make a decision, or to   |     |     manage them separately.
 |     | 3. Forcefully request members to solve dispute/
 |     | 4. Ask for outside aid, either from ‘customer’ or higher management to put the conflicting members back into place. 
-| 7   | The member in question should first speak to a single member to display grievances. This member can then talk to the
+| 7   | The member in question should first speak to a single member to display grievances. They can then talk to the
 |     | rest of the team.  An overall team discussion can then take place, where people can give their honest opinions as to  |     |  why they put forward the score in question.  An honest conversation, where each person’s views are put forward will  |     | most likely dissolve the argument. Any further quarrelling will require the input of the ‘client’, who can be told of |     | each person’s views,  and express their thoughts on how the score shall be assigned.  	 
 | 8/9	| If code is taking longer, prioritise certain aspects, to focus on the vital elements, with parts ie the GUI created in |     |   simpler formats. 
 |     | If a certain piece of documentation is obstructing the start/continuation of the coding, perhaps leave it till later  |     | if not vital to the design/later implementation or testing phases. 
