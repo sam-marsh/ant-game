@@ -92,7 +92,7 @@ From the above PERT chart, to finish the project on time the strict completion d
 | User Documentation Complete       | 02/05/2016         |
 | Report/Finalisation Complete      | 05/05/2016         |
 
-## Conflict Resolution and Risk Management Plan
+### Conflict Resolution and Risk Management Plan
 
 | Risk                                                                  | Key | Probability | Effect        | Type
 | --------------------------------------------------------------------- | --- | ----------- | ------------- | ---------
@@ -111,7 +111,7 @@ From the above PERT chart, to finish the project on time the strict completion d
 | Member late due to uncontrollable circumstances 	                    | 13	| High	      | Insignificant	| People
 | Members are absent for meeting	                                      | 14	| Moderate	  | Insignificant	| People
 
-### Risk Planning
+#### Risk Planning
 
 | Key | Plan for risk                                                               
 | --- | --------------------------------------------------------------------------------------------------------------------- 
