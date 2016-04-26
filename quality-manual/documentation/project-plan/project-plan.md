@@ -167,3 +167,16 @@ Quality Assurance will ensure the programming team's implemented solution is tho
 
 ## Peer Assessment Plan
 
+Being a group project, the first aim is to produce the best Ant Game possible, but each individual will be reviewed in order to devise some sort of grading system, to reward all those who perform well. The three primary areas are work, attendance and social behaviour. 
+
+The primary target, for each member for which they shall be judged, is that they each take an active role in the work. Everyone must do a fair amount of work, and that work must be submitted to the team at the given deadlines, failure to do so will mean a lower end grade. Of course, the quality of work must be to a decent standard, in is little use only doing the basic answer with little care or thought. 
+
+Their overall attendance must also be considered, attendance of meetings, both in the seminars and out-of-class. This shows the individuals level of commitment to both the project, and in particular the team, as it proves they are ready to help the other members. They must then, during said meetings, take part and have discussions with the group, in order to help both themselves and others understand what is being asked. 
+
+The final area that members will be assessed on is the social side of the group. They should be active during social discussions across the media/ other forms of communication. This makes sure that all members are ‘kept in the loop’, and at all times they are fully aware of the situation. It must be noted that any limitations such as lack of internet access will be considered and accounted for when the final assessment is given. All members, if needed, should try and dissolve any arguing within the group, which will of course make the project run smoothly, and keep up moral. The final point in this area is a simple ‘treat others like you would yourself’ approach, where all members are expected to be kind and generous to each other, to make sure that everyone has an equal voice, per the choice of group structure. 
+
+By each member performing well in each of the three areas, the project will be completed on time, and to a high standard. This makes it imperative that each member, whilst thinking of how well they are performing in relation to their end mark, always has the team and the project at the forefront of their minds. 
+
+The end scores in each area, and thus the overall mark, will be discussed and calculated at the end of the project, when everything else is done. By looking back over the team meeting minutes, as well as the activity sheets, the performance of each member will be seen. These both will show how well each member did in the attendance and work areas, with the social area being fairly evaluated as a group. If a member does not agree with their marking, it can be discussed as a group, allowing an overall opinion to be reached; further disagreement can be taken up with the ‘client’. 
+
+Finally, each member must be in full agreement with the final peer assessment. When this final deliverable is submitted, each member must sign off on it, ensuring full agreement and compliance with what is to be contained.  
