@@ -94,6 +94,23 @@ From the above PERT chart, to finish the project on time the strict completion d
 
 ## Conflict Resolution Plan
 
+| Risk                                                                  | Key | Probability | Effect        | Type
+| --------------------------------------------------------------------- | --- | ----------- | ------------- | ---------
+| Documents become lost/corrupt due to various circumstances            |	1   |	Moderate    | Serious	      | Technology
+| A member leaves the team before project completion                    |	2	  | Low	        | Serious	      | Organizational
+| Members are unable to meet a deadline	                                | 3	  | Moderate	  | Serious	      | People
+| The customer changes the requirements mid-process	                    | 4	  | High	      | Serious	      | Requirements
+| A piece of software is buggy, unable to work accordingly	            | 5	  | Moderate	  | Serious	      | Tools
+| There is conflict in the team that requires management of some sort	  | 6	  | Moderate	  | Serious	      | People
+| Peer Assessment is not unanimous 	                                    | 7	  | Moderate	  | Serious	      | People
+| The time to complete an objective was underestimated	                | 8	  | Moderate	  | Serious	      | Estimation
+| The size/difficulty of a task was underestimated	                    | 9	  | High	      | Tolerable 	  | Estimation
+| The tests needed to adequately check the code was under developed	    | 10	| Moderate	  | Tolerable 	  | Estimation
+| Code generated is inadequate for the particular objective	            | 11	| Moderate	  | Tolerable 	  | Requirements
+| Organization of team restructured, meaning someone else is in control	| 12	| Low	        | Tolerable 	  | Organizational
+| Member late due to uncontrollable circumstances 	                    | 13	| High	      | Insignificant	| People
+| Members are absent for meeting	                                      | 14	| Moderate	  | Insignificant	| People
+
 
 ### Planning/Documentation
 
