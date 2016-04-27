@@ -29,6 +29,13 @@ Software Engineering project.
     - [ ] UML (need class diagrams)
     - [x] Sequence diagrams
 - [ ] Software
+  - [x] Ant-brain parser
+  - [x] Ant-world parser
+  - [ ] GUI
+  - [ ] Random-world generator
+  - [ ] Two-player game
+  - [ ] Tournament
+  - [ ] Custom ant-brain
 - [ ] Testing
   - [x] Specification
   - [ ] Tests
