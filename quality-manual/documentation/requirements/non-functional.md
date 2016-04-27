@@ -7,7 +7,7 @@
 #### Reliability
 
 1. The software should crash no more than 1 time in 1000 when parsing user files, even if the files are corrupt or not well-formed.
-2. The software should crash no more than 1 time in 1000 of the time when simulating a game or tournament.
+2. The software should crash no more than 1 time in 1000 when simulating a game or tournament.
 3. The GUI should be stable and responsive to user input at least 99% of the time, including when a game is running. This applies only to systems with more than 400MB of free RAM.
 4. The software shall parse user files of up to 10,000 lines each without crashing more than 1 time in 1000.
 5. Visualisations of games and tournaments should proceed with no visible defects (glitches) at least 99 times out of 100. 
