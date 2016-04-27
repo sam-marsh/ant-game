@@ -3,14 +3,25 @@
 Software Engineering project.
 
 ## Links
+
 - [The Ant Game](https://studydirect.sussex.ac.uk/mod/resource/view.php?id=893702)
 - [Quality Manual](http://users.sussex.ac.uk/~mfb21/se/project/quality.html)
 
+## Group 9: Members
+
+- 21505959: Marsh, Samuel
+- 21302879: Oluwakanmi, Jeremiah
+- 21401526: Read, Daniel
+- 21201414: Sadeghpour, Arsalan
+- 21401562: Tossavainen, Kea
+- 21401546: Ware, Regan
+
 ## Deliverables
+
 - [x] Project Plan
 - [x] Meeting Minutes
-- [ ] Requirements
-  - [ ] Functional (need to convert natural language to structured)
+- [x] Requirements
+  - [x] Functional
   - [x] Non-functional
 - [ ] Modelling
   - [x] High-level

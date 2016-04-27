@@ -16,7 +16,7 @@
 - Each species of ants can sense (with limited capabilities), but not modify, the markers of the other species.
 - Ants can also attack the ants of the other species by surrounding them
 - Ants that die as a result of an attack become food.
-- If an ant is adjacent to 5 (or 6) ants of the other species then it dies. However, if an ant is in a cell in the very corner of the grid or along one of the edges it can only have at most 4 ants adjacent to it-therefore it cannot be killed.
+- If an ant is adjacent to 5 (or 6) ants of the other species then it dies. However, if an ant is in a cell in the very corner of the grid or along one of the edges it can only have at most 4 ants adjacent to it - therefore it cannot be killed.
 - The match is won by the species with the most food in its anthill at the end of 300,000 rounds.
 - A cell can hold an unlimited amount of food during the course of the simulation.
 - In a tournament, each team will play every other team twice on each of the contest worlds. Once as red and once as black. So for 23 teams, each team will be pitted up against 22 other teams.
