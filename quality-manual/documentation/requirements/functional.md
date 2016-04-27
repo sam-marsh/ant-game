@@ -1,205 +1,141 @@
-# Functional requirements 
-Version 1.0
-Authors: Regan Ware and Kea Tossavainen
+# Functional requirements
 
-## Project: 
-The team shall create an ant game and an ant brain which will take part in a competition against other teams in their ant worlds. 
+##### Game/1.1
 
-## Functional requirements of the game:
-- The program shall check if ant brain is valid
-- The program shall check if ant world is valid
-- The program shall visualise ant world
-- The program shall allow two players to play
-- The program shall keep statistics and determine the winner of the game based on those
-- The program shall allow tournaments when more than two players submit an ant brain and players will be paired to play against each other
+| Specification | Details |
+| -------- | --------- |
+| **Requirement**     | Parse ant brain file. |
+| **Description** | Checks if a user's custom ant brain (expected to have been provided in a file on disk) is valid according to the ant brain specification. If so, constructs an in-memory programmatic representation of the brain. |
+| **Inputs** | A user-specified path to the ant-brain file.  |
+| **Source** | A file in-memory that has been read from disk. |
+| **Outputs** | A programmatic representation of the ant brain. |
+| **Destination** | The GUI event loop. |
+| **Actions** | Iterates through each line of the file, tokenising the line and validating each token. Builds a graph of ant-brain instructions which form a finite-state machine with transitions between instructions dependent on the conditions specified in the line. |
+| **Notes** | - |
 
-### Detailed requirements of different components:
-### Ant brain:
-- Ant brain shall be a finite state machine
-- Ant brain shall be able to sense their surroundings (Here, ahead, LeftAhead, RightAhead)
-- Ant brain shall be able to move to ahead, LeftAhead and RightAhead cells with a 14 turn rest after
+##### Game/1.2
 
-### Ant: 
-- Each ant shall have unique id that determines the order in which ants take actions
-- Each ant shall have an integer between 0 and 9999 which represents current state of brain
-- Each ant shall carry at most one particle of food, this shall be represented as boolean field
-- Each ant shall have a "colour" denoting team
-- Each ant shall have a "resting" integer which represents the number of turns they must stay inactive after moving
-- Each ant shall have a has_food boolean recording whether the ant is carrying food
-- If an ant is surrounded by 5 or more enemy ants it shall detect it and remove itself
-- If an ant is cornered but only surrounded by 4 ants of the other species, it shall not die
-- When an ant dies it shall drop 3 food onto the tile it was on
-- Each ant shall keep track of their current direction
-- Ant shall have several different actions:
-    - Sense surroundings
-    - Mark or unmark a cell
-    - Pick up food from a current cell
-    - Drop food
-    - Turn left or right to change direction
-    - Move to an adjacent cell
-    - Flip
+| Specification | Details |
+| -------- | --------- |
+| **Requirement**     | Parse ant world file. |
+| **Description** | Checks if a user's custom ant world (expected to have been provided in a file on disk) is valid according to the ant world specification. If so, constructs an in-memory programmatic representation of the world. |
+| **Inputs** | A user-specified path to the ant-world file. |
+| **Source** | A file in-memory that has been read from disk. |
+| **Outputs** | A programmatic representation of the ant world. |
+| **Destination** | The GUI event loop. |
+| **Actions** | Iterates through each line of the file, tokenising the line and validating each token. Intepreting each token as a cell and building a hexagonal programmatic structure containing cells with properties specified in the file. |
+| **Notes** | - |
 
-### Ant world:
-- Ant world shall be hexagonal grid
-- Each cell in the grid shall either be rocky or clear, or contain an ant hill that is red or black
-- Ant hills shall not be adjacent to each other
-- Ants should not go to each others ant hills
-- Each clear cell in the grid can contain at most one of each of these:
-    - At most one ant
-    - Non-negative number of food between 0 and 9
-    - At most one set of chemical markers from 6 different markers
+##### Game/1.3
 
-### UI Requirements:
-- Shall display the world including tile contents
-- Scales with world dimensions (x,y)
-- Ideally a swing GUI interface
-- Can be text based due to time constraints (Print to IDE output)
-- The UI will show the state of the game every *n* frames, customisable by the user.
+| Specification | Details |
+| -------- | --------- |
+| **Requirement**     | Visualise ant world. |
+| **Description** | Uses a Swing GUI to show users a representation of the ant world in a game at a particular turn. | 
+| **Inputs** | An ant world containing information about cells, including their location, their type, and what they contain (e.g. ants, food). |
+| **Source** | A currently-running ant game. |
+| **Outputs** | An image (or otherwise) showing the state of the game in a human-readable fashion, displayed using a Swing interface. |
+| **Destination** | The game loop. |
+| **Actions** | Loops through all cells in the game and draws them to screen, with an indication of the type of cell and what it contains specified by a colour (colours not yet specified, will be at the discretion of the programmers and testers). |
+| **Notes** | - |
 
-## Functions the program shall have:
-### Ant functions:
-```
-function state(a:ant):int     = <get state component of a>
-function color(a:ant):color   = <get color component of a>
-function resting(a:ant):int   = <get resting component of a>
-function direction(a:ant):dir = <get direction component of a>
-function has_food(a:ant):bool = <get has_food component of a>
-function set_state(a:ant, s:int)     = <set state component of a to be s>
-function set_resting(a:ant, r:int)   = <set resting component of a to be r>
-function set_direction(a:ant, d:dir) = <set direction component of a to be d>
-function set_has_food(a:ant, b:bool) = <set has_food component of a to be b>
+##### Game/1.4
 
-function turn(lr:left_or_right, d:dir):dir =
-  switch lr of
-    case Left:  (d+5) mod 6
-    case Right: (d+1) mod 6
-    
-    type sense_dir =
-    Here           /* sense the ant's current cell */
-  | Ahead          /* sense the cell straight ahead in the direction ant is facing */
-  | LeftAhead      /* sense the cell that would be ahead if ant turned left */
-  | RightAhead     /* sense the cell that would be ahead if ant turned right */
+| Specification | Details |
+| -------- | --------- |
+| **Requirement**     | Simulate a two-player game. |
+| **Description** | Using two ant-brains and an ant-world, carry out a simulation of the game based on the ant finite-state machines and their environment. | 
+| **Inputs** | Two different colonies (consisting of a colour, a team name and an ant-brain) and an ant-world. |
+| **Source** | The GUI event loop. |
+| **Outputs** | The final result of the game (which team won/lost). The final state of the world. |
+| **Destination** | The GUI event loop. |
+| **Actions** | For each turn (maximum 300,000), the ants on each cell shall be iterated over. Each ant will perform an action based on their ant-brain (specified as a finite-state machine and graph based on requirement `Game/1.1`). The state of a cell (and possibly other ants) will be updated based on the action of the ant. |
+| **Notes** | - |
 
-function sensed_cell(p:pos, d:dir, sd:sense_dir):pos =
-  switch sd of
-    case Here: p
-    case Ahead: adjacent_cell(p, d)
-    case LeftAhead: adjacent_cell(p, turn(Left,d))
-    case RightAhead: adjacent_cell(p, turn(Right,d))
-```
+##### Game/1.5
 
-### Sense:
-```
-type condition =
-    Friend             /* cell contains an ant of the same color */
-  | Foe                /* cell contains an ant of the other color */
-  | FriendWithFood     /* cell contains an ant of the same color carrying food */
-  | FoeWithFood        /* cell contains an ant of the other color carrying food */
-  | Food               /* cell contains food (not being carried by an ant) */
-  | Rock               /* cell is rocky */
-  | Marker(marker)     /* cell is marked with a marker of this ant's color */
-  | FoeMarker          /* cell is marked with *some* marker of the other color */
-  | Home               /* cell belongs to this ant's anthill */
-  | FoeHome            /* cell belongs to the other anthill */
-    
-function other_color(c:color):color =
-  switch c of
-    case Red: Black
-    case Black: Red
-```
+| Specification | Details |
+| -------- | --------- |
+| **Requirement**     | Produce statistics for an ant game. |
+| **Description** | By keeping track of the state of the world at all times (or having access to the history of the game), for each team the following statistics will be computed: <ul><li>Amount of food in anthill</li><li>Number of foe's ants killed</li><li>Number of team's ants left</li><li>Number of movements made</li><li>Number of markings left</li></ul>Further statistics can be added at the discretion of the programmers where convenient. |
+| **Inputs** | The state of an ant-game at a particular turn (accumulative) or the full history of an ant-game at the end of the game. |
+| **Source** | An ant game. |
+| **Outputs** | The statistics as specified above. |
+| **Destination** | The GUI statistics display screen. |
+| **Actions** | Given the state of the game at a particular turn, all relevant statistics counters shall be updated. At the end of the game, the statistics shall be calculated and output. |
+| **Notes** | - |
 
-### Ant brain:
-```
-function get_instruction(c:color, s:state):instruction =  <get the instruction for state s of ant color c>
-```
+##### Game/1.6
 
-### Martial Arts functions:
-```
-function adjacent_ants(p:pos, c:color):int =
-  let n = 0 in
-  for d = 0..5 do
-    let cel = adjacent_cell(p, d) in
-    if some_ant_is_at(cel) && color(ant_at(cel)) = c then <increment n by 1>
-  end;
-  n
-function check_for_surrounded_ant_at(p:pos) =
-  if some_ant_is_at(p) then
-    let a = ant_at(p) in
-    if adjacent_ants(p, other_color(color(a))) >= 5 then begin
-      kill_ant_at(p);
-      set_food_at(p, food_at(p) + 3 + (if has_food(a) then 1 else 0))
-    end
-function check_for_surrounded_ants(p:pos) =
-  check_for_surrounded_ant_at(p);
-  for d = 0..5 do
-    check_for_surrounded_ant_at(adjacent_cell(p,d))
-  end
-```
+| Specification | Details |
+| -------- | --------- |
+| **Requirement**     | Simulate a tournament. |
+| **Description** | Plays ant games between multiple users, each with their own ant-brain specification. |
+| **Inputs** | A list of teams (specified by a name and an ant-brain), and an arbitrary (but at least 1) number of ant-worlds. |
+| **Source** | The GUI. |
+| **Outputs** | The results of all matches, as well as the overall winner (the team with the highest number of wins). |
+| **Destination** | The GUI tournament statistics display screen. |
+| **Actions** | Iterates over all unique combinations `(team-1, team-2, world)` and simulates a game with that 3-tuple, with the first team playing as red and the second team playing as black. Keeps track of all wins, losses and statistics for each team. After all simulations, (which are *not* visualised to the user as per `Game/1.3` but rather the statistics are displayed) the overall winner is returned. |
+| **Notes** | Iterating over all unique 3-tuples as described above will mean that every team will play every other team on every world as both red and black. |
 
-### Ant world functions:
-```
-function rocky(p:pos):bool = <true if the cell at position p is rocky>
-function some_ant_is_at(p:pos):bool =  <true if there is an ant in the cell at position p>
-function ant_at(p:pos):ant =  <return the ant in the cell at position p>
-function set_ant_at(p:pos, a:ant) =  <record the fact that the given ant is at position p>
-function clear_ant_at(p:pos) =  <record the fact that no ant is at position p>
-function ant_is_alive(id:int):bool =  <true if an ant with the given id exists somewhere in the world>
-function find_ant(id:int):pos =  <return current position of the ant with the given id>
-function kill_ant_at(p:pos) = clear_ant_at(p)
-function food_at(p:pos):int =  <return the amount of food in the cell at position p>
-function set_food_at(p:pos, f:int) =  <record the fact that a given amount of food is at position p>
-function anthill_at(p:pos, c:color):bool =   <true if the cell at position p is in the anthill of color c>
+##### Brain/2.1
 
-function adjacent_cell(p:pos, d:dir):pos =
-  let (x,y) = p in
-  switch d of
-    case 0: (x+1, y)
-    case 1: if even then (x, y+1) else (x+1, y+1)
-    case 2: if even then (x-1, y+1) else (x, y+1)
-    case 3: (x-1, y)
-    case 4: if even then (x-1, y-1) else (x, y-1)
-    case 5: if even then (x, y-1) else (x+1, y-1)
-```
+| Specification | Details |
+| -------- | --------- |
+| **Requirement**     | Simulate a tournament. |
+| **Description** | Plays ant games between multiple users, each with their own ant-brain specification. |
+| **Inputs** | A list of teams (specified by a name and an ant-brain), and an arbitrary (but at least 1) number of ant-worlds. |
+| **Source** | The GUI. |
+| **Outputs** | The results of all matches, as well as the overall winner (the team with the highest number of wins). |
+| **Destination** | The GUI tournament statistics display screen. |
+| **Actions** | Iterates over all unique combinations `(team-1, team-2, world, colour)` and simulates a game with that 4-tuple. Keeps track of all wins, losses and statistics for each team. After all simulations, (which are *not* visualised to the user as per `Game/1.3` but rather the statistics are displayed) the overall winner is returned. |
+| **Notes** | - |
 
-### Marker functions:
-```
-function set_marker_at(p:pos, c:color, i:marker) =  <set marker i of color c in cell p>
-function clear_marker_at(p:pos, c:color, i:marker) =  <clear marker i of color c in cell p>
-function check_marker_at(p:pos, c:color, i:marker):bool =  <true if marker i of color c is set in cell p>
-function check_any_marker_at(p:pos, c:color):bool =  <true if ANY marker of color c is set in cell p>
-```
+| **Requirement** | **Rationale** |
+| --- | --- |
+| Ant brain is a finite state machine | Move from state to another |
+| Ant brain is able to sense surroundings | Sense here, ahead, left ahead, right ahead |
+| Move | Move to the sensed surroundings |
 
-### Cell_matches function:
-```
-function cell_matches(p:pos, cond:condition, c:color):bool =
-  if rocky(p) then
-    if cond = Rock then true else false
-  else
-    switch cond of
-      case Friend:
-        some_ant_is_at(p) &&
-        color(ant_at(p)) = c
-      case Foe:
-        some_ant_is_at(p) &&
-        color(ant_at(p)) <> c
-      case FriendWithFood:
-        some_ant_is_at(p) &&
-        color(ant_at(p)) = c &&
-        has_food(ant_at(p))
-      case FoeWithFood:
-        some_ant_is_at(p) &&
-        color(ant_at(p)) <> c &&
-        has_food(ant_at(p))
-      case Food:
-        food_at(p) > 0
-      case Rock:
-        false
-      case Marker(i):
-        check_marker_at(p, c, i)
-      case FoeMarker:
-        check_any_marker_at(p, other_color(c))
-      case Home:
-        anthill_at(p, c)
-      case FoeHome:
-        anthill_at(p, other_color(c))
-```
+##### Ant
+
+| **Requirement:** | **Rationale** |
+| --- | --- |
+| Ant has unique id | Id determines order in which ants take actions |
+| Ant has an integer between 0-9999 | Integer represents current state of brain |
+| Boolean has\_food field | Shows if ant carries food |
+| Ant shall have colour | Denotes which team ant is a part of |
+| Integer representing "resting" | Represents the number of turns ant rests |
+| If ant is surrounded by 5 ants of other team | Ant dies |
+| If cornered by 4 ants of other team | Ant doesn't die |
+| Ant keeps track of direction | To know the current direction |
+| Ant has several different actions | Sense surroundings, mark/unmark cell, pick up food, drop food, turn left/right, move to adjacent cell, flip |
+
+##### World
+
+| **Requirement** | **Rationale** |
+| --- | --- |
+| Ant world is an hexagonal grid | Each cell is a hexagon |
+| Each cell can be rocky, clear or contain an ant hill | Ant cannot go to rocky cells and each others ant hills |
+| Ant hills can't be adjacent to each other |   |
+| Each cell can contain at most one ant, non-negative number of food between 0-9 and at most one set of chemical markers | Ants can't go to same cells as other ants, cells can contain food that ants can pick and ants can sense chemical markers |
+
+##### GUI/3.1
+
+| Specification | Details |
+| -------- | --------- |
+| **Requirement**     | Parse ant brain file. |
+| **Description** | Checks if a user's custom ant brain (expected to have been provided in a file on disk) is valid according to the ant brain specification. If so, constructs an in-memory programmatic representation of the brain. |
+| **Inputs** | A user-specified path to the ant-brain file.  |
+| **Source** | A file in-memory that has been read from disk. |
+| **Outputs** | A programmatic representation of the ant brain. |
+| **Destination** | The GUI event loop. |
+| **Actions** | Iterates through each line of the file, tokenising the line and validating each token. Builds a graph of ant-brain instructions which form a finite-state machine with transitions between instructions dependent on the conditions specified in the line. |
+| **Notes** | - |
+
+| **Requirement** | **Rationale** |
+| --- | --- |
+| Displays world including cell content | Allows player to see the world |
+| Scales with world dimensions (x,y) |   |
+| Swing GUI interface |   |
+| UI will show the state of the game every n frames | Customisable by the user |
