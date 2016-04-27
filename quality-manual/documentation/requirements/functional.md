@@ -56,19 +56,6 @@
 | **Actions** | Iterates over all unique combinations `(team-1, team-2, world)` and simulates a game with that 3-tuple, with the first team playing as red and the second team playing as black. Keeps track of all wins, losses and statistics for each team. After all simulations, (which are *not* visualised to the user as per `Game/1.3` but rather the statistics are displayed) the overall winner is returned. |
 | **Notes** | Iterating over all unique 3-tuples as described above will mean that every team will play every other team on every world as both red and black. |
 
-##### Game/5
-
-| Specification | Details |
-| -------- | --------- |
-| **Requirement**     | Simulate a tournament. |
-| **Description** | Plays ant games between multiple users, each with their own ant-brain specification. |
-| **Inputs** | A list of teams (specified by a name and an ant-brain), and an arbitrary (but at least 1) number of ant-worlds. |
-| **Source** | The GUI. |
-| **Outputs** | The results of all matches, as well as the overall winner (the team with the highest number of wins). |
-| **Destination** | The GUI tournament statistics display screen. |
-| **Actions** | Iterates over all unique combinations `(team-1, team-2, world, colour)` and simulates a game with that 4-tuple. Keeps track of all wins, losses and statistics for each team. After all simulations, (which are *not* visualised to the user as per `Game/1.3` but rather the statistics are displayed) the overall winner is returned. |
-| **Notes** | - |
-
 ### Ant
 
 ##### Ant/1
