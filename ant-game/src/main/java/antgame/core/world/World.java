@@ -13,6 +13,9 @@ public class World {
     //the cells that the world contains
     private final Cell[][] cells;
 
+    private final int width;
+    private final int height;
+
     /**
      * Creates a new world from the given cell array.
      *
@@ -20,6 +23,8 @@ public class World {
      */
     public World(Cell[][] cells) {
         this.cells = cells;
+        this.width = cells.length;
+        this.height = cells[0].length;
     }
 
     /**
@@ -61,6 +66,39 @@ public class World {
                 return cell.getType() == Cell.Type.ANTHILL_RED;
             default:
                 throw new AssertionError("internal error: unimplemented condition check");
+        }
+    }
+
+    /**
+     * Prints a world. Currently for debugging.
+     * TODO: maybe move this to a better location.
+     */
+    public void print() {
+        for (int y = 0; y < height; ++y) {
+            if (y % 2 == 1) System.out.print(' ');
+            for (int x = 0; x < width; ++x) {
+                Cell cell = cells[x][y];
+                switch (cell.getType()) {
+                    case CLEAR:
+                        if (cell.hasFood()) {
+                            System.out.print(cell.getFoodAmount());
+                        } else {
+                            System.out.print('.');
+                        }
+                        break;
+                    case ROCK:
+                        System.out.print('#');
+                        break;
+                    case ANTHILL_RED:
+                        System.out.print('+');
+                        break;
+                    case ANTHILL_BLACK:
+                        System.out.print('-');
+                        break;
+                }
+                System.out.print(' ');
+            }
+            System.out.println();
         }
     }
 
