@@ -29,3 +29,8 @@ and ant-worlds). The system should be 'stress-tested', meaning:
 
 In addition to the above, the user requirements shall be individually checked against the program by each member of the team. The
 non-functional requirements should also be checked by each member of the team, from a user's perspective.
+
+
+### Verification Acceptance Tests
+
+### Validation Acceptance Tests
