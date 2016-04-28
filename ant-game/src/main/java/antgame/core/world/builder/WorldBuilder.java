@@ -446,8 +446,4 @@ public class WorldBuilder {
         return builder.build();
     }
 
-    public static void main(String[] args) {
-        WorldBuilder.generateContestWorld().print();
-    }
-
 }
