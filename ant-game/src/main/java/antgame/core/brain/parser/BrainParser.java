@@ -15,7 +15,8 @@ import java.util.*;
  * Parses a list of instructions represented by strings, and returns an ant-brain finite state machine which acts as
  * specified by the instructions.
  *
- * To parse a {@link List} of strings into a {@link Brain}, use the static {@link BrainParser#parse(List)} method.
+ * To parse a {@link List} of strings into a {@link Brain}, use the static {@link BrainParser#parse(Colony, List)}
+ * method. Alternatively, a brain can be parsed directly from a file using {@link BrainParser#parse(Colony, File)}
  *
  * @author Sam Marsh
  */

@@ -57,12 +57,12 @@ public class WorldBuilder {
      */
     private void init() {
         for (int x = 0; x < width; ++x) {
-            cells[x][0] = new Cell(Cell.Type.ROCK);
-            cells[x][height - 1] = new Cell(Cell.Type.ROCK);
+            cells[x][0] = new Cell(Cell.Type.ROCK, x, 0);
+            cells[x][height - 1] = new Cell(Cell.Type.ROCK, x, height - 1);
         }
         for (int y = 0; y < height; ++y) {
-            cells[0][y] = new Cell(Cell.Type.ROCK);
-            cells[width - 1][y] = new Cell(Cell.Type.ROCK);
+            cells[0][y] = new Cell(Cell.Type.ROCK, 0, y);
+            cells[width - 1][y] = new Cell(Cell.Type.ROCK, width - 1, y);
         }
     }
 
@@ -83,7 +83,7 @@ public class WorldBuilder {
         for (int x = 0; x < width; ++x) {
             for (int y = 0; y < height; ++y) {
                 if (cells[x][y] == null) {
-                    cells[x][y] = new Cell(Cell.Type.CLEAR);
+                    cells[x][y] = new Cell(Cell.Type.CLEAR, x, y);
                 }
             }
         }
@@ -183,7 +183,7 @@ public class WorldBuilder {
                 add(new Position(x, y));
             }
         });
-        cells[x][y] = new Cell(Cell.Type.ROCK);
+        cells[x][y] = new Cell(Cell.Type.ROCK, x, y);
     }
 
     /**
@@ -217,7 +217,7 @@ public class WorldBuilder {
                 //check that the position is not already filled
                 validate(curr.x, curr.y);
                 //stick the new cell in the map
-                map.put(new Position(curr.x, curr.y), new Cell(type));
+                map.put(new Position(curr.x, curr.y), new Cell(type, curr.x, curr.y));
                 //move to the adjacent cell
                 curr = adjacent(curr, dir);
             }
@@ -259,7 +259,7 @@ public class WorldBuilder {
             //loop through all cells in the row and add them to the map
             for (int x = curr.x; x < curr.x + currentSize; ++x) {
                 validate(x, curr.y);
-                map.put(new Position(x, curr.y), new Cell(type));
+                map.put(new Position(x, curr.y), new Cell(type, x, curr.y));
             }
 
             //move to the next cell in the up-right direction
@@ -277,7 +277,7 @@ public class WorldBuilder {
             //loop through all cells in the row and add them to the map
             for (int x = curr.x; x < curr.x + currentSize; ++x) {
                 validate(x, curr.y);
-                map.put(new Position(x, curr.y), new Cell(type));
+                map.put(new Position(x, curr.y), new Cell(type, x, curr.y));
             }
 
             //move to the next cell in the down-right direction

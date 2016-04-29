@@ -76,20 +76,20 @@ public class WorldParser {
 
                 switch (c) {
                     case '#':
-                        cells[x][y] = new Cell(Cell.Type.ROCK);
+                        cells[x][y] = new Cell(Cell.Type.ROCK, x, y);
                         break;
                     case '.':
-                        cells[x][y] = new Cell(Cell.Type.CLEAR);
+                        cells[x][y] = new Cell(Cell.Type.CLEAR, x, y);
                         break;
                     case '+':
-                        cells[x][y] = new Cell(Cell.Type.ANTHILL_RED);
+                        cells[x][y] = new Cell(Cell.Type.ANTHILL_RED, x, y);
                         break;
                     case '-':
-                        cells[x][y] = new Cell(Cell.Type.ANTHILL_BLACK);
+                        cells[x][y] = new Cell(Cell.Type.ANTHILL_BLACK, x, y);
                         break;
                     default:
                         if (c >= '1' && c <= '9') {
-                            cells[x][y] = new Cell(Cell.Type.CLEAR);
+                            cells[x][y] = new Cell(Cell.Type.CLEAR, x, y);
                             cells[x][y].setFood(Character.getNumericValue(c));
                             break;
                         }

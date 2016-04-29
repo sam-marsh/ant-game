@@ -109,7 +109,7 @@ public class Condition {
          * @param insn the instruction number - used in the thrown exception if no associated
          *             type exists for the passed token
          * @return the {@link Type} associated with the token
-         * @throws ParseException
+         * @throws ParseException if no such associated condition exists for the passed token
          */
         public static Type from(String token, int insn) throws ParseException {
             for (Type condition : values()) {
