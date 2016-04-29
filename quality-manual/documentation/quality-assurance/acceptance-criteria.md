@@ -185,7 +185,7 @@ Expected Result: The software functionals correctly on all platforms.
 ### Validation Acceptance Tests
 
 
-##### Ant Brain and Ant Worlds
+##### Uploading Ant Brains and Worlds
 
 Test to perform: The user can upload brains into an ant world with two ant colonies, one for each player and it should check if an ant-brain and ant world supplied by a player is syntactically well-formed.
 
