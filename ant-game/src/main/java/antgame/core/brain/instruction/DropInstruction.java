@@ -19,7 +19,7 @@ public class DropInstruction extends Instruction {
      * @param st the state to transition to next
      */
     public DropInstruction(int insn, Instruction st) {
-        super(insn);
+        super(insn, Type.DROP);
         this.st = st;
     }
 

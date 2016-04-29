@@ -25,7 +25,7 @@ public class TurnInstruction extends Instruction {
      * @param st the state to transition to after execution of the instruction
      */
     public TurnInstruction(int insn, Direction direction, Instruction st) {
-        super(insn);
+        super(insn, Type.TURN);
         this.direction = direction;
         this.st = st;
     }

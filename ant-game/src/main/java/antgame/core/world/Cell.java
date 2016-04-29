@@ -25,16 +25,26 @@ public class Cell {
     //how much food is in the cell
     private int food;
 
+    //the coordinate x, from the left of the world
+    private final int x;
+
+    //the coordinate y, from the top of the world
+    private final int y;
+
     /**
      * Creates a new cell of the given type.
      *
      * @param type the type of cell - rocky or clear
+     * @param x the cell's x coordinate
+     * @param y the cell's y coordinate
      */
-    public Cell(Type type) {
+    public Cell(Type type, int x, int y) {
         this.type = type;
         this.markers = new HashSet<>();
         this.ant = null;
         this.food = 0;
+        this.x = x;
+        this.y = y;
     }
 
     /**
@@ -85,6 +95,15 @@ public class Cell {
     }
 
     /**
+     * Called by ants to check if this cell is available to move in to.
+     *
+     * @return true if the cell is free (clear of ants and other obstacles), otherwise false
+     */
+    public boolean free() {
+        return type != Type.ROCK && !hasAnt();
+    }
+
+    /**
      * @return the ant contained in the cell
      */
     public Ant getAnt() {
@@ -92,6 +111,27 @@ public class Cell {
             throw new NullPointerException("no ant in cell");
         }
         return ant;
+    }
+
+    /**
+     * Puts an ant in this cell.
+     * @param ant the ant to place here
+     */
+    public void setAnt(Ant ant) {
+        if (hasAnt()) {
+            throw new AssertionError("ant already here");
+        }
+        this.ant = ant;
+    }
+
+    /**
+     * Removes the current ant from this cell.
+     */
+    public void removeAnt() {
+        if (!hasAnt()) {
+            throw new AssertionError("no ant to remove");
+        }
+        ant = null;
     }
 
     /**
@@ -122,6 +162,20 @@ public class Cell {
      */
     public Type getType() {
         return type;
+    }
+
+    /**
+     * @return the cell's x coordinate
+     */
+    public int getX() {
+        return x;
+    }
+
+    /**
+     * @return the cell's y coordinate
+     */
+    public int getY() {
+        return y;
     }
 
     /**

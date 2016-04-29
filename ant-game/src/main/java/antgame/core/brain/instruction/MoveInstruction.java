@@ -21,7 +21,7 @@ public class MoveInstruction extends Instruction {
      * @param st2 the state to transition to on failure
      */
     public MoveInstruction(int insn, Instruction st1, Instruction st2) {
-        super(insn);
+        super(insn, Type.MOVE);
         this.st1 = st1;
         this.st2 = st2;
     }

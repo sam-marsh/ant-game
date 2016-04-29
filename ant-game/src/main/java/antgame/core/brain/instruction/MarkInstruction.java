@@ -24,7 +24,7 @@ public class MarkInstruction extends Instruction {
      * @param st the state to transition to after marking the cell
      */
     public MarkInstruction(int insn, Marker marker, Instruction st) {
-        super(insn);
+        super(insn, Type.MARK);
         this.marker = marker;
         this.st = st;
     }

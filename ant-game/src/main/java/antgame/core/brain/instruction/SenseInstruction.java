@@ -35,7 +35,7 @@ public class SenseInstruction extends Instruction {
      * @param condition the 'question' to ask the world about the cell
      */
     public SenseInstruction(int insn, Direction direction, Instruction st1, Instruction st2, Condition condition) {
-        super(insn);
+        super(insn, Type.SENSE);
         this.direction = direction;
         this.st1 = st1;
         this.st2 = st2;

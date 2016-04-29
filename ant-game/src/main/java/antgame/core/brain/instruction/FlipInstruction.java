@@ -27,10 +27,17 @@ public class FlipInstruction extends Instruction {
      * @param st2 the state to transition to otherwise
      */
     public FlipInstruction(int insn, int n, Instruction st1, Instruction st2) {
-        super(insn);
+        super(insn, Type.FLIP);
         this.n = n;
         this.st1 = st1;
         this.st2 = st2;
+    }
+
+    /**
+     * @return the upper bound on the random number to be generated, non-inclusive
+     */
+    public int getRange() {
+        return n;
     }
 
     /**

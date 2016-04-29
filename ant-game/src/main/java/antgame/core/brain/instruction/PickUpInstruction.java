@@ -22,7 +22,7 @@ public class PickUpInstruction extends Instruction {
      *            carrying food, or no food in current cell)
      */
     public PickUpInstruction(int insn, Instruction st1, Instruction st2) {
-        super(insn);
+        super(insn, Type.PICK_UP);
         this.st1 = st1;
         this.st2 = st2;
     }

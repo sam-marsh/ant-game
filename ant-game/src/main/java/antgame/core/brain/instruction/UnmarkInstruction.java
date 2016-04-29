@@ -23,7 +23,7 @@ public class UnmarkInstruction extends Instruction {
      * @param st the instruction to transition to after removing the marker
      */
     public UnmarkInstruction(int insn, Marker marker, Instruction st) {
-        super(insn);
+        super(insn, Type.UNMARK);
         this.marker = marker;
         this.st = st;
     }

@@ -15,15 +15,20 @@ import java.text.ParseException;
 public abstract class Instruction {
 
     //the instruction number
-    private int insn;
+    private final int insn;
+
+    //the instruction type
+    private final Type type;
 
     /**
      * Creates a new instruction with the given instruction number.
      *
      * @param insn the instruction identifier (line number)
+     * @param type the type of instruction
      */
-    public Instruction(int insn) {
+    public Instruction(int insn, Type type) {
         this.insn = insn;
+        this.type = type;
     }
 
     /**
@@ -31,6 +36,13 @@ public abstract class Instruction {
      */
     public int getInstruction() {
         return insn;
+    }
+
+    /**
+     * @return the instruction type
+     */
+    public Type getType() {
+        return type;
     }
 
     /**

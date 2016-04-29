@@ -1,6 +1,7 @@
 package antgame.core.world;
 
 import antgame.core.Colony;
+import antgame.core.Direction;
 import antgame.core.brain.instruction.Condition;
 
 /**
@@ -25,6 +26,34 @@ public class World {
         this.cells = cells;
         this.width = cells.length;
         this.height = cells[0].length;
+    }
+
+    /**
+     * Finds the cell adjacent to a given cell, in a given direction.
+     *
+     * @param cell the given cell
+     * @param direction the direction to move
+     * @return the adjacent cell when moving one step in the given direction
+     */
+    public Cell adjacent(Cell cell, Direction direction) {
+        int x = cell.getX();
+        int y = cell.getY();
+        switch (direction) {
+            case EAST:
+                return cells[x + 1][y];
+            case SOUTH_EAST:
+                return even(y) ? cells[x][y + 1] : cells[x + 1][y + 1];
+            case SOUTH_WEST:
+                return even(y) ? cells[x - 1][y + 1] : cells[x][y + 1];
+            case WEST:
+                return cells[x - 1][y];
+            case NORTH_WEST:
+                return even(y) ? cells[x - 1][y - 1] : cells[x][y - 1];
+            case NORTH_EAST:
+                return even(y) ? cells[x][y - 1] : cells[x + 1][y - 1];
+            default:
+                throw new AssertionError("internal error: direction not implemented");
+        }
     }
 
     /**
@@ -100,6 +129,10 @@ public class World {
             }
             System.out.println();
         }
+    }
+
+    private boolean even(int a) {
+        return a % 2 == 0;
     }
 
 }
