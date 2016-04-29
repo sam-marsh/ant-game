@@ -141,7 +141,7 @@ Expected result: Iterates through each line of the file, tokenising the line and
 
 #### GUI
 
-Test 1: Visualise an ant world
+##### Test 1: Visualise an ant world
 
 Test to perform: Uses a Swing GUI to show users a representation of the ant world in a game at a particular turn.
 
