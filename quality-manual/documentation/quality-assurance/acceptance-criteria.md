@@ -33,4 +33,14 @@ non-functional requirements should also be checked by each member of the team, f
 
 ### Verification Acceptance Tests
 
+#### Test 1: Game Functional Requirement: Parse an Ant Brain
+
+Prerequisites: A user-specified path to the ant-brain file.
+
+Test to perform: Checks if a user's custom ant brain (expected to have been provided in a file on disk) is valid according to the ant brain specification. If so, constructs an in-memory programmatic representation of the brain.
+
+Expected result: A programmatic representation of the ant brain. It iterates through each line of the file, tokenising the line and validating each token. Builds a graph of ant-brain instructions which form a finite-state machine with transitions between instructions dependent on the conditions specified in the line.
+
+
+
 ### Validation Acceptance Tests
