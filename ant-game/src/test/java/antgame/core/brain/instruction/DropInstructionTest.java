@@ -6,6 +6,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
+ * Tests the {@link DropInstruction} class.
+ *
  * @author Sam Marsh
  */
 public class DropInstructionTest {
@@ -27,6 +29,11 @@ public class DropInstructionTest {
 
     /**
      * Tests all methods exposed by the {@link DropInstruction} class.
+     *
+     * @see DropInstruction#getType()
+     * @see DropInstruction#getInstruction()
+     * @see DropInstruction#success()
+     * @see DropInstruction#failure()
      */
     @Test
     public void testDrop() {
