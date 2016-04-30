@@ -38,6 +38,15 @@ The high-level design serves as a transition between the requirements and the fu
 
 ##### Ant Functionality - state diagram
 
-![state-diagram](Ant Functionality State Diagram.png)
+![Ant Functionality-state-diagram](Ant Functionality State Diagram.png)
 
+###### Functions
 
+- Sense: This function takes a cell as an input, it must find this cell, and then checnk its contents, for objects such as food or another ant. 
+- Move: This function sets the new position (in a cell) of the ant. If it is surrounded by other ants, it must be killed, if not, nothing happens. 
+- Turn: The ant's current direction is updated to the new inputted direction. 
+- Flip: A random number is generated.
+- Pick Up - The ant collects food in the cell, the food contents of itself and the cell are updated. 
+- Drop: The ant drops food in the cell, the food contents of itself and the cell are updated. 
+- Mark: The cell has a new marker set. 
+- Unmark: An ant's marker is cleared in the sensed cell.
