@@ -54,3 +54,13 @@ The high-level design serves as a transition between the requirements and the fu
 ##### Game Activity Diagram
 
 ![Game Activity Diagram](Game Activity Diagram.png)
+
+This diagram shows how the game operates in a high-level view. Ant brains and a single world are loaded by an actor. This then initialises different anthills for each different ant-brain. Each ants IDs are also initialised. The game is then started, lasting for 3000 rounds. Once the round counter is at its maximum, the food at each anthill is counted; the team with the most food at their brains anthill is declared the winner. 
+
+##### Use Case Diagram
+
+![Use Case Diagram](Use Case Diagram.png)
+
+The brain has a choice of either flipping (choosing a random number, going to one of two states depending on identity of this number) or turning the current ant. This ant has a choice of actions it can undertake. Once a function is chosen, the world is notified, and it executes the instruction in the game, by interacting with the other components. 
+
+
