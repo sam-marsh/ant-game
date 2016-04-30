@@ -14,20 +14,15 @@ public class TurnInstruction extends Instruction {
     //the direction in which to turn
     private final Direction direction;
 
-    //the state to transition to after execution of the instruction
-    private final Instruction st;
-
     /**
      * Creates a new turn instruction.
      *
      * @param insn the instruction identifier (line number)
      * @param direction the direction in which to turn
-     * @param st the state to transition to after execution of the instruction
      */
-    public TurnInstruction(int insn, Direction direction, Instruction st) {
+    public TurnInstruction(int insn, Direction direction) {
         super(insn, Type.TURN);
         this.direction = direction;
-        this.st = st;
     }
 
     /**
@@ -35,22 +30,6 @@ public class TurnInstruction extends Instruction {
      */
     public Direction getDirection() {
         return direction;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Instruction success() {
-        return st;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Instruction failure() {
-        return st;
     }
 
     /**

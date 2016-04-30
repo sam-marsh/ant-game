@@ -13,20 +13,15 @@ public class MarkInstruction extends Instruction {
     //the integer marker to mark the cell with, in the range 0..5
     private final Marker marker;
 
-    //the state to transition to after the cell is marked
-    private final Instruction st;
-
     /**
      * Creates a new mark instruction.
      *
      * @param insn the instruction identifier (line number)
      * @param marker the marker to mark the cell with, in the range 0..5
-     * @param st the state to transition to after marking the cell
      */
-    public MarkInstruction(int insn, Marker marker, Instruction st) {
+    public MarkInstruction(int insn, Marker marker) {
         super(insn, Type.MARK);
         this.marker = marker;
-        this.st = st;
     }
 
     /**
@@ -34,22 +29,6 @@ public class MarkInstruction extends Instruction {
      */
     public Marker getMarker() {
         return marker;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Instruction success() {
-        return st;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Instruction failure() {
-        return st;
     }
 
 }

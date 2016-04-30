@@ -74,7 +74,7 @@ public class Cell {
      * @return true if marked by the enemy
      */
     public boolean foeMarked(Colony asking) {
-        return markers.parallelStream().anyMatch(m -> !m.getColony().equals(asking));
+        return markers.parallelStream().anyMatch(m -> !m.getColour().equals(asking.getColour()));
     }
 
     /**

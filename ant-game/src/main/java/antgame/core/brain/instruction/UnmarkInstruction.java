@@ -12,20 +12,15 @@ public class UnmarkInstruction extends Instruction {
     //the marker index, in the range 0..5
     private final Marker marker;
 
-    //the instruction to transition to next
-    private final Instruction st;
-
     /**
      * Creates a new unmark instruction.
      *
      * @param insn the instruction identifer (line number)
      * @param marker the marker to remove, in the range 0..5
-     * @param st the instruction to transition to after removing the marker
      */
-    public UnmarkInstruction(int insn, Marker marker, Instruction st) {
+    public UnmarkInstruction(int insn, Marker marker) {
         super(insn, Type.UNMARK);
         this.marker = marker;
-        this.st = st;
     }
 
     /**
@@ -33,22 +28,6 @@ public class UnmarkInstruction extends Instruction {
      */
     public Marker getMarker() {
         return marker;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Instruction success() {
-        return st;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Instruction failure() {
-        return st;
     }
 
 }

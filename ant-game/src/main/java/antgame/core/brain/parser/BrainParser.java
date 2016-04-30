@@ -15,8 +15,9 @@ import java.util.*;
  * Parses a list of instructions represented by strings, and returns an ant-brain finite state machine which acts as
  * specified by the instructions.
  *
- * To parse a {@link List} of strings into a {@link Brain}, use the static {@link BrainParser#parse(Colony, List)}
- * method. Alternatively, a brain can be parsed directly from a file using {@link BrainParser#parse(Colony, File)}
+ * To parse a {@link List} of strings into a {@link Brain}, use the static
+ * {@link BrainParser#parse(Colony.Colour, File)} method. Alternatively, a brain can be parsed directly from a file
+ * using {@link BrainParser#parse(Colony.Colour, File)}
  *
  * @author Sam Marsh
  */
@@ -24,8 +25,8 @@ public class BrainParser {
 
     private static final int MAXIMUM_NUM_LINES = 10000;
 
-    //also keep the colony for use with markers
-    private final Colony colony;
+    //also keep the colour for use with markers
+    private final Colony.Colour colour;
 
     //keep a list of the lines
     private final List<String> lines;
@@ -38,8 +39,8 @@ public class BrainParser {
      *
      * @param lines the lines representing instructions
      */
-    private BrainParser(Colony colony, List<String> lines) {
-        this.colony = colony;
+    private BrainParser(Colony.Colour colour, List<String> lines) {
+        this.colour = colour;
         this.lines = lines;
         this.insns = new HashSet<>();
     }
@@ -133,8 +134,6 @@ public class BrainParser {
                 throw new AssertionError("internal error: unhandled type in parser: " + type);
         }
 
-        //add to the instruction set and return
-        insns.add(instruction);
         return instruction;
     }
 
@@ -144,11 +143,10 @@ public class BrainParser {
         }
 
         SenseInstruction.Direction direction = SenseInstruction.Direction.from(tokens[1], insn);
-        Instruction st1 = parseInstruction(parseInt(tokens[2], insn));
-        Instruction st2 = parseInstruction(parseInt(tokens[3], insn));
 
         Condition.Type type = Condition.Type.from(tokens[4], insn);
         Condition condition;
+
 
         if (type == Condition.Type.MARKER) {
             if (tokens.length != 6) {
@@ -158,7 +156,7 @@ public class BrainParser {
             if (marker < 0 || marker > 5) {
                 throw new ParseException("marker must be in the range 0..5, was " + marker, insn);
             }
-            condition = new Condition(new Marker(colony, marker));
+            condition = new Condition(new Marker(colour, marker));
         } else {
             if (tokens.length != 5) {
                 throw new ParseException("invalid syntax: incorrect number of arguments", insn);
@@ -166,7 +164,15 @@ public class BrainParser {
             condition = new Condition(type);
         }
 
-        return new SenseInstruction(insn, direction, st1, st2, condition);
+        SenseInstruction ret = new SenseInstruction(insn, direction, condition);
+        insns.add(ret);
+
+        Instruction st1 = parseInstruction(parseInt(tokens[2], insn));
+        Instruction st2 = parseInstruction(parseInt(tokens[3], insn));
+        ret.success(st1);
+        ret.failure(st2);
+
+        return ret;
     }
 
     private Instruction parseMarkInstruction(String[] tokens, int insn) throws ParseException {
@@ -180,9 +186,14 @@ public class BrainParser {
             throw new ParseException("marker must be in the range 0..5, was " + marker, insn);
         }
 
-        Instruction st = parseInstruction(parseInt(tokens[2], insn));
+        MarkInstruction ret = new MarkInstruction(insn, new Marker(colour, marker));
+        insns.add(ret);
 
-        return new MarkInstruction(insn, new Marker(colony, marker), st);
+        Instruction st = parseInstruction(parseInt(tokens[2], insn));
+        ret.success(st);
+        ret.failure(st);
+
+        return ret;
     }
 
     private Instruction parseUnmarkInstruction(String[] tokens, int insn) throws ParseException {
@@ -196,9 +207,14 @@ public class BrainParser {
             throw new ParseException("marker must be in the range 0..5, was " + marker, insn);
         }
 
-        Instruction st = parseInstruction(parseInt(tokens[2], insn));
+        UnmarkInstruction ret = new UnmarkInstruction(insn, new Marker(colour, marker));
+        insns.add(ret);
 
-        return new UnmarkInstruction(insn, new Marker(colony, marker), st);
+        Instruction st = parseInstruction(parseInt(tokens[2], insn));
+        ret.success(st);
+        ret.failure(st);
+
+        return ret;
     }
 
     private Instruction parsePickUpInstruction(String[] tokens, int insn) throws ParseException {
@@ -206,10 +222,15 @@ public class BrainParser {
             throw new ParseException("invalid syntax: incorrect number of arguments", insn);
         }
 
+        Instruction ret = new PickUpInstruction(insn);
+        insns.add(ret);
+
         Instruction st1 = parseInstruction(parseInt(tokens[1], insn));
         Instruction st2 = parseInstruction(parseInt(tokens[2], insn));
+        ret.success(st1);
+        ret.failure(st2);
 
-        return new PickUpInstruction(insn, st1, st2);
+        return ret;
     }
 
     private Instruction parseDropInstruction(String[] tokens, int insn) throws ParseException {
@@ -217,9 +238,14 @@ public class BrainParser {
             throw new ParseException("invalid syntax: incorrect number of arguments", insn);
         }
 
-        Instruction st = parseInstruction(parseInt(tokens[1], insn));
+        DropInstruction ret = new DropInstruction(insn);
+        insns.add(ret);
 
-        return new DropInstruction(insn, st);
+        Instruction st = parseInstruction(parseInt(tokens[1], insn));
+        ret.success(st);
+        ret.failure(st);
+
+        return ret;
     }
 
     private Instruction parseTurnInstruction(String[] tokens, int insn) throws ParseException {
@@ -228,9 +254,15 @@ public class BrainParser {
         }
 
         TurnInstruction.Direction direction = TurnInstruction.Direction.from(tokens[1], insn);
-        Instruction st = parseInstruction(parseInt(tokens[2], insn));
 
-        return new TurnInstruction(insn, direction, st);
+        TurnInstruction ret = new TurnInstruction(insn, direction);
+        insns.add(ret);
+
+        Instruction st = parseInstruction(parseInt(tokens[2], insn));
+        ret.success(st);
+        ret.failure(st);
+
+        return ret;
     }
 
     private Instruction parseMoveInstruction(String[] tokens, int insn) throws ParseException {
@@ -238,10 +270,15 @@ public class BrainParser {
             throw new ParseException("invalid syntax: incorrect number of arguments", insn);
         }
 
+        MoveInstruction ret = new MoveInstruction(insn);
+        insns.add(ret);
+
         Instruction st1 = parseInstruction(parseInt(tokens[1], insn));
         Instruction st2 = parseInstruction(parseInt(tokens[2], insn));
+        ret.success(st1);
+        ret.failure(st2);
 
-        return new MoveInstruction(insn, st1, st2);
+        return ret;
     }
 
     private Instruction parseFlipInstruction(String[] tokens, int insn) throws ParseException {
@@ -250,10 +287,16 @@ public class BrainParser {
         }
 
         int n = parseInt(tokens[1], insn);
+
+        FlipInstruction ret = new FlipInstruction(insn, n);
+        insns.add(ret);
+
         Instruction st1 = parseInstruction(parseInt(tokens[2], insn));
         Instruction st2 = parseInstruction(parseInt(tokens[3], insn));
+        ret.success(st1);
+        ret.failure(st2);
 
-        return new FlipInstruction(insn, n, st1, st2);
+        return ret;
     }
 
     private int parseInt(String token, int line) throws ParseException {
@@ -267,26 +310,26 @@ public class BrainParser {
     /**
      * Parses a brain from a file which contains an ant-brain specification.
      *
-     * @param colony the colony to which this ant brain will belong
+     * @param colour the colour to which this ant brain will belong
      * @param file the file where the ant-brain is described
      * @return an ant-brain representing the states described by the file
      * @throws ParseException if the ant brain is malformed in the file
      * @throws IOException if an error in reading the file is encountered
      */
-    public static Brain parse(Colony colony, File file) throws ParseException, IOException {
-        return parse(colony, Files.readAllLines(file.toPath()));
+    public static Brain parse(Colony.Colour colour, File file) throws ParseException, IOException {
+        return parse(colour, Files.readAllLines(file.toPath()));
     }
 
     /**
      * Parses a brain from a list of strings which represent an ant-brain specification.
      *
-     * @param colony the colony to which this ant brain will belong
+     * @param colour the colour to which this ant brain will belong
      * @param lines the lines describing the ant brain
      * @return an ant-brain representing the states described by the list of strings
      * @throws ParseException if the ant-brain is malformed in the list of strings
      */
-    public static Brain parse(Colony colony, List<String> lines) throws ParseException {
-        return new BrainParser(colony, lines).parse();
+    public static Brain parse(Colony.Colour colour, List<String> lines) throws ParseException {
+        return new BrainParser(colour, lines).parse();
     }
 
 }
