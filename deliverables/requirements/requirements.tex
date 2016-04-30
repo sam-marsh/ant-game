@@ -1,0 +1,955 @@
+\documentclass[11pt]{article}
+\usepackage{fullpage}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{hyperref}
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+\title{Requirements}
+\date{}
+
+\setlength\LTleft{0pt}
+\setlength\LTright{0pt}
+
+\setlength{\parskip}{\baselineskip}%
+\setlength{\parindent}{0pt}%
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+\section{User Requirements}  
+
+\begin{enumerate}
+\item The program should check if an ant-brain supplied by a player is syntactically well-formed.
+\item The program should check if a given description of an ant world is syntactically well-formed and meets the requirements for ant worlds used in tournaments.
+\item The program should be able visualise a given ant world.
+\item The program should be able to generate random but well-formed ant worlds.
+\item The program should allow two players to play: i.e. enable two players to upload their ant-brains and choose an ant-world, and then run the game in the ant world, taking statistics and determining the winner of the game.
+\item The program should allow users to play tournaments, where an arbitrary number of players can upload ant-brains, who are all paired up to play against each other. The overall tournament winner is the ant brain that wins the most individual games.
+\item The development team should also produce a novel, proof-of-concept ant-brain.
+\item The user can upload brains into an ant world with two ant colonies, one for each player.
+\item The program should also support uploading custom ant world from files.
+\item An ant world should simulate the behaviour of both kinds of ants, using the ant-brains supplied by the players.
+\item The two species of ants are placed in a random world containing two anthills, some food sources, and several obstacles. 
+\item Ants must explore the world, find food and bring it back to their anthill. 
+\item Ants can communicate or leave trails by means of chemical markers.
+\item Each species of ants can sense (with limited capabilities), but not modify, the markers of the other species.
+\item Ants can also attack the ants of the other species by surrounding them
+\item Ants that die as a result of an attack become food.
+\item If an ant is adjacent to 5 (or 6) ants of the other species then it dies. However, if an ant is in a cell in the very corner of the grid or along one of the edges it can only have at most 4 ants adjacent to it - therefore it cannot be killed.
+\item The match is won by the species with the most food in its anthill at the end of 300,000 rounds.
+\item A cell can hold an unlimited amount of food during the course of the simulation.
+\item In a tournament, each team will play every other team twice on each of the contest worlds. Once as red and once as black. So for 23 teams, each team will be pitted up against 22 other teams.
+\item There must be at least one empty cell between adjacent non-food items.
+\end{enumerate}
+
+\section{Functional Requirements}
+
+\subsection{Game}\label{game}
+
+\subsubsection*{Game/1}\label{game1}
+
+\begin{longtable}[c]{@{\extracolsep{\fill}}|p{0.2\textwidth}|p{0.7\textwidth}|@{}}
+\hline
+\textbf{Specification} & \textbf{Details}\tabularnewline
+\hline
+\textbf{Requirement} & Simulate a two-player game.\tabularnewline
+\textbf{Description} & Using two ant-brains and an ant-world, carry out
+a simulation of the game based on the ant finite-state machines and
+their environment.\tabularnewline
+\textbf{Inputs} & Two different colonies (consisting of a colour, a team
+name and an ant-brain) and an ant-world.\tabularnewline
+\textbf{Source} & The GUI event loop.\tabularnewline
+\textbf{Outputs} & The final result of the game (which team won/lost).
+The final state of the world.\tabularnewline
+\textbf{Destination} & The GUI event loop.\tabularnewline
+\textbf{Actions} & For each turn (maximum 300,000), the ants on each
+cell shall be iterated over. Each ant will perform an action based on
+their ant-brain (specified as a finite-state machine and graph). The
+state of a cell (and possibly other ants) will be updated based on the
+action of the ant. The winner of the game is determined by the colony
+with the most food in their anthill (that is, the number of food
+particles in their anthill's cells). Food carried by ants is ignored in
+this score counting.\tabularnewline
+\textbf{Notes} & -\tabularnewline
+\hline
+\end{longtable}
+
+\subsubsection*{Game/2}\label{game2}
+
+\begin{longtable}[c]{@{\extracolsep{\fill}}|p{0.2\textwidth}|p{0.7\textwidth}|@{}}
+\hline
+\textbf{Specification} & \textbf{Details}\tabularnewline
+\hline
+\textbf{Requirement} & Produce statistics for an ant game.\tabularnewline
+\textbf{Description} & By keeping track of the state of the
+world at all times (or having access to the history of the game), for
+each team the following statistics will be computed: \begin{itemize}
+ \item Amount of food in anthill
+ \item Number of foe's ants killed
+ \item Number of team's ants left
+ \item Number of movements made
+ \item Number of markings left
+ \end{itemize} Further statistics can be added at the discretion of the programmers
+where convenient.\tabularnewline
+\textbf{Inputs} & The state of an ant-game at a particular turn (accumulative) or the full
+history of an ant-game at the end of the game.\tabularnewline
+\textbf{Source} & An ant game.\tabularnewline
+\textbf{Outputs} & The statistics as specified above.\tabularnewline
+\textbf{Destination} & The GUI statistics
+display screen.\tabularnewline
+\textbf{Actions} & Given the state of the game at a particular turn, all relevant statistics counters shall be updated. At the end of the game, the statistics shall be calculated and output. \tabularnewline
+\textbf{Notes} & -\tabularnewline
+\hline
+\end{longtable}
+
+\subsubsection*{Game/3}\label{game3}
+
+\begin{longtable}[c]{@{\extracolsep{\fill}}|p{0.2\textwidth}|p{0.7\textwidth}|@{}}
+\hline
+Specification & Details\tabularnewline
+\hline
+
+\textbf{Requirement} & Simulate a tournament.\tabularnewline
+\textbf{Description} & Plays ant games between multiple users, each with
+their own ant-brain specification.\tabularnewline
+\textbf{Inputs} & A list of teams (specified by a name and an
+ant-brain), and an arbitrary (but at least 1) number of
+ant-worlds.\tabularnewline
+\textbf{Source} & The GUI.\tabularnewline
+\textbf{Outputs} & The results of all matches, as well as the overall
+winner (the team with the highest number of wins).\tabularnewline
+\textbf{Destination} & The GUI tournament statistics display
+screen.\tabularnewline
+\textbf{Actions} & Iterates over all unique combinations
+\texttt{(team-1,\ team-2,\ world)} and simulates a game with that
+3-tuple, with the first team playing as red and the second team playing
+as black. Keeps track of all wins, losses and statistics for each team.
+After all simulations, (which are \emph{not} visualised to the user as
+per \texttt{Game/1.3} but rather the statistics are displayed) the
+overall winner is returned. The final results shall be calculated as
+follows: a team shall earn 2 points for a win, and 1 point for a draw.
+The score shall be tallied at the end, with the team having the highest
+score being the winner. If there is a draw, the tournament shall be
+repeated with the highest-scoring half of teams.\tabularnewline
+\textbf{Notes} & Iterating over all unique 3-tuples as described above
+will mean that every team will play every other team on every world as
+both red and black. The number of worlds used for a tournament shall be
+specified by the user when interacting with the GUI tournament setup
+view.\tabularnewline
+\hline
+\end{longtable}
+
+\subsubsection*{Game/4}\label{game4}
+
+\begin{longtable}[c]{@{\extracolsep{\fill}}|p{0.2\textwidth}|p{0.7\textwidth}|@{}}
+\hline
+Specification & Details\tabularnewline
+\hline
+
+\textbf{Requirement} & Parse an ant brain file.\tabularnewline
+\textbf{Description} & Checks if a user's custom ant brain (expected to
+have been provided in a file on disk) is valid according to the ant
+brain specification. If so, constructs an in-memory programmatic
+representation of the brain.\tabularnewline
+\textbf{Inputs} & A user-specified path to the ant-brain
+file.\tabularnewline
+\textbf{Source} & A file in-memory that has been read from
+disk.\tabularnewline
+\textbf{Outputs} & A programmatic representation of the ant
+brain.\tabularnewline
+\textbf{Destination} & The GUI event loop.\tabularnewline
+\textbf{Actions} & Iterates through each line of the file, tokenising
+the line and validating each token. Builds a graph of ant-brain
+instructions which form a finite-state machine with transitions between
+instructions dependent on the conditions specified in the
+line.\tabularnewline
+\textbf{Notes} & The specification of an ant-brain file is further
+below: see \texttt{Parsing\ Specifications/Ant\ Brain}.\tabularnewline
+\hline
+\end{longtable}
+
+\subsubsection*{Miscellaneous}\label{miscellaneous}
+
+\begin{longtable}[c]{|p{0.2\textwidth}|p{0.5\textwidth}|p{0.2\textwidth}|}
+\hline
+Identifier & Requirement & Rationale\tabularnewline
+\hline
+
+\textbf{Game/Misc.1} & At the start of a game, all ants shall face east.
+& User-requested.\tabularnewline
+\textbf{Game/Misc.2} & Ant's brains shall be initialised to state 0. &
+User requested.\tabularnewline
+\textbf{Game/Misc.3} & Each anthill cell shall be initially populated
+with a single ant of the anthill cell's colour. &
+User-requested.\tabularnewline
+\textbf{Game/Misc.4} & Ants shall be allocated identifiers in increasing
+numerical order, in top-to-bottom left-to-right order based on their
+position in the ant world. & User-requested.\tabularnewline
+\hline
+\end{longtable}
+
+\subsection{Ant}\label{ant}
+
+\subsubsection*{Ant/1}\label{ant1}
+
+\begin{longtable}[c]{@{\extracolsep{\fill}}|p{0.2\textwidth}|p{0.7\textwidth}|@{}}
+\hline
+Specification & Details\tabularnewline
+\hline
+
+\textbf{Requirement} & Sense a cell.\tabularnewline
+\textbf{Description} & Performs a sense operation on a particular cell
+of a particular condition (cell and condition specified by the ant-brain
+instruction).\tabularnewline
+\textbf{Inputs} & Ant-brain instruction context, access to the cell in
+question.\tabularnewline
+\textbf{Source} & The game controller.\tabularnewline
+\textbf{Outputs} & A boolean result that informs the game controller
+which state the ant-brain has transitioned to (either the success state
+or failure-state, as specified in the original ant-brain
+file).\tabularnewline
+\textbf{Destination} & The game control loop.\tabularnewline
+\textbf{Actions} & The ant's current instruction stores information
+about the direction to sense in and the condition to sense for. The
+direction is one of \texttt{here}, \texttt{ahead}, \texttt{left-ahead}
+or \texttt{right-ahead}. The ant queries the world to determine the cell
+in the relevant direction, and checks the condition on that cell. If the
+condition holds for that cell, it transitions to the \texttt{success}
+state. If not, it transitions to the \texttt{fail}-state.\tabularnewline
+\textbf{Notes} & The predicates available to an ant for sense operations
+are \texttt{friend} (whether the given cell contains an ant of the same
+team), \texttt{foe} (whether the given cell contains an ant of the
+opposing team), \texttt{friend\_with\_food} (as with \texttt{friend},
+but also carrying food), \texttt{foe\_with\_food} (as with \texttt{foe},
+but also carrying food), \texttt{rock} (whether the cell type is rocky),
+\texttt{marker\ n} (whether the cell is marked with a marker,
+represented by an integer \texttt{n}, of the same team),
+\texttt{foe\_marker} (whether the cell has marked by a foe, with
+\emph{any} integer marker identifier), \texttt{home} (whether the cell
+is part of the anthill of that ants team), and \texttt{foe\_home}
+(whether the cell is part of the opponent's anthill).\tabularnewline
+\hline
+\end{longtable}
+
+\subsubsection*{Ant/2}\label{ant2}
+
+\begin{longtable}[c]{@{\extracolsep{\fill}}|p{0.2\textwidth}|p{0.7\textwidth}|@{}}
+\hline
+Specification & Details\tabularnewline
+\hline
+
+\textbf{Requirement} & Mark a cell.\tabularnewline
+\textbf{Description} & Performs a mark operation on the current cell,
+placing a chemical marker as specified by the current ant-brain
+instruction.\tabularnewline
+\textbf{Inputs} & The world context, the ant-brain instruction
+context.\tabularnewline
+\textbf{Source} & The game controller.\tabularnewline
+\textbf{Outputs} & No output required.\tabularnewline
+\textbf{Destination} & The game control loop.\tabularnewline
+\textbf{Actions} & Tells the world to mark the ant's current cell with a
+particular integer. Transitions to the next state.\tabularnewline
+\textbf{Notes} & The marker must be in the range
+\texttt{0..5}.\tabularnewline
+\hline
+\end{longtable}
+
+\subsubsection*{Ant/3}\label{ant3}
+
+\begin{longtable}[c]{@{\extracolsep{\fill}}|p{0.2\textwidth}|p{0.7\textwidth}|@{}}
+\hline
+Specification & Details\tabularnewline
+\hline
+
+\textbf{Requirement} & Unmark a cell.\tabularnewline
+\textbf{Description} & Performs an unmark operation on the current cell,
+removing a chemical marker as specified by the current ant-brain
+instruction.\tabularnewline
+\textbf{Inputs} & The world context, the ant-brain instruction
+context.\tabularnewline
+\textbf{Source} & The game controller.\tabularnewline
+\textbf{Outputs} & No output required.\tabularnewline
+\textbf{Destination} & The game control loop.\tabularnewline
+\textbf{Actions} & Tells the world to unmark the ant's current cell,
+removing the marker with a particular identifier. Transitions to the
+next state.\tabularnewline
+\textbf{Notes} & The marker must be in the range
+\texttt{0..5}.\tabularnewline
+\hline
+\end{longtable}
+
+\subsubsection*{Ant/4}\label{ant4}
+
+\begin{longtable}[c]{@{\extracolsep{\fill}}|p{0.2\textwidth}|p{0.7\textwidth}|@{}}
+\hline
+Specification & Details\tabularnewline
+\hline
+
+\textbf{Requirement} & Pick up food.\tabularnewline
+\textbf{Description} & Picks up food from the current cell,
+transitioning to one of two ant-brain states depending on whether the
+pick-up operation was successful.\tabularnewline
+\textbf{Inputs} & The world context, the ant-brain instruction
+context.\tabularnewline
+\textbf{Source} & The game controller.\tabularnewline
+\textbf{Outputs} & A boolean result that informs the game controller
+which state the ant-brain has transitioned to (either the success state
+or failure-state, as specified in the original ant-brain
+file).\tabularnewline
+\textbf{Destination} & The game control loop.\tabularnewline
+\textbf{Actions} & Queries the world to see if the current cell has
+food. If not, transitions to the fail-state. Otherwise ets the internal
+state of the ant to \texttt{has-food\ =\ true}, as per requirement
+\texttt{Ant/Misc.4}. Removes a food particle from the current cell.
+Transitions to the success state.\tabularnewline
+\textbf{Notes} & -\tabularnewline
+\hline
+\end{longtable}
+
+\subsubsection*{Ant/5}\label{ant5}
+
+\begin{longtable}[c]{@{\extracolsep{\fill}}|p{0.2\textwidth}|p{0.7\textwidth}|@{}}
+\hline
+Specification & Details\tabularnewline
+\hline
+
+\textbf{Requirement} & Drop food.\tabularnewline
+\textbf{Description} & Drops food into the current cell, transitioning
+to the next state as specified in the ant-brain finite state
+machine.\tabularnewline
+\textbf{Inputs} & The world context, the ant-brain instruction
+context.\tabularnewline
+\textbf{Source} & The game controller.\tabularnewline
+\textbf{Outputs} & No output required.\tabularnewline
+\textbf{Destination} & The game control loop.\tabularnewline
+\textbf{Actions} & Gets the current cell from the world context and adds
+a food particle to it. Transitions to the next state.\tabularnewline
+\textbf{Notes} & If the ant does not have food, no action on the cell
+shall be taken, and the ant shall transition to the next
+state.\tabularnewline
+\hline
+\end{longtable}
+
+\subsubsection*{Ant/6}\label{ant6}
+
+\begin{longtable}[c]{@{\extracolsep{\fill}}|p{0.2\textwidth}|p{0.7\textwidth}|@{}}
+\hline
+Specification & Details\tabularnewline
+\hline
+
+\textbf{Requirement} & Turn.\tabularnewline
+\textbf{Description} & Causes the internal direction attribute of the
+ant (as specified in \texttt{Ant/Misc.7}) to change based on the current
+turn instruction's specification.\tabularnewline
+\textbf{Inputs} & The world context, the ant-brain instruction
+context.\tabularnewline
+\textbf{Source} & The game controller.\tabularnewline
+\textbf{Outputs} & No output required.\tabularnewline
+\textbf{Destination} & The game control loop.\tabularnewline
+\textbf{Actions} & The direction specified by the instruction can be one
+of \texttt{left} or \texttt{right}. This shall cause the direction of
+the ant to `rotate' - i.e. \texttt{left} will cause the ant to rotate
+one edge anticlockwise in its hexagonal cell, and vice-versa for
+\texttt{right}. The ant will then transition into the next
+state.\tabularnewline
+\textbf{Notes} & -\tabularnewline
+\hline
+\end{longtable}
+
+\subsubsection*{Ant/7}\label{ant7}
+
+\begin{longtable}[c]{@{\extracolsep{\fill}}|p{0.2\textwidth}|p{0.7\textwidth}|@{}}
+\hline
+Specification & Details\tabularnewline
+\hline
+
+\textbf{Requirement} & Move.\tabularnewline
+\textbf{Description} & Causes the ant to move forward based on its
+direction into an adjacent cell (if possible).\tabularnewline
+\textbf{Inputs} & The world context, the ant-brain instruction
+context.\tabularnewline
+\textbf{Source} & The game controller.\tabularnewline
+\textbf{Outputs} & A boolean result that informs the game controller
+which state the ant-brain has transitioned to (either the success state
+or failure-state, as specified in the original ant-brain
+file).\tabularnewline
+\textbf{Destination} & The game control loop.\tabularnewline
+\textbf{Actions} & Based on the ant's current direction and the ant's
+current cell, the world can be queried for the cell in front of the ant.
+If the cell is free (not rocky and does not contain another ant), the
+ant shall remove itself from the current cell and add itself to the
+relevant adjacent cell. It shall then update its own \texttt{resting}
+attribute to indicate to the game controller that it must now rest for
+14 moves. Then it will transition to the success state. If not free, the
+ant shall transition to the fail-state.\tabularnewline
+\textbf{Notes} & Resting is not \emph{handled} here, rather it is
+handled by the game controller which will check the resting attribute
+and not call any instruction-step methods on the ant unless not
+resting.\tabularnewline
+\hline
+\end{longtable}
+
+\subsubsection*{Ant/8}\label{ant8}
+
+\begin{longtable}[c]{@{\extracolsep{\fill}}|p{0.2\textwidth}|p{0.7\textwidth}|@{}}
+\hline
+Specification & Details\tabularnewline
+\hline
+
+\textbf{Requirement} & Flip.\tabularnewline
+\textbf{Description} & Causes the ant to transition into one of two
+states depending on the result of a pseudo-random generated
+integer.\tabularnewline
+\textbf{Inputs} & The world context, the ant-brain instruction
+context.\tabularnewline
+\textbf{Source} & The game controller.\tabularnewline
+\textbf{Outputs} & A boolean result that informs the game controller
+which state the ant-brain has transitioned to (either state-1 or
+state-2, as specified in the original ant-brain file).\tabularnewline
+\textbf{Destination} & The game control loop.\tabularnewline
+\textbf{Actions} & Using the system's random number generator, the ant
+shall produce a random integer between \texttt{0..(n-1)}, where
+\texttt{n} is the integer specified by the flip instruction. If
+\texttt{0}, the ant shall transition to state-1. Otherwise, it shall
+transition to state-2.\tabularnewline
+\textbf{Notes} & -\tabularnewline
+\hline
+\end{longtable}
+
+\subsubsection*{Miscellaneous}\label{miscellaneous-1}
+
+\begin{longtable}[c]{|p{0.2\textwidth}|p{0.3\textwidth}|p{0.4\textwidth}|}
+\hline
+Identifier & Requirement & Rationale\tabularnewline
+\hline
+
+\textbf{Ant/Misc.1} & Each ant shall have an associated unique integer
+identifier. & This identifier shall determine the order in which the ant
+moves as compared to other ants (with ants moving in ascending order of
+identifier).\tabularnewline
+\textbf{Ant/Misc.2} & Each ant shall have an associated colour, either
+\texttt{red} or \texttt{black}. & The colour shall identify the ant's
+team and also make it clear to the user in world
+visualisation.\tabularnewline
+\textbf{Ant/Misc.3} & Each ant shall use the finite-state machine
+representation of its brain to store its current state. & This state is
+queried by the game controller to decide how the ant interacts with the
+world.\tabularnewline
+\textbf{Ant/Misc.4} & Each ant shall hold a \texttt{boolean} field that
+tracks whether the ant is holding food. & Accessible to the game
+controller since it performs different actions depending on whether an
+ant carries food or not.\tabularnewline
+\textbf{Ant/Misc.5} & Each ant shall hold an \texttt{integer} field that
+tracks how many turns it is resting for. & When an ant rests, it is not
+allowed to move. This field shall be decremented by the game loop, and
+if \texttt{0} then the ant is able to move.\tabularnewline
+\textbf{Ant/Misc.6} & Ants shall die if surrounded by \texttt{5} ants of
+the opposing team. & User-specified requirement. Note: this means that
+ants on the edge of the game-world or next to certain rocky structures
+are not able to be killed, since they do not have \texttt{5} free cells
+surrounding them.\tabularnewline
+\textbf{Ant/Misc.7} & The ant shall track its own direction. & The
+direction of the ant shall be used by the game controller for operations
+such as moving the ant forward or sensing.\tabularnewline
+\hline
+\end{longtable}
+
+\subsection{World}\label{world}
+
+\subsubsection*{World/1}\label{world1}
+
+\begin{longtable}[c]{@{\extracolsep{\fill}}|p{0.2\textwidth}|p{0.7\textwidth}|@{}}
+\hline
+Specification & Details\tabularnewline
+\hline
+
+\textbf{Requirement} & Parse ant world file.\tabularnewline
+\textbf{Description} & Checks if a user's custom ant world (expected to
+have been provided in a file on disk) is valid according to the ant
+world specification. If so, constructs an in-memory programmatic
+representation of the world.\tabularnewline
+\textbf{Inputs} & A user-specified path to the ant-world
+file.\tabularnewline
+\textbf{Source} & A file in-memory that has been read from
+disk.\tabularnewline
+\textbf{Outputs} & A programmatic representation of the ant
+world.\tabularnewline
+\textbf{Destination} & The GUI event loop.\tabularnewline
+\textbf{Actions} & Iterates through each line of the file, tokenising
+the line and validating each token. Intepreting each token as a cell and
+building a hexagonal programmatic structure containing cells with
+properties specified in the file.\tabularnewline
+\textbf{Notes} & -\tabularnewline
+\hline
+\end{longtable}
+
+\subsubsection*{World/2}\label{world2}
+
+\begin{longtable}[c]{@{\extracolsep{\fill}}|p{0.2\textwidth}|p{0.7\textwidth}|@{}}
+\hline
+Specification & Details\tabularnewline
+\hline
+
+\textbf{Requirement} & Generate random contest worlds.\tabularnewline
+\textbf{Description} & Creates random contest worlds that conform to the
+requirements for a tournament, as described in the \emph{Actions}
+section below.\tabularnewline
+\textbf{Inputs} & None.\tabularnewline
+\textbf{Source} & The tournament setup, or alternatively the GUI. That
+is, this has two different operations - either the user requests a
+custom ant world (to write to file), or the contest world is randomly
+generated as a tournament is starting.\tabularnewline
+\textbf{Outputs} & A programmatic representation of an ant
+world.\tabularnewline
+\textbf{Destination} & The GUI event loop (or tournament
+setup).\tabularnewline
+\textbf{Actions} & Pseudo-randomly generates an ant world of 150x150
+cells. This ant world shall have rocky edge cells. It shall have two
+hexagonal ant hills of edge length 7, for red and black, randomly
+located. It shall have 14 randomly located rocks. It shall have 11
+randomly located blobs of food, where a blob of food is a 5x5 rectangle.
+Each food blob shall be randomly oriented and each cell in the ant blob
+shall have 5 food particles. All separate components of the world
+(ant-hills, food-blobs, rocks) shall be separated by at least one clear
+cell.\tabularnewline
+\textbf{Notes} & A component for converting a programmatic
+representation of an ant world to a textual representation should also
+be developed.\tabularnewline
+\hline
+\end{longtable}
+
+\subsubsection*{Miscellaneous}\label{miscellaneous-2}
+
+\begin{longtable}[c]{|p{0.2\textwidth}|p{0.3\textwidth}|p{0.4\textwidth}|}
+\hline
+Identifier & Requirement & Rationale\tabularnewline
+\hline
+
+\textbf{World/Misc.1} & The ant world programmatic structure shall
+present an interface that appears as if the world is comprised of
+hexagonal cell (that is, each non-edge cell should be surrounded by 6
+adjacent cells). & As specified in the user requirements, each cell is a
+hexagon.\tabularnewline
+\textbf{World/Misc.2} & Each cell shall have an associated type, which
+shall be one of \texttt{rocky}, \texttt{clear}, \texttt{red-ant-hill} or
+\texttt{black-ant-hill}. & As per user requirements, \texttt{rocky}
+cells are inaccessible to ants, and \texttt{ant-hill} cells belong to
+their associated teams and are where ants are initially
+spawned.\tabularnewline
+\textbf{World/Misc.4} & Ant hills cannot be adjacent to one another. &
+Direct user requirement, reasoning unclear.\tabularnewline
+\textbf{World/Misc.5} & Each non-rocky cell can contain \texttt{0-1}
+ants. & Direct user requirement. Ants cannot `walk over' each
+other.\tabularnewline
+\textbf{World/Misc.6} & Each clear cell can contain \texttt{0+} food
+particles. & Food cannot logically be negative. Note: as specified by
+the ant-world cell specification, initially a cell can contain only
+\texttt{0-9} food particles. However, as food is dropped this number can
+increase above the initial limit unboundedly.\tabularnewline
+\textbf{World/Misc.7} & Each clear cell can contain any non-negative
+number of chemical markers for each team. & Ants can mark the same cell
+with multiple markers, but cannot modify their opponents.\tabularnewline
+\hline
+\end{longtable}
+
+\subsection{GUI}\label{gui}
+
+\subsubsection*{GUI/1}\label{gui1}
+
+\begin{longtable}[c]{@{\extracolsep{\fill}}|p{0.2\textwidth}|p{0.7\textwidth}|@{}}
+\hline
+Specification & Details\tabularnewline
+\hline
+
+\textbf{Requirement} & Visualise ant world.\tabularnewline
+\textbf{Description} & Uses a Swing GUI to show users a representation
+of the ant world in a game at a particular turn.\tabularnewline
+\textbf{Inputs} & An ant world containing information about cells,
+including their location, their type, and what they contain (e.g.~ants,
+food).\tabularnewline
+\textbf{Source} & A currently-running ant game.\tabularnewline
+\textbf{Outputs} & An image (or otherwise) showing the state of the game
+in a human-readable fashion, displayed using a Swing
+interface.\tabularnewline
+\textbf{Destination} & The game loop.\tabularnewline
+\textbf{Actions} & Loops through all cells in the game and draws them to
+screen, with an indication of the type of cell and what it contains
+specified by a colour (colours not yet specified, will be at the
+discretion of the programmers and testers).\tabularnewline
+\textbf{Notes} & -\tabularnewline
+\hline
+\end{longtable}
+
+\subsubsection*{Miscellaneous}\label{miscellaneous-3}
+
+\begin{longtable}[c]{|p{0.2\textwidth}|p{0.3\textwidth}|p{0.4\textwidth}|}
+\hline
+Identifier & Requirement & Rationale\tabularnewline
+\hline
+
+\textbf{GUI/Misc.1} & The GUI shall display the entire world, including
+all world content. & Allows viewing of the entire state of the game in a
+user-friendly way.\tabularnewline
+\textbf{GUI/Misc.2} & The game view interface shall scale proportionally
+to world dimensions \texttt{(x,\ y)}. & Scaling means the entire world
+state is always visible to users.\tabularnewline
+\textbf{GUI/Misc.3} & There will be a user-customisable option to
+display the state of the game every \texttt{n} frames. & Makes the game
+play-speed personalisable to the user, to avoid simulation being too
+short or too long.\tabularnewline
+\hline
+\end{longtable}
+
+\subsection{Parsing Specifications}\label{parsing-specifications}
+
+\subsubsection{Brain}\label{ant-brain}
+
+This is the specification for an ant-brain file. These are provided by
+the user, but development of the brain parser shall interpret the file
+contents as conforming to the following (taken directly from the client
+requirements):
+
+\begin{itemize}
+\tightlist
+\item
+  Each line in the file represents one state. The first line is state 0,
+  the second line state 1, and so on.
+\item
+  The file may contain at most 10000 lines.
+\item
+  Each line shall consists of a sequence of whitespace-separated tokens,
+  followed (optionally) by a comment beginning with a semicolon and
+  extending to the end of the line.
+\item
+  Tokens are either keywords or integers.
+\item
+  Keywords are case-insensitive.
+\item
+  The possible instruction tokens are:
+  \begin{itemize}
+  \tightlist
+  \item
+  \texttt{Sense}
+\item
+  \texttt{Mark}
+\item
+  \texttt{Unmark}
+\item
+  \texttt{PickUp}
+\item
+  \texttt{Drop}
+\item
+  \texttt{Turn}
+\item
+  \texttt{Move}
+\item
+  \texttt{Flip}
+  \end{itemize}
+\item
+  The tokens for sensing directions are:
+  \begin{itemize}\tightlist
+  \item
+  \texttt{Here}
+\item
+  \texttt{Ahead}
+\item
+  \texttt{LeftAhead}
+\item
+  \texttt{RightAhead}
+  \end{itemize}
+\item
+  The tokens for conditions are:
+    \begin{itemize}\tightlist
+\item
+  \texttt{Friend}
+\item
+  \texttt{Foe}
+\item
+  \texttt{FriendWithFood}
+\item
+  \texttt{FoeWithFood}
+\item
+  \texttt{Food}
+\item
+  \texttt{Rock}
+\item
+  \texttt{Marker\ i}, where \texttt{i} is an integer from \texttt{0-5}
+\item
+  \texttt{FoeMarker}
+\item
+  \texttt{Home}
+\item
+  \texttt{FoeHome}
+  \end{itemize}
+\item
+  The tokens for turn are:
+    \begin{itemize} \tightlist
+\item
+  \texttt{Left}
+\item
+  \texttt{Right}
+  \end{itemize}
+\end{itemize}
+
+\subsubsection{World}\label{ant-world}
+
+This is the specification for an ant-world file. These are both provided
+by the user and generated randomly, so development of the world parser
+and contest world generator shall conform to the following (taken
+directly from the client requirements):
+\begin{itemize}
+\tightlist
+\item
+  The first line of the file contains a single integer representing the
+  size of the world in the \texttt{x} dimension.
+\item
+  The second line of the file contains a single integer representing the
+  size of the world in the \texttt{y} dimension.
+\item
+  The rest of the file consists of \texttt{y} lines, each containing
+  \texttt{x} one-character cell specifiers, separated by spaces (even
+  lines also contain a leading space before the first cell specifier).
+  The top-left cell specifier corresponds to position \texttt{(0,\ 0)}.
+  \textbf{Note}: although generated worlds shall conform to this
+  specification, the parser shall ignore leading and extra whitespace.
+\item
+  The cell specifiers are:
+  \begin{itemize} \tightlist
+\item
+  \texttt{\#}: rocky cell
+\item
+  \texttt{.}: clear cell (containing nothing interesting)
+\item
+  \texttt{+}: red anthill cell
+\item
+  \texttt{-}: black anthill cell
+\item
+  \texttt{1}-\texttt{9}: clear cell containing the given number of food
+  particles
+  \end{itemize}
+\end{itemize}
+
+\newpage
+\section{Non-Functional Requirements}
+
+\subsubsection{Product}\label{product}
+
+\subparagraph{Reliability}\label{reliability}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  The software should crash no more than 1 time in 1000 when parsing
+  user files, even if the files are corrupt or not well-formed.
+\item
+  The software should crash no more than 1 time in 1000 when simulating
+  a game or tournament.
+\item
+  The GUI should be stable and responsive to user input at least 99\% of
+  the time, including when a game is running. This applies only to
+  systems with more than 400MB of free RAM.
+\item
+  The software shall parse user files of up to 10,000 lines each without
+  crashing more than 1 time in 1000.
+\item
+  Visualisations of games and tournaments should proceed with no visible
+  defects (glitches) at least 99 times out of 100.
+\item
+  If the program crashes, a log containing the stack trace of the error
+  and any other pertinent details shall be written to the program's
+  working directory, titled ``ant-game-crash-{[}current unix
+  time{]}.log''.
+\end{enumerate}
+
+\subparagraph{Usability}\label{usability}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  The software should have a minimal learning curve for new users. That
+  is, the GUI should have intuitive and clear controls that step the
+  user(s) through each stage of the game without being required to
+  follow external instructions (not including understanding the rules of
+  the game and the development of a user's ant-brain file).
+\item
+  All user interfaces shall be developed using the JavaFX API.
+\item
+  The software shall present a help menu, accessible at all times in the
+  program, which upon clicking displays a popup user interface
+  containing the searchable user documentation for the program.
+\end{enumerate}
+
+\subparagraph{Performance}\label{performance}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Response time of the system when interacting with any component of the
+  GUI should be negligible before the user is presented with the
+  interaction's result or with a loading screen.
+\item
+  The GUI should not hang (that is, be unresponsive to user interaction)
+  for more than one second after any user interaction.
+\item
+  Parsing user files (ant-brain, ant-world) should take no longer than 5
+  seconds.
+\item
+  The two-player game simulation should take no longer than 30 seconds
+  for 300,000 rounds, not including artificially introduced delays when
+  displaying the game to the user.
+\end{enumerate}
+
+\subparagraph{Security}\label{security}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  The software shall not require internet or network access to run, and
+  will have access to the full feature-set of the program offline
+  without use of any network connections.
+\item
+  The system shall not purposefully access or alter any existing user or
+  system files, with the exception of ant-brain and ant-world files
+  chosen with explicit permission from the user (via selection from a
+  file-chooser interface).
+\end{enumerate}
+
+\subparagraph{Portability}\label{portability}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  The software shall be cross-platform across commonly used personal
+  desktop operating systems (Windows 7+, Mac OS X 10.8.3+, Linux) that
+  support Java 8.0.
+\end{enumerate}
+
+\subparagraph{Resources}\label{resources}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  The system should not store more than 100MB of non-volatile data, not
+  including the user's ant-brain and ant-world files.
+\item
+  The software shall use no more than 100MB of RAM, with the exception
+  of a maximum of 400MB of RAM while executing/displaying a game.
+\end{enumerate}
+
+\subparagraph{Deployment}\label{deployment}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  A build of the program shall be delivered in executable JAR format, to
+  allow the user to run the program without accessing the command line
+  and without any other external configuration by the user.
+\end{enumerate}
+
+\subsubsection{Organisation}\label{organisation}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  All development and testing shall be undertaken in either the Netbeans
+  IDE or IntelliJ IDE.
+\item
+  Team communication relevant to the product-related aspects of the
+  project (planning, development, testing) shall be recorded for future
+  reference:
+
+  \begin{enumerate}
+  \def\labelenumii{\arabic{enumii}.}
+  \tightlist
+  \item
+    Facebook chat - message archive
+  \item
+    Slack chat - message archive
+  \item
+    In-person - meeting minutes
+  \end{enumerate}
+\item
+  JUnit 4.12 shall be used as the testing library across all development
+  and testing systems.
+\item
+  Gradle 2.5+ shall be used as the build automaton system across all
+  development and testing systems.
+\item
+  All project-related documents, source code, tests and builds shall be
+  kept on the team's GitHub repository, with new versions being
+  committed and pushed to the repository on a regular basis and as soon
+  as a major change/refactoring occurs.
+\item
+  The software's source code shall be documented extensively, defined as
+  follows:
+
+  \begin{enumerate}
+  \def\labelenumii{\arabic{enumii}.}
+  \tightlist
+  \item
+    The
+    \href{http://www.oracle.com/technetwork/java/javase/documentation/index-jsp-135444.html}{Javadoc
+    comment structure} shall be used to document every field, method and
+    class.
+  \item
+    The structure of Javadoc documentation shall follow the
+    \href{http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html}{Oracle
+    style guide}.
+  \item
+    Single-line comments shall be used inside methods to make the
+    purpose of lines/blocks of code clear, when deemed appropriate by
+    the coder(s).
+  \item
+    For fragments of incomplete code which are pushed to the project's
+    GitHub repository or left to complete later, a single line comment
+    starting with ``//TODO:'' shall be used to briefly describe the task
+    to complete.
+  \end{enumerate}
+\item
+  A copy of all project documents and source code shall be stored
+  independently on each team member's personal computer, regularly
+  pulled from the central team GitHub repository. In addition, an
+  up-to-date backup of the GitHub repository shall be kept in one or
+  more of the team's personal Dropbox repositories.
+\item
+  The Jacoco code coverage analysis tool shall be used by the
+  testing/validation team to ensure maximum code coverage. The final
+  submitted system shall have 100\% code coverage.
+\end{enumerate}
+
+\subsubsection{External}\label{external}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  The software shall be delivered by Thursday 5 May at 4:00PM, by online
+  submission to Study Direct.
+\item
+  All libraries and external material used in the project shall be
+  documented and credited to the original author(s), as per the
+  University of Sussex's
+  \href{http://www.sussex.ac.uk/s3/?id=35}{plagiarism} policies.
+\end{enumerate}
+
+\newpage
+\section{Domain Requirements}
+
+There are no additional domain requirements for this project. The application domain of the system is assumed to be extremely similar to the development and testing domain: as per the non-functional product requirements, this software is designed to run on personal operating systems compatible with Java 8.
+
+All current requirements have been classified as functional or non-functional.
+
+\end{document}
