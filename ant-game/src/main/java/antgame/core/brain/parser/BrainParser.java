@@ -90,7 +90,7 @@ public class BrainParser {
             line = line.substring(0, semicolonIndex);
 
         //split into tokens by whitespace
-        String[] tokens = line.split(" ");
+        String[] tokens = line.split("\\s");
 
         //as per requirements, instruction n is on line n, so line cannot be empty
         if (tokens.length < 1) {
