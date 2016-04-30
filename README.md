@@ -32,7 +32,7 @@ Software Engineering project.
   - [x] Ant-brain parser
   - [x] Ant-world parser
   - [ ] GUI
-  - [ ] Random-world generator
+  - [x] Random-world generator
   - [ ] Two-player game
   - [ ] Tournament
   - [ ] Custom ant-brain
