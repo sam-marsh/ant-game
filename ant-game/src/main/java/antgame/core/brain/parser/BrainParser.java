@@ -264,10 +264,27 @@ public class BrainParser {
         }
     }
 
+    /**
+     * Parses a brain from a file which contains an ant-brain specification.
+     *
+     * @param colony the colony to which this ant brain will belong
+     * @param file the file where the ant-brain is described
+     * @return an ant-brain representing the states described by the file
+     * @throws ParseException if the ant brain is malformed in the file
+     * @throws IOException if an error in reading the file is encountered
+     */
     public static Brain parse(Colony colony, File file) throws ParseException, IOException {
-        return new BrainParser(colony, Files.readAllLines(file.toPath())).parse();
+        return parse(colony, Files.readAllLines(file.toPath()));
     }
 
+    /**
+     * Parses a brain from a list of strings which represent an ant-brain specification.
+     *
+     * @param colony the colony to which this ant brain will belong
+     * @param lines the lines describing the ant brain
+     * @return an ant-brain representing the states described by the list of strings
+     * @throws ParseException if the ant-brain is malformed in the list of strings
+     */
     public static Brain parse(Colony colony, List<String> lines) throws ParseException {
         return new BrainParser(colony, lines).parse();
     }
