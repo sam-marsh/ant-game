@@ -50,3 +50,7 @@ The high-level design serves as a transition between the requirements and the fu
 - Drop: The ant drops food in the cell, the food contents of itself and the cell are updated. 
 - Mark: The cell has a new marker set. 
 - Unmark: An ant's marker is cleared in the sensed cell.
+
+##### Game Activity Diagram
+
+![Game Activity Diagram](Game Activity Diagram.png)
