@@ -8,29 +8,16 @@
 
 | Specification | Details |
 | -------- | --------- |
-| **Requirement**     | Parse an ant brain file. |
-| **Description** | Checks if a user's custom ant brain (expected to have been provided in a file on disk) is valid according to the ant brain specification. If so, constructs an in-memory programmatic representation of the brain. |
-| **Inputs** | A user-specified path to the ant-brain file.  |
-| **Source** | A file in-memory that has been read from disk. |
-| **Outputs** | A programmatic representation of the ant brain. |
-| **Destination** | The GUI event loop. |
-| **Actions** | Iterates through each line of the file, tokenising the line and validating each token. Builds a graph of ant-brain instructions which form a finite-state machine with transitions between instructions dependent on the conditions specified in the line. |
-| **Notes** | - |
-
-##### Game/2
-
-| Specification | Details |
-| -------- | --------- |
 | **Requirement**     | Simulate a two-player game. |
 | **Description** | Using two ant-brains and an ant-world, carry out a simulation of the game based on the ant finite-state machines and their environment. | 
 | **Inputs** | Two different colonies (consisting of a colour, a team name and an ant-brain) and an ant-world. |
 | **Source** | The GUI event loop. |
 | **Outputs** | The final result of the game (which team won/lost). The final state of the world. |
 | **Destination** | The GUI event loop. |
-| **Actions** | For each turn (maximum 300,000), the ants on each cell shall be iterated over. Each ant will perform an action based on their ant-brain (specified as a finite-state machine and graph based on requirement `Game/1`). The state of a cell (and possibly other ants) will be updated based on the action of the ant. |
+| **Actions** | For each turn (maximum 300,000), the ants on each cell shall be iterated over. Each ant will perform an action based on their ant-brain (specified as a finite-state machine and graph). The state of a cell (and possibly other ants) will be updated based on the action of the ant. The winner of the game is determined by the colony with the most food in their anthill (that is, the number of food particles in their anthill's cells). Food carried by ants is ignored in this score counting. |
 | **Notes** | - |
 
-##### Game/3
+##### Game/2
 
 | Specification | Details |
 | -------- | --------- |
@@ -43,7 +30,7 @@
 | **Actions** | Given the state of the game at a particular turn, all relevant statistics counters shall be updated. At the end of the game, the statistics shall be calculated and output. |
 | **Notes** | - |
 
-##### Game/4
+##### Game/3
 
 | Specification | Details |
 | -------- | --------- |
@@ -53,8 +40,30 @@
 | **Source** | The GUI. |
 | **Outputs** | The results of all matches, as well as the overall winner (the team with the highest number of wins). |
 | **Destination** | The GUI tournament statistics display screen. |
-| **Actions** | Iterates over all unique combinations `(team-1, team-2, world)` and simulates a game with that 3-tuple, with the first team playing as red and the second team playing as black. Keeps track of all wins, losses and statistics for each team. After all simulations, (which are *not* visualised to the user as per `Game/1.3` but rather the statistics are displayed) the overall winner is returned. |
-| **Notes** | Iterating over all unique 3-tuples as described above will mean that every team will play every other team on every world as both red and black. |
+| **Actions** | Iterates over all unique combinations `(team-1, team-2, world)` and simulates a game with that 3-tuple, with the first team playing as red and the second team playing as black. Keeps track of all wins, losses and statistics for each team. After all simulations, (which are *not* visualised to the user as per `Game/1.3` but rather the statistics are displayed) the overall winner is returned. The final results shall be calculated as follows: a team shall earn 2 points for a win, and 1 point for a draw. The score shall be tallied at the end, with the team having the highest score being the winner. If there is a draw, the tournament shall be repeated with the highest-scoring half of teams. |
+| **Notes** | Iterating over all unique 3-tuples as described above will mean that every team will play every other team on every world as both red and black. The number of worlds used for a tournament shall be specified by the user when interacting with the GUI tournament setup view. |
+
+##### Game/4
+
+| Specification | Details |
+| -------- | --------- |
+| **Requirement**     | Parse an ant brain file. |
+| **Description** | Checks if a user's custom ant brain (expected to have been provided in a file on disk) is valid according to the ant brain specification. If so, constructs an in-memory programmatic representation of the brain. |
+| **Inputs** | A user-specified path to the ant-brain file.  |
+| **Source** | A file in-memory that has been read from disk. |
+| **Outputs** | A programmatic representation of the ant brain. |
+| **Destination** | The GUI event loop. |
+| **Actions** | Iterates through each line of the file, tokenising the line and validating each token. Builds a graph of ant-brain instructions which form a finite-state machine with transitions between instructions dependent on the conditions specified in the line. |
+| **Notes** | The specification of an ant-brain file is further below: see `Parsing Specifications/Ant Brain`. |
+
+##### Miscellaneous
+
+| Identifier | Requirement | Rationale |
+| --- | --- | --- |
+| **Game/Misc.1** | At the start of a game, all ants shall face east. | User-requested. |
+| **Game/Misc.2** | Ant's brains shall be initialised to state 0. | User requested. |
+| **Game/Misc.3** | Each anthill cell shall be initially populated with a single ant of the anthill cell's colour. | User-requested. |
+| **Game/Misc.4** | Ants shall be allocated identifiers in increasing numerical order, in top-to-bottom left-to-right order based on their position in the ant world. | User-requested. |
 
 ### Ant
 
@@ -69,7 +78,7 @@
 | **Outputs** |  A boolean result that informs the game controller which state the ant-brain has transitioned to (either the success state or failure-state, as specified in the original ant-brain file). |
 | **Destination** | The game control loop. |
 | **Actions** | The ant's current instruction stores information about the direction to sense in and the condition to sense for. The direction is one of `here`, `ahead`, `left-ahead` or `right-ahead`. The ant queries the world to determine the cell in the relevant direction, and checks the condition on that cell. If the condition holds for that cell, it transitions to the `success` state. If not, it transitions to the `fail`-state. |
-| **Notes** | - |
+| **Notes** | The predicates available to an ant for sense operations are `friend` (whether the given cell contains an ant of the same team), `foe` (whether the given cell contains an ant of the opposing team), `friend_with_food` (as with `friend`, but also carrying food), `foe_with_food` (as with `foe`, but also carrying food), `rock` (whether the cell type is rocky), `marker n` (whether the cell is marked with a marker, represented by an integer `n`, of the same team), `foe_marker` (whether the cell has marked by a foe, with *any* integer marker identifier), `home` (whether the cell is part of the anthill of that ants team), and `foe_home` (whether the cell is part of the opponent's anthill). |
 
 ##### Ant/2
 
@@ -167,7 +176,7 @@
 | Identifier | Requirement | Rationale |
 | --- | --- | --- |
 | **Ant/Misc.1** | Each ant shall have an associated unique integer identifier. |  This identifier shall determine the order in which the ant moves as compared to other ants (with ants moving in ascending order of identifier). |
-| **Ant/Misc.2** | Each ant shall have an associated colour. | The colour shall identify the ant's team and also make it clear to the user in world visualisation. |
+| **Ant/Misc.2** | Each ant shall have an associated colour, either `red` or `black`. | The colour shall identify the ant's team and also make it clear to the user in world visualisation. |
 | **Ant/Misc.3** | Each ant shall use the finite-state machine representation of its brain to store its current state. | This state is queried by the game controller to decide how the ant interacts with the world. |
 | **Ant/Misc.4** | Each ant shall hold a `boolean` field that tracks whether the ant is holding food. | Accessible to the game controller since it performs different actions depending on whether an ant carries food or not. |
 | **Ant/Misc.5** | Each ant shall hold an `integer` field that tracks how many turns it is resting for. | When an ant rests, it is not allowed to move. This field shall be decremented by the game loop, and if `0` then the ant is able to move. |
@@ -188,6 +197,19 @@
 | **Destination** | The GUI event loop. |
 | **Actions** | Iterates through each line of the file, tokenising the line and validating each token. Intepreting each token as a cell and building a hexagonal programmatic structure containing cells with properties specified in the file. |
 | **Notes** | - |
+
+##### World/2
+
+| Specification | Details |
+| -------- | --------- |
+| **Requirement**     | Generate random contest worlds. |
+| **Description** | Creates random contest worlds that conform to the requirements for a tournament, as described in the *Actions* section below. |
+| **Inputs** | None. |
+| **Source** | The tournament setup, or alternatively the GUI. That is, this has two different operations - either the user requests a custom ant world (to write to file), or the contest world is randomly generated as a tournament is starting. |
+| **Outputs** | A programmatic representation of an ant world. |
+| **Destination** | The GUI event loop (or tournament setup). |
+| **Actions** | Pseudo-randomly generates an ant world of 150x150 cells. This ant world shall have rocky edge cells. It shall have two hexagonal ant hills of edge length 7, for red and black, randomly located. It shall have 14 randomly located rocks. It shall have 11 randomly located blobs of food, where a blob of food is a 5x5 rectangle. Each food blob shall be randomly oriented and each cell in the ant blob shall have 5 food particles. All separate components of the world (ant-hills, food-blobs, rocks) shall be separated by at least one clear cell. |
+| **Notes** | A component for converting a programmatic representation of an ant world to a textual representation should also be developed. |
 
 ##### Miscellaneous
 
@@ -222,3 +244,57 @@
 | **GUI/Misc.1** | The GUI shall display the entire world, including all world content. | Allows viewing of the entire state of the game in a user-friendly way. |
 | **GUI/Misc.2** | The game view interface shall scale proportionally to world dimensions `(x, y)`. | Scaling means the entire world state is always visible to users. |
 | **GUI/Misc.3** | There will be a user-customisable option to display the state of the game every `n` frames. | Makes the game play-speed personalisable to the user, to avoid simulation being too short or too long. |
+
+### Parsing Specifications
+
+#### Ant-Brain
+
+This is the specification for an ant-brain file. These are provided by the user, but development of the brain parser shall interpret the file contents as conforming to the following (taken directly from the client requirements):
+
+-  Each line in the file represents one state. The first line is state 0, the second line state 1, and so on.
+- The file may contain at most 10000 lines.
+- Each line shall consists of a sequence of whitespace-separated tokens, followed (optionally) by a comment beginning with a semicolon and extending to the end of the line.
+- Tokens are either keywords or integers.
+- Keywords are case-insensitive.
+- The possible instruction tokens are:
+   - `Sense`
+   - `Mark`
+   - `Unmark`
+   - `PickUp`
+   - `Drop`
+   - `Turn`
+   - `Move`
+   - `Flip`
+- The tokens for sensing directions are:
+   - `Here`
+   - `Ahead`
+   - `LeftAhead`
+   - `RightAhead`
+- The tokens for conditions are:
+   - `Friend`
+   - `Foe`
+   - `FriendWithFood`
+   - `FoeWithFood`
+   - `Food`
+   - `Rock`
+   - `Marker i`, where `i` is an integer from `0-5`
+   - `FoeMarker`
+   - `Home`
+   - `FoeHome`
+- The tokens for turn are:
+   - `Left`
+   - `Right`
+
+#### Ant World
+
+This is the specification for an ant-world file. These are both provided by the user and generated randomly, so development of the world parser and contest world generator shall conform to the following (taken directly from the client requirements):
+
+- The first line of the file contains a single integer representing the size of the world in the `x` dimension.
+- The second line of the file contains a single integer representing the size of the world in the `y` dimension.
+- The rest of the file consists of `y` lines, each containing `x` one-character cell specifiers, separated by spaces (even lines also contain a leading space before the first cell specifier). The top-left cell specifier corresponds to position `(0, 0)`. **Note**: although generated worlds shall conform to this specification, the parser shall ignore leading and extra whitespace. 
+- The cell specifiers are:
+   - `#`: rocky cell
+   - `.`: clear cell (containing nothing interesting)
+   - `+`: red anthill cell
+   - `-`: black anthill cell
+   - `1`-`9`: clear cell containing the given number of food particles

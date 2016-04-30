@@ -21,3 +21,4 @@
 - A cell can hold an unlimited amount of food during the course of the simulation.
 - In a tournament, each team will play every other team twice on each of the contest worlds. Once as red and once as black. So for 23 teams, each team will be pitted up against 22 other teams.
 - There must be at least one empty cell between adjacent non-food items.
+
