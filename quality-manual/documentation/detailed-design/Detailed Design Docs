@@ -7,5 +7,6 @@ with one another. This provides those who are coding a far simpler job, as the i
 so it is their jobs to only implement these ideas, and to put them into practice. 
 
 ##### Ant - state diagram
+![Diagram of Drop Function](Ant Drop - Sequence Diagram.png)  
 
-![drop-diagram](Ant Drop - Sequence Diagram.png)
+
