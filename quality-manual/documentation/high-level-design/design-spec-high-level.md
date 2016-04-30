@@ -12,6 +12,7 @@ The high-level design serves as a transition between the requirements and the fu
 
 ![state-diagram](ant-movement-state-diagram.png)
 
+
 ###### State
 
 - Sense: The ant locates a cell either in front (`Ahead`), to its left (`LeftAhead`) or its right (`RightAhead`) and updates its state.
@@ -34,4 +35,9 @@ The high-level design serves as a transition between the requirements and the fu
 - Food: The ant has located some food in the sensed cell.
 - Marker: The ant has located a marker in the sensed cell.
 - Anthill: The ant has located a cell which is part of its anthill after moving.
+
+##### Ant Functionality - state diagram
+
+![state-diagram](Ant Functionality State Diagram.png)
+
 
