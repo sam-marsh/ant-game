@@ -43,7 +43,7 @@ The project was started by the group on 18/02/2016. This means, assuming each ph
 
 ## Milestones
 
-From the above PERT chart, milestone goals are:
+From the above PERT chart, to finish the project on time the strict completion deadlines are:
 
 | Task                              | Date               |
 | ----------------------------------|--------------------|

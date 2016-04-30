@@ -15,33 +15,73 @@ import java.text.ParseException;
 public abstract class Instruction {
 
     //the instruction number
-    private int insn;
+    private final int insn;
+
+    //the instruction type
+    private final Type type;
+
+    //the state to move to on failure
+    protected Instruction success;
+
+    //the state to move to on success
+    protected Instruction failure;
 
     /**
      * Creates a new instruction with the given instruction number.
      *
      * @param insn the instruction identifier (line number)
+     * @param type the type of instruction
      */
-    public Instruction(int insn) {
+    public Instruction(int insn, Type type) {
         this.insn = insn;
+        this.type = type;
     }
 
     /**
      * @return the instruction identified for this instruction
      */
-    public int getInstruction() {
+    public int getID() {
         return insn;
+    }
+
+    /**
+     * @return the instruction type
+     */
+    public Type getType() {
+        return type;
     }
 
     /**
      * @return the next instruction for a particular ant to transition to if the instruction was successful
      */
-    public abstract Instruction success();
+    public final Instruction success() {
+        return success;
+    }
 
     /**
      * @return the next instruction for a particular ant to transition to if the instruction failed
      */
-    public abstract Instruction failure();
+    public final Instruction failure() {
+        return failure;
+    }
+
+    /**
+     * Sets the state to transition to on successful execution of this instruction.
+     *
+     * @param success the state to transition to
+     */
+    public void success(Instruction success) {
+        this.success = success;
+    }
+
+    /**
+     * Sets the state to transition to on failed execution of this instruction.
+     *
+     * @param failure the state to transition to
+     */
+    public void failure(Instruction failure) {
+        this.failure = failure;
+    }
 
     @Override
     public boolean equals(Object o) {

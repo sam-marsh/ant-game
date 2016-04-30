@@ -12,41 +12,22 @@ public class FlipInstruction extends Instruction {
     //the random number used will be in the range 0..n inclusive
     private final int n;
 
-    //the state to move to if rand(n) == 0
-    private final Instruction st1;
-
-    //the state to move to if rand(n) != 0
-    private final Instruction st2;
-
     /**
      * Creates a new flip instruction.
      *
      * @param insn the instruction identifier (line number)
      * @param n the random number used will be in the range 0..n
-     * @param st1 the state to transition to if the random number is 0
-     * @param st2 the state to transition to otherwise
      */
-    public FlipInstruction(int insn, int n, Instruction st1, Instruction st2) {
-        super(insn);
+    public FlipInstruction(int insn, int n) {
+        super(insn, Type.FLIP);
         this.n = n;
-        this.st1 = st1;
-        this.st2 = st2;
     }
 
     /**
-     * {@inheritDoc}
+     * @return the upper bound on the random number to be generated, non-inclusive
      */
-    @Override
-    public Instruction success() {
-        return st1;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Instruction failure() {
-        return st2;
+    public int getRange() {
+        return n;
     }
 
 }

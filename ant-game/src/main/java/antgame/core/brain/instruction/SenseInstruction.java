@@ -16,12 +16,6 @@ public class SenseInstruction extends Instruction {
     //the direction to sense in
     private final Direction direction;
 
-    //the state to transition to if the condition holds for the sensed cell
-    private final Instruction st1;
-
-    //the state to transition to if the condition does not hold for the sensed cell
-    private final Instruction st2;
-
     //the 'question' to ask the world about the cell
     private final Condition condition;
 
@@ -30,15 +24,11 @@ public class SenseInstruction extends Instruction {
      *
      * @param insn the instruction identifier (line number)
      * @param direction the direction in which to sense
-     * @param st1 the state to transition to if the condition holds for the sensed cell
-     * @param st2 the state to transition to if the condition does not hold for the sensed cell
      * @param condition the 'question' to ask the world about the cell
      */
-    public SenseInstruction(int insn, Direction direction, Instruction st1, Instruction st2, Condition condition) {
-        super(insn);
+    public SenseInstruction(int insn, Direction direction, Condition condition) {
+        super(insn, Type.SENSE);
         this.direction = direction;
-        this.st1 = st1;
-        this.st2 = st2;
         this.condition = condition;
     }
 
@@ -54,22 +44,6 @@ public class SenseInstruction extends Instruction {
      */
     public Condition getCondition() {
         return condition;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Instruction success() {
-        return st1;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Instruction failure() {
-        return st2;
     }
 
     /**

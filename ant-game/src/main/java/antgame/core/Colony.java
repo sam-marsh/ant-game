@@ -15,6 +15,7 @@ public class Colony {
      * Creates a new colony with the given colour.
      *
      * @param colour the colour of the ants
+     * @param brain the ant brain associated with this team
      */
     public Colony(Colour colour, Brain brain) {
         this.colour = colour;

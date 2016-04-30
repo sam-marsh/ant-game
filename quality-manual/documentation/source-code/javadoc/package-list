@@ -1,8 +1,8 @@
-antgame
 antgame.core
 antgame.core.brain
 antgame.core.brain.instruction
 antgame.core.brain.parser
 antgame.core.util
 antgame.core.world
+antgame.core.world.builder
 antgame.core.world.parser

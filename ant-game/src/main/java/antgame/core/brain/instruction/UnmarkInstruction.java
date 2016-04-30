@@ -1,5 +1,7 @@
 package antgame.core.brain.instruction;
 
+import antgame.core.world.Marker;
+
 /**
  * Represents an instruction to remove a marker from a cell.
  *
@@ -8,48 +10,24 @@ package antgame.core.brain.instruction;
 public class UnmarkInstruction extends Instruction {
 
     //the marker index, in the range 0..5
-    private final int marker;
-
-    //the instruction to transition to next
-    private final Instruction st;
+    private final Marker marker;
 
     /**
      * Creates a new unmark instruction.
      *
      * @param insn the instruction identifer (line number)
      * @param marker the marker to remove, in the range 0..5
-     * @param st the instruction to transition to after removing the marker
      */
-    public UnmarkInstruction(int insn, int marker, Instruction st) {
-        super(insn);
+    public UnmarkInstruction(int insn, Marker marker) {
+        super(insn, Type.UNMARK);
         this.marker = marker;
-        this.st = st;
-        if (marker < 0 || marker > 5) {
-            throw new IllegalArgumentException("invalid marker, not in range 0..5: " + marker);
-        }
     }
 
     /**
      * @return the marker index to remove
      */
-    public int getMarker() {
+    public Marker getMarker() {
         return marker;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Instruction success() {
-        return st;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Instruction failure() {
-        return st;
     }
 
 }
