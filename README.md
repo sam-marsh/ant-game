@@ -35,7 +35,7 @@ Software Engineering project.
   - [x] Random-world generator
   - [ ] Two-player game
   - [ ] Tournament
-  - [ ] Custom ant-brain
+  - [x] Custom ant-brain
 - [ ] Testing
   - [x] Specification
   - [ ] Tests
