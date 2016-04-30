@@ -51,7 +51,7 @@ public class Ant {
      */
     public Ant(Colony colony, World world, Cell cell) {
         this.colony = colony;
-        this.insn = colony.getBrain().getInstruction();
+        this.insn = colony.getBrain().getInstructionGraph();
         this.food = false;
         this.direction = DEFAULT_DIRECTION;
         this.rest = 0;

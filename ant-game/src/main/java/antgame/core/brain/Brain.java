@@ -13,7 +13,7 @@ public class Brain {
         this.instruction = initial;
     }
 
-    public Instruction getInstruction() {
+    public Instruction getInstructionGraph() {
         return instruction;
     }
 
