@@ -27,4 +27,5 @@ public class BrainParserTest {
         assertEquals(Instruction.Type.SENSE, first.getType());
     }
 
+
 }
