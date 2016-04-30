@@ -31,7 +31,7 @@ public class DropInstructionTest {
      * Tests all methods exposed by the {@link DropInstruction} class.
      *
      * @see DropInstruction#getType()
-     * @see DropInstruction#getInstruction()
+     * @see DropInstruction#getID()
      * @see DropInstruction#success()
      * @see DropInstruction#failure()
      */
@@ -39,7 +39,8 @@ public class DropInstructionTest {
     public void testDrop() {
         //drop instruction should be of type DROP
         assertEquals(Instruction.Type.DROP, drop.getType());
-        assertEquals(DROP_LINE_NUMBER, drop.getInstruction());
+        //check that the instruction ID is what we set it to be before
+        assertEquals(DROP_LINE_NUMBER, drop.getID());
         //both success and failure states should move to the single next state
         assertEquals(next, drop.success());
         assertEquals(next, drop.failure());

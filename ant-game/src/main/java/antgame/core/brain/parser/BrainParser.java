@@ -76,7 +76,7 @@ public class BrainParser {
         }
 
         //if we've already parsed the instruction, return it
-        Optional<Instruction> check = insns.parallelStream().filter(i -> i.getInstruction() == insn).findAny();
+        Optional<Instruction> check = insns.parallelStream().filter(i -> i.getID() == insn).findAny();
         if (check.isPresent()) {
             return check.get();
         }

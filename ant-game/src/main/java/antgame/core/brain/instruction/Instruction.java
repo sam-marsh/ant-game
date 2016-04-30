@@ -34,7 +34,7 @@ public abstract class Instruction {
     /**
      * @return the instruction identified for this instruction
      */
-    public int getInstruction() {
+    public int getID() {
         return insn;
     }
 
