@@ -56,11 +56,21 @@ It shall involve running the entire system, interacting through the GUI, and exa
 
 ##### Instruction Tests
 
-Description - We shall be testing the functionality of the Sense, Mark, Unmark, Drop, Pickup, Move, Flip and Turn Instructions followed by the Condition class which represents a type of Condition used by an Ant during sensing. In Addition to these tests the Flip Instruction will be tested to ensure the upper bound on the randon number generated is set correctly, The Turn instruction will be tested to check whether the getDirection() updates the direction acccordingly, and the Mark and Unmark instructions will be tested to ensure they place/remove markers appropriately. Finally the Sense instruction will be tested to check if the Condition and Direction to be sensed are set correctly. 
+Description - We shall be testing the functionality of the Sense, Mark, Unmark, Drop, Pickup, Move, Flip and Turn Instructions followed by the Condition class representing a type of Condition used by an Ant during Sense. The Condition will be tested by ensuring all conditions match their type and getMarker() on a non marker condition followed by a marker condition. Sense will be tested by ensuring whether the direction and condition of the sense are set correctly. The Mark and Unmark instruction's getMarker() will be tested to ensure the marker to place/remove is returned correctly. Flip will be tested to ensure the upper bound on the random number generator is set correctly. Drop, Pickup and Move will be tested to esure they have the correct ID and Instruction Type and transition to the next state appropriately on success and failure. 
+
 
 Overhead - JUnit tests for each class representing an instruction.
 
-Expected Results - A successful test is determined by whether an Instruction ID and type matches the tested instruction and whether it transitions to the next state on success and failure appropriately.In terms of the Condition, a test for getMarker() should only be successfull for a Marker condition and throw an exception for other conditions. In terms of the Flip Instruction getRange() should return the upper bound of the random number generated. The Turn Instruction should update direction upon turning in all possible directions, Placing a Marker using the Mark Instruction should create a Marker and Removing a Marker using Unmark should remove markers. Finally The Sense Instruction should set up a sensing condition and direction correctly.
+Expected Results - A successful test is determined by whether an instruction has the correct Instruction ID and that their type matches the tested instruction and whether it transitions to the next state on success and failure appropriately. In terms of the Condition, all conditions should match their type and getMarker() on a marker condition should return a marker and on a non marker condition should throw an exception. Sense should set the direction and condition of the instruction correctly. The Mark and Unmark instructions getMarker() method should return an instruction. The Flip Instructions's getRange() should return the upper bound on the random number geenrated. Finally Drop, Pickup and Move will be successfull if they have the correct ID and that their instruction type matches. 
+
+
+##### Adding Instructions to the Brain
+
+Description - Different Instructions shall be added to the Brain and getInstructionGraph() will be tested to ensure that the latest added Instruction is always returned.
+
+Overhead - JUnit Tests for Brain Class
+
+Expected Results - A successfull test is determined by whether the last added instruciton is returned by a call to getInstructionGraph() in the Brain class.
 
 
 
