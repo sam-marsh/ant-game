@@ -102,6 +102,28 @@ Overhead - JUnit Testing
 
 Expected Results - The world file should be parsed correctly according to the text file, it should have the correct number of Rocky and Clear cells and Anthills should be exactly as described in the file.
 
+Test Case Data - A text file representing the layout specification of the world
+
+
+#### Ant
+
+##### Ant Instruction Tests
+
+Description - The Ant's behaviour will be tested using the step() method to ensure it correctly performs the relevant action according to the next instruction in it's brain. Tests will be carried out on Sense, Move, Unmark, Mark, Flip, Turn and Pickup to see if they function correctly.
+
+Overhead - JUnit Testing
+
+Expected Result - The Ant performs the relevant instruction according to it's brain and performs it correctly.
+
+
+##### Ant Resting
+
+Description - The Ant's resting behaviour will be tested to ensure the Ant rests and wakes up correctly
+
+Overhead - JUnit Testing
+
+Expected Result - If the Ant is currently resting then it should not perform an action, If it has woken up then it should perform it's next instruction. The Ant should be able to sleep after 14 step() executions.
+
 
 
 
