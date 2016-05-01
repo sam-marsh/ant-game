@@ -56,73 +56,14 @@ It shall involve running the entire system, interacting through the GUI, and exa
 
 ##### Instruction Tests
 
-Description - We shall be testing the functionality of the Sense, Mark, Unmark, Drop, Pickup, Move, Flip and Turn Instructions.
+Description - We shall be testing the functionality of the Sense, Mark, Unmark, Drop, Pickup, Move, Flip and Turn Instructions followed by the Condition class which represents a type of Condition used by an Ant during sensing. In Addition to these tests the Flip Instruction will be tested to ensure the upper bound on the randon number generated is set correctly, The Turn instruction will be tested to check whether the getDirection() updates the direction acccordingly, and the Mark and Unmark instructions will be tested to ensure they place/remove markers appropriately. Finally the Sense instruction will be tested to check if the Condition and Direction to be sensed are set correctly. 
 
 Overhead - JUnit tests for each class representing an instruction.
 
-Expected Results - A successful test is determined by whether an Instruction ID, whether the instruction type matches the tested instruction and whether it transitions to the next state on success and failure appropriately.
+Expected Results - A successful test is determined by whether an Instruction ID and type matches the tested instruction and whether it transitions to the next state on success and failure appropriately.In terms of the Condition, a test for getMarker() should only be successfull for a Marker condition and throw an exception for other conditions. In terms of the Flip Instruction getRange() should return the upper bound of the random number generated. The Turn Instruction should update direction upon turning in all possible directions, Placing a Marker using the Mark Instruction should create a Marker and Removing a Marker using Unmark should remove markers. Finally The Sense Instruction should set up a sensing condition and direction correctly.
 
 
-##### Brain Parser Test
 
-Description - The Brain Parser will be tested to ensure it correctly parses a list of instructions from a text file represented by strings and returns a finite state machine acting as specified by the instructions.
-
-Overhead - JUnit Testing
-
-Expected Results - A successfull test is determined by whether the Brain Parser has successfully parsed each type of instruction according to the finite state machine representing a list of instructions contained within a text file.
-
-Test Case Data - A text file containing a list of instructions will be used to test if it has been parsed successfully.
-
-
-#### World
-
-##### World Builder Test
-
-Description - A World Builder will generate random worlds that are valid for tournaments i.e. ensures it correctly creates a valid context word by creating the correct number of rocky cells, anthills of an appropriate size, appropriate items of food, gets the adjacent position of a particular direction, places rocks/rectangles/hexagons correctly and undergoes validation checks such as checking if a set of cells representing an object is adjacent to nothing and whether a cell overlaps another cell. 
-
-Overhead - JUnit Testing
-
-Expected Results - A successfull test is determined by whether the World has successfully created a context world by validating the correct number of items and sizes of those items.
-
-
-##### World Test
-
-Description - A World must be able to check if a given cell satisfies a condition sensed by an Ant of a particular Colony and must be able to find the adjacent cell to a given cell. This will be tested by printing a world from the command line to validate World responses. 
-
-Overhead - JUnit Testing
-
-Expected Results - The world will respond correctly to the condition sensed by an Ant and responds correctly by finding the adjacent cell to a given cell. 
-
-
-##### World Parser Test
-
-Description - The World Parser will be tested to ensure it correctly parses a world from an ordered lists of lines contained in a text file.
-
-Overhead - JUnit Testing
-
-Expected Results - The world file should be parsed correctly according to the text file, it should have the correct number of Rocky and Clear cells and Anthills should be exactly as described in the file.
-
-Test Case Data - A text file representing the layout specification of the world
-
-
-#### Ant
-
-##### Ant Instruction Tests
-
-Description - The Ant's behaviour will be tested using the step() method to ensure it correctly performs the relevant action according to the next instruction in it's brain. Tests will be carried out on Sense, Move, Unmark, Mark, Flip, Turn and Pickup to see if they function correctly.
-
-Overhead - JUnit Testing
-
-Expected Result - The Ant performs the relevant instruction according to it's brain and performs it correctly.
-
-
-##### Ant Resting
-
-Description - The Ant's resting behaviour will be tested to ensure the Ant rests and wakes up correctly
-
-Overhead - JUnit Testing
-
-Expected Result - If the Ant is currently resting then it should not perform an action, If it has woken up then it should perform it's next instruction. The Ant should be able to sleep after 14 step() executions.
 
 
 
