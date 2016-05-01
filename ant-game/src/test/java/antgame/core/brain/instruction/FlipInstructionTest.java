@@ -41,13 +41,19 @@ public class FlipInstructionTest {
 
     }
 
+    /**
+     * Tests getting the range of the Flip Instruction by the {@link FlipInstruction} class
+     * @see FlipInstruction#getRange()
+     */
     @Test
     public void getRange() throws Exception {
 
+        // Test range of Flip Instruction is
+        assertEquals(5,flip.getRange());
     }
 
     /**
-     * Tests all methods exposed by the {@link FlipInstruction} class
+     * Tests below methods exposed by the {@link FlipInstruction} class
      * @see FlipInstruction#getType()
      * @see FlipInstruction#getID()
      * @see FlipInstruction#success()
