@@ -52,6 +52,48 @@ It shall involve running the entire system, interacting through the GUI, and exa
 
 ### Unit Tests
 
+#### Brain
+
+##### Instruction Tests
+
+Description - We shall be testing the functionality of the Sense, Mark, Unmark, Drop, Pickup, Move, Flip and Turn Instructions.
+
+Overhead - JUnit tests for each class representing an instruction.
+
+Expected Results - A successful test is determined by whether an Instruction ID, whether the instruction type matches the tested instruction and whether it transitions to the next state on success and failure appropriately.
+
+
+##### Brain Parser Test
+
+Description - The Brain Parser will be tested to ensure it correctly parses a list of instructions represented by strings and returns a finite state machine acting as specified by the instructions.
+
+Overhead - JUnit Testing
+
+Expected Results - A successfull test is determined by whether the Brain Parser has successfully parsed each type of instruction according to the finite state machine representing a list of instructions contained within a text file.
+
+Test Case Data - A text file containing a list of instructions will be used to test if it has been parsed successfully.
+
+
+#### World
+
+##### World Builder Test
+
+Description - A World will be built and tested to ensure it correctly creates a valid context world i.e. creating the correct number of rocky cells, anthills of an appropriate size, appropriate items of food, gets the adjacent position of a particular direction, places rocks/rectangles/hexagons correctly and undergoes validation checks such as checking if a set of cells representing an object is adjacent to nothing and whether a cell overlaps another cell. The World will also be able to check if if a given cell satisfies the condition sensed by an Ant of a particular Colony.
+
+Overhead - JUnit Testing
+
+Expected Results - A successfull test is determined by whether the World has successfully created a context world by validating the correct number of items and sizes of those items, it's able to respond to conditions sensed by Ants and is able to obtain positions.
+
+
+##### World Parser Test
+
+Description - 
+
+
+
+
+
+
 ### Release Tests
 
 
@@ -59,5 +101,11 @@ It shall involve running the entire system, interacting through the GUI, and exa
 ## Test Results
 
 ### Unit Tests
+
+#### Brain
+
+##### Instruction Tests
+
+
 
 ### Release Tests
