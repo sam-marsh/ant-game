@@ -65,7 +65,7 @@ Expected Results - A successful test is determined by whether an Instruction ID,
 
 ##### Brain Parser Test
 
-Description - The Brain Parser will be tested to ensure it correctly parses a list of instructions represented by strings and returns a finite state machine acting as specified by the instructions.
+Description - The Brain Parser will be tested to ensure it correctly parses a list of instructions from a text file represented by strings and returns a finite state machine acting as specified by the instructions.
 
 Overhead - JUnit Testing
 
@@ -78,16 +78,29 @@ Test Case Data - A text file containing a list of instructions will be used to t
 
 ##### World Builder Test
 
-Description - A World will be built and tested to ensure it correctly creates a valid context world i.e. creating the correct number of rocky cells, anthills of an appropriate size, appropriate items of food, gets the adjacent position of a particular direction, places rocks/rectangles/hexagons correctly and undergoes validation checks such as checking if a set of cells representing an object is adjacent to nothing and whether a cell overlaps another cell. The World will also be able to check if if a given cell satisfies the condition sensed by an Ant of a particular Colony.
+Description - A World Builder will generate random worlds that are valid for tournaments i.e. ensures it correctly creates a valid context word by creating the correct number of rocky cells, anthills of an appropriate size, appropriate items of food, gets the adjacent position of a particular direction, places rocks/rectangles/hexagons correctly and undergoes validation checks such as checking if a set of cells representing an object is adjacent to nothing and whether a cell overlaps another cell. 
 
 Overhead - JUnit Testing
 
-Expected Results - A successfull test is determined by whether the World has successfully created a context world by validating the correct number of items and sizes of those items, it's able to respond to conditions sensed by Ants and is able to obtain positions.
+Expected Results - A successfull test is determined by whether the World has successfully created a context world by validating the correct number of items and sizes of those items.
+
+
+##### World Test
+
+Description - A World must be able to check if a given cell satisfies a condition sensed by an Ant of a particular Colony and must be able to find the adjacent cell to a given cell. This will be tested by printing a world from the command line to validate World responses. 
+
+Overhead - JUnit Testing
+
+Expected Results - The world will respond correctly to the condition sensed by an Ant and responds correctly by finding the adjacent cell to a given cell. 
 
 
 ##### World Parser Test
 
-Description - 
+Description - The World Parser will be tested to ensure it correctly parses a world from an ordered lists of lines contained in a text file.
+
+Overhead - JUnit Testing
+
+Expected Results - The world file should be parsed correctly according to the text file, it should have the correct number of Rocky and Clear cells and Anthills should be exactly as described in the file.
 
 
 
@@ -101,11 +114,6 @@ Description -
 ## Test Results
 
 ### Unit Tests
-
-#### Brain
-
-##### Instruction Tests
-
 
 
 ### Release Tests
