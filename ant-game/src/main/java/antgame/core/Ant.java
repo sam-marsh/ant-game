@@ -24,6 +24,9 @@ public class Ant {
     //the ant's team
     private final Colony colony;
 
+    //the ant's identifier
+    private final int id;
+
     //the current brain state
     private Instruction insn;
 
@@ -43,13 +46,16 @@ public class Ant {
     private Cell cell;
 
     /**
-     * Creates a new ant belonging to the specified colony.
+     * Creates a new ant belonging to the specified colony. The ant places itself in the given cell,
+     * that is, no 'manual' adding of this ant instance to a cell is required.
      *
+     * @param id the ant's unique identifier
      * @param colony the colony to which the ant belongs
      * @param world the world in which this ant lives
      * @param cell the initial cell to place the ant in
      */
-    public Ant(Colony colony, World world, Cell cell) {
+    public Ant(int id, Colony colony, World world, Cell cell) {
+        this.id = id;
         this.colony = colony;
         this.insn = colony.getBrain().getInstructionGraph();
         this.food = false;
@@ -58,6 +64,13 @@ public class Ant {
         this.world = world;
         this.cell = cell;
         cell.setAnt(this);
+    }
+
+    /**
+     * @return the unique identifier of this ant
+     */
+    public int getID() {
+        return id;
     }
 
     /**

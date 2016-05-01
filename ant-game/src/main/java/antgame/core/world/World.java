@@ -1,8 +1,13 @@
 package antgame.core.world;
 
+import antgame.core.Ant;
 import antgame.core.Colony;
 import antgame.core.Direction;
 import antgame.core.brain.instruction.Condition;
+
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Represents a game world.
@@ -13,6 +18,9 @@ public class World {
 
     //the cells that the world contains
     private final Cell[][] cells;
+
+    //keep track of the ants
+    private final List<Ant> ants;
 
     private final int width;
     private final int height;
@@ -26,6 +34,7 @@ public class World {
         this.cells = cells;
         this.width = cells.length;
         this.height = cells[0].length;
+        this.ants = new LinkedList<>();
     }
 
     /**
@@ -96,6 +105,37 @@ public class World {
             default:
                 throw new AssertionError("internal error: unimplemented condition check");
         }
+    }
+
+    /**
+     * Spawns the ants of both colonies, with one ant being placed on each anthill cell of the associated team.
+     *
+     * @param red the red colony
+     * @param black the black colony
+     */
+    public void spawnAnts(Colony red, Colony black) {
+        if (red.getColour() != Colony.Colour.RED) throw new IllegalArgumentException("red colony not red");
+        if (black.getColour() != Colony.Colour.BLACK) throw new IllegalArgumentException("black colony not black");
+        if (!ants.isEmpty()) throw new IllegalStateException("ants already spawned");
+
+        int id = 0;
+        for (int y = 0; y < height; ++y) {
+            for (int x = 0; x < width; ++x) {
+                if (cells[x][y].getType() == Cell.Type.ANTHILL_RED) {
+                    ants.add(new Ant(id, red, this, cells[x][y]));
+                } else if (cells[x][y].getType() == Cell.Type.ANTHILL_BLACK) {
+                    ants.add(new Ant(id, black, this, cells[x][y]));
+                }
+            }
+        }
+
+    }
+
+    /**
+     * @return an (unmodifiable) view of the ants in the world in ascending order of id
+     */
+    public List<Ant> getAnts() {
+        return Collections.unmodifiableList(ants);
     }
 
     /**

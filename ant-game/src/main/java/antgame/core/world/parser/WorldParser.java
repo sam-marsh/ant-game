@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -53,7 +54,8 @@ public class WorldParser {
 
         Cell[][] cells = new Cell[sizex][sizey];
 
-        lines.remove(0); lines.remove(1);
+        //delete the first two lines which give the size of the world
+        lines.remove(0); lines.remove(0);
         int offset = 2;
 
         if (lines.size() != sizey) {
@@ -61,11 +63,11 @@ public class WorldParser {
         }
 
         for (int y = 0; y < sizey; ++y) {
-            String line = lines.get(y);
-            String[] tokens = line.split(" ");
+            String line = lines.get(y).trim();
+            String[] tokens = line.split("\\s");
 
             if (tokens.length != sizex) {
-                throw new ParseException("row too short", y + offset);
+                throw new ParseException("row too short: expected " + sizex + ", got " + tokens.length, y + offset);
             }
 
             for (int x = 0; x < tokens.length; ++x) {
@@ -110,7 +112,7 @@ public class WorldParser {
      * @throws IOException if an I/O exception occurred in reading the file contents
      */
     public static World parse(File file) throws ParseException, IOException {
-        return parse(Files.readAllLines(file.toPath()));
+        return parse(new ArrayList<>(Files.readAllLines(file.toPath())));
     }
 
 }
