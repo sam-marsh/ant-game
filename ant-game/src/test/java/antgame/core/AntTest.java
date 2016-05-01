@@ -1,6 +1,9 @@
 package antgame.core;
 
 import antgame.core.brain.Brain;
+import antgame.core.brain.instruction.Condition;
+import antgame.core.brain.instruction.Instruction;
+import antgame.core.brain.instruction.SenseInstruction;
 import antgame.core.brain.parser.BrainParser;
 import antgame.core.world.World;
 import antgame.core.world.parser.WorldParser;
@@ -10,6 +13,9 @@ import org.junit.Test;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.List;
+
+import static org.junit.Assert.*;
 
 /**
  * Tests the {@link Ant} class.
@@ -24,7 +30,7 @@ public class AntTest {
     //holds the red colony instance
     private Colony redColony;
 
-    //holds the brain of the black ant colony (resource /brain/ant-brain-2.txt)
+    //holds the brain of the black ant colony (resource /brain/ant-brain-1.txt) i.e. same brain
     private Brain blackBrain;
 
     //holds the black colony instance
@@ -51,7 +57,7 @@ public class AntTest {
         //parse the black brain
         blackBrain = BrainParser.parse(
                 Colony.Colour.BLACK,
-                new File(AntTest.class.getResource("/brain/ant-brain-2.txt").getFile())
+                new File(AntTest.class.getResource("/brain/ant-brain-1.txt").getFile())
         );
         blackColony = new Colony(Colony.Colour.BLACK, blackBrain);
 
@@ -65,7 +71,7 @@ public class AntTest {
     }
 
     @Test
-    public void testGetColony() {
+    public void testInitialState() {
 
     }
 
