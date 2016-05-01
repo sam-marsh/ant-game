@@ -17,9 +17,10 @@ public class Tournament {
     private ArrayList<Player> players;
     private ArrayList<World> worlds;
     
-    public Tournament(ArrayList<Player> players)
+    public Tournament(ArrayList<Player> players, ArrayList<World> worlds)
     {
         this.players = players;
+        this.worlds = worlds;
     }
     
     public Player runTournament()

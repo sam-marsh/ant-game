@@ -19,3 +19,4 @@ cache:
 env:
   global:
     - COVERALLS_REPO_TOKEN=zm9SVdMMz5DtmEBUIV6fNPaW3AG5WOoYu
+    - TERM=dumb
