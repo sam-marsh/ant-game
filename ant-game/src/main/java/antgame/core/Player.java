@@ -5,15 +5,22 @@
  */
 package antgame.core;
 
+import antgame.core.brain.Brain;
+import java.io.File;
+
 /**
  *
  * @author Regan
  */
 public class Player {
+    private final String name;
     private int wins;
+    private final File brainFile;
     
-    public Player()
+    public Player(String name, File brainFile)
     {
+        this.name = name;
+        this.brainFile = brainFile;
         wins = 0;
     }
     
