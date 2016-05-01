@@ -270,4 +270,11 @@ public class Ant {
         return food;
     }
 
+    /**
+     * @return where this ant is
+     */
+    public Cell getCell() {
+        return cell;
+    }
+
 }
