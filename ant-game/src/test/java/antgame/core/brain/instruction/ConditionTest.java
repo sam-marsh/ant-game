@@ -1,6 +1,7 @@
 package antgame.core.brain.instruction;
 
-import antgame.core.Direction;
+import antgame.core.Colony;
+import antgame.core.world.Marker;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,7 +32,7 @@ public class ConditionTest {
     public void setUp() throws Exception {
 
         // Tests Conditions
-        MarkerCondition = new Condition(Condition.Type.MARKER);
+        MarkerCondition = new Condition(new Marker(Colony.Colour.BLACK,3));
         FoodCondition = new Condition(Condition.Type.FOOD);
         FoeCondition = new Condition(Condition.Type.FOE);
         FoeHomeCondition = new Condition(Condition.Type.FOE_HOME);
@@ -49,11 +50,11 @@ public class ConditionTest {
     }
 
     /**
-     * Tests whether condition type is correct for all conditions
-     * @throws Exception
+     * Tests whether condition type is correct for all conditions in {@link Condition}
+     * @see Condition#getType()
      */
     @Test
-    public void getType() throws Exception {
+    public void getType() {
 
         // tests that the conditions are what we expected
         assertEquals(Condition.Type.MARKER,MarkerCondition.getType());
@@ -68,16 +69,30 @@ public class ConditionTest {
         assertEquals(Condition.Type.ROCK,RockCondition.getType());
     }
 
+
     /**
-     * Tests If the Marker is set properly
-     * Tests If Error is raised when obtaining a marker from a different condition
+     * Tests If Marker is set properly in Marker Condition {@link Condition}
+     * @see Condition#getMarker()
+     */
+
+    @Test
+    public void testGetMarker()
+    {
+        // Marker to test
+        Marker m = new Marker(Colony.Colour.BLACK,3);
+        assertEquals(m,MarkerCondition.getMarker());
+    }
+
+    /**
+     * Tests If Error is raised when obtaining a marker from a different condition in {@link Condition}
+     * @see Condition#getMarker()
      */
     @Test (expected = AssertionError.class)
-    public void getMarker() {
+    public void testGetMarkerError() {
 
-        assertNotNull(MarkerCondition.getMarker());
-        assertNull(FoodCondition.getMarker());
+        // Arbitrary Marker
+        Marker m = new Marker(Colony.Colour.RED,4);
 
-
+        assertEquals(m,FoodCondition.getMarker());
     }
 }
