@@ -26,4 +26,9 @@ public class Match {
     {
         return playerRed;
     }
+
+    public World world() {
+        return world;
+    }
+
 }

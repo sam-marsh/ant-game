@@ -293,4 +293,5 @@ public class Ant {
         return cell;
     }
 
+    public Instruction getState() { return insn; }
 }

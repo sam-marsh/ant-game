@@ -1,6 +1,7 @@
 package antgame.gui.screen;
 
 import antgame.core.Colony;
+import antgame.core.brain.Brain;
 import antgame.core.brain.parser.BrainParser;
 import antgame.gui.GUI;
 import antgame.gui.util.CentrePanel;
@@ -16,8 +17,14 @@ import java.text.ParseException;
  */
 public class MatchSetupView extends View {
 
+    private PlayerBuilder p1;
+    private PlayerBuilder p2;
+
     public MatchSetupView(GUI context) {
         super(context);
+
+        p1 = new PlayerBuilder();
+        p2 = new PlayerBuilder();
 
         setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
@@ -31,10 +38,10 @@ public class MatchSetupView extends View {
         constraints.weightx = 0.1;
         constraints.weighty = 0.1;
         constraints.fill = GridBagConstraints.BOTH;
-        add(new PlayerSetupPanel(), constraints);
+        add(new PlayerSetupPanel(p1), constraints);
 
         constraints.gridx = 1;
-        add(new PlayerSetupPanel(), constraints);
+        add(new PlayerSetupPanel(p2), constraints);
 
         constraints.gridx = 0;
         constraints.gridy = 2;
@@ -50,13 +57,26 @@ public class MatchSetupView extends View {
 
     private class PlayerSetupPanel extends JPanel {
 
-        private PlayerSetupPanel() {
+        private PlayerSetupPanel(PlayerBuilder pb) {
             setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
             setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
             add(Box.createVerticalGlue());
             add(new CentrePanel(new JLabel("player") {
                 {
                     setFont(GUI.TITLE_FONT);
+                }
+            }));
+            add(new CentrePanel(new JButton("set name") {
+                {
+                    addActionListener((e) -> {
+                        String result = JOptionPane.showInputDialog(
+                                context, "enter your name", "name",
+                                JOptionPane.QUESTION_MESSAGE
+                        );
+                        if (result != null) {
+                            pb.name = result;
+                        }
+                    });
                 }
             }));
             add(new CentrePanel(new JButton("upload your ant-brain") {
@@ -67,7 +87,7 @@ public class MatchSetupView extends View {
                         if (val == JFileChooser.APPROVE_OPTION) {
                             new Thread(() -> {
                                 try {
-                                    BrainParser.parse(chooser.getSelectedFile());
+                                    pb.brain = BrainParser.parse(chooser.getSelectedFile());
                                 } catch (ParseException pe) {
                                     SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(
                                             context,
@@ -114,6 +134,17 @@ public class MatchSetupView extends View {
                 }
             });
         }
+    }
+
+    private class PlayerBuilder {
+
+        private String name;
+        private Brain brain;
+
+        private boolean complete() {
+            return name != null && brain != null;
+        }
+
     }
 
 }

@@ -37,6 +37,18 @@ public class World {
         this.ants = new LinkedList<>();
     }
 
+    public int width() {
+        return width;
+    }
+
+    public int height() {
+        return height;
+    }
+
+    public Cell cell(int x, int y) {
+        return cells[x][y]; //todo check bounds
+    }
+
     /**
      * Finds the cell adjacent to a given cell, in a given direction.
      *
@@ -123,8 +135,10 @@ public class World {
             for (int x = 0; x < width; ++x) {
                 if (cells[x][y].getType() == Cell.Type.ANTHILL_RED) {
                     ants.add(new Ant(id, red, this, cells[x][y]));
+                    ++id;
                 } else if (cells[x][y].getType() == Cell.Type.ANTHILL_BLACK) {
                     ants.add(new Ant(id, black, this, cells[x][y]));
+                    ++id;
                 }
             }
         }
@@ -184,7 +198,7 @@ public class World {
     }
 
     private boolean even(int a) {
-        return a % 2 == 0;
+        return a % 2 == 1;
     }
 
 }

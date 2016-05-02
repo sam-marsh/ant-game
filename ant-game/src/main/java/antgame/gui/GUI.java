@@ -1,10 +1,16 @@
 package antgame.gui;
 
 import antgame.AntGame;
+import antgame.core.Match;
+import antgame.core.world.parser.WorldParser;
+import antgame.gui.screen.MatchView;
 import antgame.gui.screen.StartView;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.text.ParseException;
 
 /**
  * @author Sam Marsh
@@ -26,8 +32,13 @@ public class GUI extends JFrame {
         //set title
         setTitle(AntGame.APPLICATION_NAME);
 
-        StartView start = new StartView(this);
-        setContentPane(start);
+        try {
+            MatchView view = new MatchView(this, new Match(null, null, WorldParser.parse(
+                    new File("/Users/Sam/Projects/ant-game/ant-game/src/test/resources/world/ant-world-1.txt"))));
+            setContentPane(view);
+        } catch (ParseException | IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
