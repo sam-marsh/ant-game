@@ -74,7 +74,7 @@ public class Ant {
     }
 
     /**
-     * Checks if this ant is surrounded by four or more enemy ants.
+     * Checks if this ant is surrounded by five or more enemy ants.
      *
      * @return true if the ant is surrounded, otherwise false
      */
