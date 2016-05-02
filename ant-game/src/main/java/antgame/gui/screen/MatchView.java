@@ -23,7 +23,6 @@ import java.util.stream.Collectors;
  */
 public class MatchView extends View {
 
-    private static final Color COLOR_CLEAR_CELL = new Color(100, 57, 0, 60);
     private static final Color COLOR_ROCKY_CELL = new Color(100, 57, 0);
     private static final Color COLOR_RED_ANTHILL_CELL = new Color(195, 80, 63);
     private static final Color COLOR_BLACK_ANTHILL_CELL = new Color(88, 88, 88);
@@ -34,31 +33,34 @@ public class MatchView extends View {
         setLayout(new BorderLayout());
         try {
             match.world().spawnAnts(new Colony(Colony.Colour.RED, BrainParser.parse(
-                    new File("/Users/Sam/Projects/ant-game/ant-game/src/test/resources/brain/ant-brain-2.txt")
+                    new File("/Users/Sam/Projects/ant-game/ant-game/src/test/resources/brain/ant-brain-1.txt")
             )), new Colony(Colony.Colour.BLACK, BrainParser.parse(
                     new File("/Users/Sam/Projects/ant-game/ant-game/src/test/resources/brain/ant-brain-2.txt")
             )));
         } catch (ParseException | IOException e) {
             e.printStackTrace();
         }
-        add(new WorldPanel(match.world()), BorderLayout.CENTER);
+        setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        add(new WorldPanel(match), BorderLayout.CENTER);
     }
 
     private class WorldPanel extends JPanel {
 
+        private Match match;
         private World world;
         private TexturePaint texture;
 
-        private WorldPanel(World world) {
-            this.world = world;
+        private WorldPanel(Match match) {
+            this.world = match.world();
+            this.match = match;
             setBorder(BorderFactory.createCompoundBorder(
-                    BorderFactory.createEmptyBorder(5, 5, 5, 5),
-                    BorderFactory.createBevelBorder(BevelBorder.LOWERED)
+                    BorderFactory.createBevelBorder(BevelBorder.LOWERED),
+                    BorderFactory.createEmptyBorder(5, 5, 5, 5)
             ));
             try {
                 texture = new TexturePaint(
                         ImageIO.read(MatchView.class.getResource("/texture.jpg")),
-                        new Rectangle(0, 0, getWidth(), getHeight())
+                        new Rectangle(0, 0, 200, 200)
                 );
             } catch (IOException e) {
                 e.printStackTrace();
@@ -92,6 +94,8 @@ public class MatchView extends View {
             double panelWidth = getWidth();
             double panelHeight = getHeight();
             gfx.clearRect(0, 0, (int) panelWidth, (int) panelHeight);
+            gfx.setColor(Color.BLACK);
+            gfx.fillRect(0, 0, (int) panelWidth, (int) panelHeight);
 
             int worldWidth = world.width();
             int worldHeight = world.height();
@@ -104,17 +108,19 @@ public class MatchView extends View {
             int xOffset = (int) (Math.abs(panelWidth - (cellWidth * worldWidth)) / 2);
 
             gfx.setPaint(texture);
+            gfx.fillRect(
+                    xOffset + (int) cellWidth / 2, yOffset,
+                    (int) (cellWidth * worldWidth),
+                    (int) (cellHeight * worldHeight)
+            );
 
             for (int y = 0; y < worldHeight; ++y) {
                 double offset = xOffset + (y % 2 == 1 ? cellWidth : 0);
 
                 for (int x = 0; x < worldWidth; ++x) {
-                    Color cellColour;
+                    Color cellColour = null;
                     Cell cell = world.cell(x, y);
                     switch (cell.getType()) {
-                        case CLEAR:
-                            cellColour = COLOR_CLEAR_CELL;
-                            break;
                         case ROCK:
                             cellColour = COLOR_ROCKY_CELL;
                             break;
@@ -124,12 +130,12 @@ public class MatchView extends View {
                         case ANTHILL_RED:
                             cellColour = COLOR_RED_ANTHILL_CELL;
                             break;
-                        default:
-                            throw new AssertionError("unimplemented");
                     }
+
                     if (cell.hasFood()) {
-                        cellColour = COLOR_FOOD_CELL;
+                        cellColour = blend(cellColour, COLOR_FOOD_CELL, 0.5f);
                     }
+
                     if (cell.hasAnt()) {
                         if (cell.getAnt().getColony().getColour() == Colony.Colour.RED) {
                             cellColour = Color.RED;
@@ -137,9 +143,10 @@ public class MatchView extends View {
                             cellColour = Color.BLACK;
                         }
                     }
-                    if (cellColour == COLOR_CLEAR_CELL) {
+
+                    if (cellColour == null)
                         continue;
-                    }
+
                     gfx.setColor(cellColour);
 
                     gfx.fillOval(
@@ -158,6 +165,36 @@ public class MatchView extends View {
             }
         }
 
+    }
+
+    //http://stackoverflow.com/questions/19398238/how-to-mix-two-int-colors-correctly
+    private Color blend( Color c1, Color c2, float ratio ) {
+        if (c1 == null) return c2;
+        if (c2 == null) return c1;
+
+        if ( ratio > 1f ) ratio = 1f;
+        else if ( ratio < 0f ) ratio = 0f;
+        float iRatio = 1.0f - ratio;
+
+        int i1 = c1.getRGB();
+        int i2 = c2.getRGB();
+
+        int a1 = (i1 >> 24 & 0xff);
+        int r1 = ((i1 & 0xff0000) >> 16);
+        int g1 = ((i1 & 0xff00) >> 8);
+        int b1 = (i1 & 0xff);
+
+        int a2 = (i2 >> 24 & 0xff);
+        int r2 = ((i2 & 0xff0000) >> 16);
+        int g2 = ((i2 & 0xff00) >> 8);
+        int b2 = (i2 & 0xff);
+
+        int a = (int)((a1 * iRatio) + (a2 * ratio));
+        int r = (int)((r1 * iRatio) + (r2 * ratio));
+        int g = (int)((g1 * iRatio) + (g2 * ratio));
+        int b = (int)((b1 * iRatio) + (b2 * ratio));
+
+        return new Color( a << 24 | r << 16 | g << 8 | b );
     }
 
 }

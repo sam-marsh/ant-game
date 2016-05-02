@@ -164,39 +164,6 @@ public class World {
         ant.getCell().setFood(ant.getCell().getFoodAmount() + 3);
     }
 
-    /**
-     * Prints a world. Currently for debugging.
-     * TODO: maybe move this to a better location.
-     */
-    public void print() {
-        for (int y = 0; y < height; ++y) {
-            if (y % 2 == 1) System.out.print(' ');
-            for (int x = 0; x < width; ++x) {
-                Cell cell = cells[x][y];
-                switch (cell.getType()) {
-                    case CLEAR:
-                        if (cell.hasFood()) {
-                            System.out.print(cell.getFoodAmount());
-                        } else {
-                            System.out.print('.');
-                        }
-                        break;
-                    case ROCK:
-                        System.out.print('#');
-                        break;
-                    case ANTHILL_RED:
-                        System.out.print('+');
-                        break;
-                    case ANTHILL_BLACK:
-                        System.out.print('-');
-                        break;
-                }
-                System.out.print(' ');
-            }
-            System.out.println();
-        }
-    }
-
     private boolean even(int a) {
         return a % 2 == 1;
     }

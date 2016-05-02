@@ -446,4 +446,44 @@ public class WorldBuilder {
         return builder.build();
     }
 
+    /**
+     * Converts a programmatic representation of a world into a textual description.
+     *
+     * @param world the world to convert
+     * @return a list of strings describing the world
+     */
+    public static List<String> toText(World world) {
+        List<String> list = new LinkedList<>();
+        list.add(String.valueOf(world.width()));
+        list.add(String.valueOf(world.height()));
+        for (int y = 0; y < world.height(); ++y) {
+            StringBuilder line = new StringBuilder();
+            if (y % 2 == 1) line.append(' ');
+            for (int x = 0; x < world.width(); ++x) {
+                Cell cell = world.cell(x, y);
+                switch (cell.getType()) {
+                    case CLEAR:
+                        if (cell.hasFood()) {
+                            line.append(cell.getFoodAmount());
+                        } else {
+                            line.append('.');
+                        }
+                        break;
+                    case ROCK:
+                        line.append('#');
+                        break;
+                    case ANTHILL_RED:
+                        line.append('+');
+                        break;
+                    case ANTHILL_BLACK:
+                        line.append('-');
+                        break;
+                }
+                line.append(' ');
+            }
+            list.add(line.toString());
+        }
+        return list;
+    }
+
 }
