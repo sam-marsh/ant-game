@@ -19,7 +19,6 @@ public class BrainParserTest {
     @Test
     public void test() throws IOException, ParseException {
         Brain brain = BrainParser.parse(
-                Colony.Colour.RED,
                 new File(BrainParserTest.class.getResource("/brain/ant-brain-1.txt").getFile())
         );
 
