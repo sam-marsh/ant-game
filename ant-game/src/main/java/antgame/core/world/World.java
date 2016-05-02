@@ -89,7 +89,7 @@ public class World {
             case ROCK:
                 return cell.getType() == Cell.Type.ROCK;
             case MARKER:
-                return cell.marked(condition.getMarker());
+                return cell.marked(asking, condition.getMarker());
             case FOE_MARKER:
                 return cell.foeMarked(asking);
             case HOME:

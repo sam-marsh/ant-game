@@ -159,7 +159,7 @@ public class Ant {
      */
     private void mark() {
         MarkInstruction mark = (MarkInstruction) insn;
-        if (cell.mark(mark.getMarker())) {
+        if (cell.mark(colony, mark.getMarker())) {
             insn = insn.success();
         } else {
             insn = insn.failure();
@@ -248,7 +248,7 @@ public class Ant {
      */
     private void unmark() {
         UnmarkInstruction unmark = (UnmarkInstruction) insn;
-        if (cell.unmark(unmark.getMarker())) {
+        if (cell.unmark(colony, unmark.getMarker())) {
             insn = insn.success();
         } else {
             insn = insn.failure();

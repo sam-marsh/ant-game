@@ -36,8 +36,8 @@ public class MarkInstructionTest {
     @Before
     public void setUp() throws Exception {
 
-        m = new Marker(Colony.Colour.RED,5);
-        m2 = new Marker(Colony.Colour.BLACK,2);
+        m = new Marker(5);
+        m2 = new Marker(2);
 
         mark = new MarkInstruction(MARK_LINE_NUMBER,m);
 

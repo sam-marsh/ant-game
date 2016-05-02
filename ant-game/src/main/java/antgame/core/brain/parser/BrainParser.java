@@ -156,7 +156,7 @@ public class BrainParser {
             if (marker < 0 || marker > 5) {
                 throw new ParseException("marker must be in the range 0..5, was " + marker, insn);
             }
-            condition = new Condition(new Marker(colour, marker));
+            condition = new Condition(new Marker(marker));
         } else {
             if (tokens.length != 5) {
                 throw new ParseException("invalid syntax: incorrect number of arguments", insn);
@@ -186,7 +186,7 @@ public class BrainParser {
             throw new ParseException("marker must be in the range 0..5, was " + marker, insn);
         }
 
-        MarkInstruction ret = new MarkInstruction(insn, new Marker(colour, marker));
+        MarkInstruction ret = new MarkInstruction(insn, new Marker(marker));
         insns.add(ret);
 
         Instruction st = parseInstruction(parseInt(tokens[2], insn));
@@ -207,7 +207,7 @@ public class BrainParser {
             throw new ParseException("marker must be in the range 0..5, was " + marker, insn);
         }
 
-        UnmarkInstruction ret = new UnmarkInstruction(insn, new Marker(colour, marker));
+        UnmarkInstruction ret = new UnmarkInstruction(insn, new Marker(marker));
         insns.add(ret);
 
         Instruction st = parseInstruction(parseInt(tokens[2], insn));

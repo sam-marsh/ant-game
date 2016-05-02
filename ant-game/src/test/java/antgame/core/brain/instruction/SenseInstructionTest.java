@@ -35,7 +35,7 @@ public class SenseInstructionTest {
         // setup arbitrary  next instruction
         next = new DropInstruction(10);
 
-        MarkerCondition = new Condition(new Marker(Colony.Colour.BLACK,3));
+        MarkerCondition = new Condition(new Marker(3));
 
         sense = new SenseInstruction(SENSE_LINE_NUMBER, SenseInstruction.Direction.AHEAD,MarkerCondition);
         sense.success(next);

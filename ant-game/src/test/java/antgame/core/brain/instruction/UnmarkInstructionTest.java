@@ -34,8 +34,8 @@ public class UnmarkInstructionTest {
     @Before
     public void setUp() throws Exception {
 
-        m = new Marker(Colony.Colour.RED, 5);
-        m2 = new Marker(Colony.Colour.BLACK, 2);
+        m = new Marker(5);
+        m2 = new Marker(2);
 
         unmark = new UnmarkInstruction(UNMARK_LINE_NUMBER, m);
 

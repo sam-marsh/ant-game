@@ -17,7 +17,8 @@ public class Cell {
     private final Type type;
 
     //holds the chemical markers in the cell
-    private final Set<Marker> markers;
+    private final Set<Marker> redMarkers;
+    private final Set<Marker> blackMarkers;
 
     //holds the current ant - or null if none
     private Ant ant;
@@ -40,7 +41,8 @@ public class Cell {
      */
     public Cell(Type type, int x, int y) {
         this.type = type;
-        this.markers = new HashSet<>();
+        this.redMarkers = new HashSet<>();
+        this.blackMarkers = new HashSet<>();
         this.ant = null;
         this.food = 0;
         this.x = x;
@@ -53,8 +55,12 @@ public class Cell {
      * @param marker the marker to add
      * @return true if the cell did not already contain the marker
      */
-    public boolean mark(Marker marker) {
-        return markers.add(marker);
+    public boolean mark(Colony colony, Marker marker) {
+        if (colony.getColour() == Colony.Colour.RED) {
+            return redMarkers.add(marker);
+        } else {
+            return blackMarkers.add(marker);
+        }
     }
 
     /**
@@ -63,8 +69,12 @@ public class Cell {
      * @param marker the marker to remove
      * @return true if the cell contained the marker
      */
-    public boolean unmark(Marker marker) {
-        return markers.remove(marker);
+    public boolean unmark(Colony colony, Marker marker) {
+        if (colony.getColour() == Colony.Colour.RED) {
+            return redMarkers.remove(marker);
+        } else {
+            return blackMarkers.remove(marker);
+        }
     }
 
     /**
@@ -74,7 +84,11 @@ public class Cell {
      * @return true if marked by the enemy
      */
     public boolean foeMarked(Colony asking) {
-        return markers.parallelStream().anyMatch(m -> !m.getColour().equals(asking.getColour()));
+        if (asking.getColour() == Colony.Colour.RED) {
+            return !blackMarkers.isEmpty();
+        } else {
+            return redMarkers.isEmpty();
+        }
     }
 
     /**
@@ -83,8 +97,12 @@ public class Cell {
      * @param marker the marker to check for
      * @return true if the cell contains the marker
      */
-    public boolean marked(Marker marker) {
-        return markers.contains(marker);
+    public boolean marked(Colony colony, Marker marker) {
+        if (colony.getColour() == Colony.Colour.RED) {
+            return redMarkers.contains(marker);
+        } else {
+            return blackMarkers.contains(marker);
+        }
     }
 
     /**
