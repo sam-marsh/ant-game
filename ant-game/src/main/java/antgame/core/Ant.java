@@ -74,6 +74,22 @@ public class Ant {
     }
 
     /**
+     * Checks if this ant is surrounded by five or more enemy ants.
+     *
+     * @return true if the ant is surrounded, otherwise false
+     */
+    public boolean surrounded() {
+        int around = 0;
+        for (Direction direction : Direction.values()) {
+            Cell adjacent = world.adjacent(cell, direction);
+            if (adjacent.hasAnt() && !adjacent.getAnt().getColony().equals(colony)) {
+                ++around;
+            }
+        }
+        return around >= 5;
+    }
+
+    /**
      * Performs a game step, with this ant performing a particular
      * action based on the ant's brain state.
      */
@@ -268,6 +284,13 @@ public class Ant {
      */
     public boolean hasFood() {
         return food;
+    }
+
+    /**
+     * @return where this ant is
+     */
+    public Cell getCell() {
+        return cell;
     }
 
 }

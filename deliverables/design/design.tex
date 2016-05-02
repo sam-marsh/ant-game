@@ -43,7 +43,7 @@ would be an interaction between the Ant Game program and two other
 systems, as below:
 
 \begin{center}
-\includegraphics{diagrams/context-model.png}
+\includegraphics{high-level-diagrams/context-model.png}
 \end{center}
 
 However, as per the functional requirements document (\texttt{Game/4}
@@ -67,7 +67,7 @@ two users are following this process model at the same time, and
 interacting with the same instance of the program.
 
 \begin{center}
-\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{diagrams/process-model.png}
+\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{high-level-diagrams/process-model.png}
 \end{center}
 
 \subsubsection{Game Process}\label{game-process}
@@ -83,7 +83,7 @@ anthill is counted; the team with the most food at their brains anthill
 is declared the winner.
 
 \begin{center}
-\includegraphics[width=\textwidth]{diagrams/process-model-game.png}
+\includegraphics[width=\textwidth]{high-level-diagrams/process-model-game.png}
 \end{center}
 
 \subsection{Use Cases}\label{use-cases}
@@ -96,7 +96,7 @@ actors in the following use cases are the players of the game.
 \subsubsection{Upload Ant Brain}\label{upload-ant-brain}
 
 \begin{center}
-\includegraphics[width=0.4\textwidth]{diagrams/use-case-1-upload-ant-brain.png}
+\includegraphics[width=0.4\textwidth]{high-level-diagrams/use-case-1-upload-ant-brain.png}
 \end{center}
 
 \begin{longtable}[c]{@{}p{0.2\textwidth}p{0.7\textwidth}@{}}
@@ -125,7 +125,7 @@ relevant).\tabularnewline
 \subsubsection{Generate Random World}\label{generate-random-world}
 
 \begin{center}
-\includegraphics[width=0.4\textwidth]{diagrams/use-case-2-generate-random-world.png}
+\includegraphics[width=0.4\textwidth]{high-level-diagrams/use-case-2-generate-random-world.png}
 \end{center}
 
 \begin{longtable}[c]{@{}p{0.2\textwidth}p{0.7\textwidth}@{}}
@@ -153,7 +153,7 @@ on disk, and then writes to a text file at that location.\tabularnewline
 \subsubsection{Upload Ant World}\label{upload-ant-world}
 
 \begin{center}
-\includegraphics[width=0.4\textwidth]{diagrams/use-case-3-upload-ant-world.png}
+\includegraphics[width=0.4\textwidth]{high-level-diagrams/use-case-3-upload-ant-world.png}
 \end{center}
 
 \begin{longtable}[c]{@{}p{0.2\textwidth}p{0.7\textwidth}@{}}
@@ -183,7 +183,7 @@ for a contest world shall be checked (see requirement
 \subsubsection{Simulate Two Player Game}\label{simulate-two-player-game}
 
 \begin{center}
-\includegraphics[width=0.4\textwidth]{diagrams/use-case-4-two-player-game.png}
+\includegraphics[width=0.4\textwidth]{high-level-diagrams/use-case-4-two-player-game.png}
 \end{center}
 
 \begin{longtable}[c]{@{}p{0.2\textwidth}p{0.7\textwidth}@{}}
@@ -211,7 +211,7 @@ the players, as well as relevant game statistics.\tabularnewline
 \subsubsection{Tournament}\label{tournament}
 
 \begin{center}
-\includegraphics[width=0.4\textwidth]{diagrams/use-case-5-tournament.png}
+\includegraphics[width=0.4\textwidth]{high-level-diagrams/use-case-5-tournament.png}
 \end{center}
 
 \begin{longtable}[c]{@{}p{0.2\textwidth}p{0.7\textwidth}@{}}
@@ -242,10 +242,10 @@ game.\tabularnewline
 \subsection{System Components}\label{system-components}
 
 From the functional requirements, the process model and use cases, the
-main system components and their interactions have been modelled below.
+main system components and their interactions have been modelled below. Note also the multiplicity between the components.
 
 \begin{center}
-\includegraphics[width=\textwidth]{diagrams/system-components.png}
+\includegraphics[width=\textwidth]{high-level-diagrams/system-components.png}
 \end{center}
 
 The system components diagram is extremely useful in terms of developing
@@ -254,5 +254,111 @@ design section.
 
 \newpage
 \section{Low-Level}
+
+The low-level section of the design goes into further detail of how the system is to be implemented. The lower level design has been done is a slightly non-conventional order --- instead of beginning from the system component diagram to develop detailed class diagrams, the initial point of the low-level design has started from the use cases to construct detailed sequence diagrams. From the sequence diagrams, class diagrams have been constructed to validate the design.
+
+\subsection{Sequence Diagrams}
+
+The following sequence diagrams detail, in particular, the behaviour of an ant as it interacts with the world in a game simulation. A single `operation' is described in each sequence, and clearly exposes the relevant components and behaviours associated with the operation. 
+
+\subsubsection{Ant - Drop}
+
+This sequence diagram describes the actions of an ant when performing a \textit{drop} instruction.
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{low-level-diagrams/sequence/ant-drop.png}
+\end{center}
+
+\subsubsection{Ant - Flip}
+
+This sequence diagram describes the actions of an ant when performing a \textit{flip} instruction.
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{low-level-diagrams/sequence/ant-flip.png}
+\end{center}
+
+\subsubsection{Ant - Mark}
+
+This sequence diagram describes the actions of an ant when performing a \textit{mark} instruction.
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{low-level-diagrams/sequence/ant-mark.png}
+\end{center}
+
+\subsubsection{Ant - Move}
+
+This sequence diagram describes the actions of an ant when performing a \textit{move} instruction.
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{low-level-diagrams/sequence/ant-move.png}
+\end{center}
+
+\subsubsection{Ant - Pick-Up}
+
+This sequence diagram describes the actions of an ant when performing a \textit{pick-up} instruction.
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{low-level-diagrams/sequence/ant-pickup.png}
+\end{center}
+
+\subsubsection{Ant - Sense}
+
+This sequence diagram describes the actions of an ant when performing a \textit{sense} instruction.
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{low-level-diagrams/sequence/ant-sense.png}
+\end{center}
+
+\subsubsection{Ant - Turn}
+
+This sequence diagram describes the actions of an ant when performing a \textit{turn} instruction.
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{low-level-diagrams/sequence/ant-turn.png}
+\end{center}
+
+\subsubsection{Ant - Unmark}
+
+This sequence diagram describes the actions of an ant when performing an \textit{unmark} instruction.
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{low-level-diagrams/sequence/ant-unmark.png}
+\end{center}
+
+\subsubsection{World - Execute Instruction}
+
+This sequence diagram describes the actions of the world when interacting with the ant to execute an instruction.
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{low-level-diagrams/sequence/ant-unmark.png}
+\end{center}
+
+\subsection{Class Diagrams}
+
+The class diagrams in this section have omitted getters and setters for brevity.
+
+\subsubsection{Instructions}
+
+The following diagram abstracts the different type of \textit{instructions} that an ant brain can carry out. This component of the system follows a linked-list style paradigm - an \texttt{Instruction} has two self-referential attributes \texttt{success} and \texttt{failure}, which are the states that the ant brain will transition to depending on whether the ant's action was a success or a failure. Observe that the majority of classes below have little to no operations, only attributes --- this is because the majority of state changes will be handled by other components, whereas this component is primarily for holding data. All classes are immutable, apart from setting the transition instructions.
+ 
+\begin{center}
+\includegraphics[width=0.8\textwidth]{low-level-diagrams/class/instruction.png}
+\end{center}
+
+\subsubsection{Brain}
+
+Generating the above instruction data is done by the \textit{Brain Parser} component. As can be seen in the brain class diagram, a colony is composed of a colour and a brain - \textbf{note}: a colony of ants shares the same brain - an ant will, upon instantiation, get the start-instruction from the brain, and then keep track of its own state from then on. The brain parser exposes only one public method (to parse an ant brain file). The rest of the methods are to convert a string representation of the given type into the programmatic representation as per the instruction class diagram.
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{low-level-diagrams/class/brain.png}
+\end{center}
+
+\subsubsection{World}
+
+The next component of the system is the world-related content. The world parser reads a world specification from a file and produces a world instance. A world-generator instance can create a world instance via adding random contest-valid cells. A world is made up of an array of cells, which can have markers added and removed from them --- notice that a marker instance has an associated colony. In addition a cell can also hold an ant, which the world initialises via spawning the ants at the start of a game. 
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{low-level-diagrams/class/world.png}
+\end{center}
 
 \end{document}

@@ -139,6 +139,18 @@ public class World {
     }
 
     /**
+     * Kills an ant and removes it from the game, also dropping 3 food where it existed.
+     *
+     * @param ant the ant to kill
+     */
+    public void murder(Ant ant) {
+        //remove from the list
+        ants.remove(ant);
+        ant.getCell().removeAnt();
+        ant.getCell().setFood(ant.getCell().getFoodAmount() + 3);
+    }
+
+    /**
      * Prints a world. Currently for debugging.
      * TODO: maybe move this to a better location.
      */
