@@ -23,6 +23,7 @@ public class DropInstructionTest {
 
     @Before
     public void setUp() {
+
         next = new FlipInstruction(10, 10);
         drop = new DropInstruction(DROP_LINE_NUMBER);
         drop.success(next);

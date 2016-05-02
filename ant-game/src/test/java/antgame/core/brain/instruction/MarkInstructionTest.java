@@ -8,7 +8,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
+ * Tests the {@link MarkInstruction} class.
  * Created by Arsalan on 01/05/2016.
  */
 public class MarkInstructionTest {
@@ -26,6 +26,8 @@ public class MarkInstructionTest {
     // Marker 2 used for testing
     private Marker m2;
 
+
+    // Mark Instruction line number
     private static int MARK_LINE_NUMBER = 5;
 
 
@@ -37,21 +39,22 @@ public class MarkInstructionTest {
         m = new Marker(Colony.Colour.RED,5);
         m2 = new Marker(Colony.Colour.BLACK,2);
 
-
         mark = new MarkInstruction(MARK_LINE_NUMBER,m);
 
     }
 
 
     /**
-     * Tests if a Marker placed was the correct marker in {@link MarkInstruction}
+     * Tests if a Marker set was the correct marker in {@link MarkInstruction}
      * @see MarkInstruction#getMarker()
      */
     @Test
-    public void testGetMarker() {
+    public void testGetMarker() throws Exception {
 
+        // Mark instruction should return the marker set
         assertEquals(m,mark.getMarker());
 
+        // Mark Instruction should not return the 2nd marker
         assertNotEquals(m2,mark.getMarker());
     }
 
@@ -63,7 +66,7 @@ public class MarkInstructionTest {
      * @see Instruction#failure()
      */
     @Test
-    public void testMarkInstruction()
+    public void testMarkInstruction() throws Exception
     {
         //mark instruction should be of type MARK
         assertEquals(Instruction.Type.MARK, mark.getType());

@@ -31,7 +31,7 @@ public class ConditionTest {
     @Before
     public void setUp() throws Exception {
 
-        // Tests Conditions
+        // Set Up Test Conditions
         MarkerCondition = new Condition(new Marker(Colony.Colour.BLACK,3));
         FoodCondition = new Condition(Condition.Type.FOOD);
         FoeCondition = new Condition(Condition.Type.FOE);
@@ -80,6 +80,8 @@ public class ConditionTest {
     {
         // Marker to test
         Marker m = new Marker(Colony.Colour.BLACK,3);
+
+        // should equal the marker
         assertEquals(m,MarkerCondition.getMarker());
     }
 
@@ -93,6 +95,7 @@ public class ConditionTest {
         // Arbitrary Marker
         Marker m = new Marker(Colony.Colour.RED,4);
 
+        // Should throw an exception
         assertEquals(m,FoodCondition.getMarker());
     }
 }
