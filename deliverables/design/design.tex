@@ -335,7 +335,7 @@ This sequence diagram describes the actions of the world when interacting with t
 
 \subsection{Class Diagrams}
 
-The class diagrams in this section have omitted getters and setters for brevity.
+The class diagrams in this section have omitted getters and setters for brevity. After each diagram is a brief description of the purpose of each class involved.
 
 \subsubsection{Instructions}
 
@@ -345,6 +345,28 @@ The following diagram abstracts the different type of \textit{instructions} that
 \includegraphics[width=0.8\textwidth]{low-level-diagrams/class/instruction.png}
 \end{center}
 
+\begin{longtable}[c]{@{}p{0.2\textwidth}p{0.7\textwidth}@{}}
+\toprule
+& Ant Game: Instructions\tabularnewline
+\midrule
+
+\texttt{TurnDirection} & An \texttt{enum} that describes the directions available for an ant to turn in - \texttt{left} or \texttt{right} as per functional requirement \texttt{Ant/6}. \tabularnewline
+\texttt{TurnInstruction} & Represents an instruction that orders an ant to turn in a particular direction. The transition success state and fail state are both the same state. \tabularnewline
+\texttt{UnmarkInstruction} & Represents an instruction that orders an ant to unmark a cell that holds a marker (of the same colony) of a given integer identifier. The transition success state and fail state are both the same state. \tabularnewline
+\texttt{FlipInstruction} & Represents an instruction to generate a random number in the range \texttt{0..n}. \tabularnewline
+\texttt{SenseDirection} & An \texttt{enum} that describes the directions available for an ant to sense in - \texttt{left-ahead}, \texttt{ahead}, and \texttt{right-ahead}. \tabularnewline
+\texttt{Condition} & A class which represents a sense condition for an ant to validate on a cell. A condition has a type, and if it is a sense condition, also a marker identifier. \tabularnewline
+\texttt{ConditionType} & An \texttt{enum} that represents possible conditions for an ant to check on a cell - see requirement \texttt{Ant/1}. \tabularnewline
+\texttt{SenseInstruction} & A class which represents an order for an ant to check a condition on a cell in a specific direction. \tabularnewline
+\texttt{MarkInstruction} & A class which represents an order for an ant to mark a cell. \textbf{Note}: the design specification for the \texttt{marker} field has been slightly modified - instead of an integer, the \texttt{MarkInstruction} class will use an instance of a \texttt{Marker} class, which holds an integer marker and \textit{also} an associated colony colour (red or black). \tabularnewline
+\texttt{DropInstruction} & A class which represents an order for an ant to drop its food. The success and failure states for this class are the same state. \tabularnewline
+\texttt{PickUpInstruction} & A class which represents an order for an ant to pick up the food on its current cell. \tabularnewline
+\texttt{MoveInstruction} & A class which represents an order for an ant to step forward in its current direction. \tabularnewline
+\texttt{InstructionType} & An enumeration which holds all possible instruction types - e.g. \texttt{DropInstruction}. \tabularnewline
+\texttt{Instruction} & Finally, the abstract base class of all above instruction types --- this class stores information which is shared amongst its subclasses. Each instruction has an \texttt{index} (the line number, $0$-based), a type (holding the type of subclass), and two recursive instances of \texttt{Instruction} which hold the state to transition to if the ant's evaluation of this instruction is a success, and the state to transition to if the ant's evaluation of this instruction fails. For several subclasses, these are the same state. \tabularnewline
+\bottomrule
+\end{longtable}
+
 \subsubsection{Brain}
 
 Generating the above instruction data is done by the \textit{Brain Parser} component. As can be seen in the brain class diagram, a colony is composed of a colour and a brain - \textbf{note}: a colony of ants shares the same brain - an ant will, upon instantiation, get the start-instruction from the brain, and then keep track of its own state from then on. The brain parser exposes only one public method (to parse an ant brain file). The rest of the methods are to convert a string representation of the given type into the programmatic representation as per the instruction class diagram.
@@ -353,6 +375,19 @@ Generating the above instruction data is done by the \textit{Brain Parser} compo
 \includegraphics[width=0.8\textwidth]{low-level-diagrams/class/brain.png}
 \end{center}
 
+\begin{longtable}[c]{@{}p{0.2\textwidth}p{0.7\textwidth}@{}}
+\toprule
+& Ant Game: Brain\tabularnewline
+\midrule
+
+\texttt{Instruction} & This is a reference to the \texttt{Instruction} class in the previous diagram. \tabularnewline
+\texttt{BrainParser} & This class has the purpose operation of translating a string-based representation of a brain graph constructed from the subclasses of \texttt{Instruction}. The \texttt{parse\_from\_file(File)} method should also validate the syntax of the brain specification. The internal design of the class is \textit{deliberately left unspecified}: it is left up to the programmers - either by stepping through the file line by line and connecting up the graph afterwards, or recursively parsing instructions based on the transition states that each line references. \tabularnewline
+\texttt{Brain} & This class represents a unified brain of a colony. All ants share the same brain, but they do not share the same brain state - i.e. they keep track of the current state based on the return value of \texttt{Instruction\#success()}/\texttt{Instruction\#failure()}. \tabularnewline
+\texttt{Colony} & As mentioned directly above, ants of the same colony share the same brain. So an instance of the brain is contained in the colony representation. A colony also has an associated colour, as below. \tabularnewline
+\texttt{Colour} & Holds the possible colours of a colony - either red or black. \tabularnewline
+\bottomrule
+\end{longtable}
+
 \subsubsection{World}
 
 The next component of the system is the world-related content. The world parser reads a world specification from a file and produces a world instance. A world-generator instance can create a world instance via adding random contest-valid cells. A world is made up of an array of cells, which can have markers added and removed from them --- notice that a marker instance has an associated colony. In addition a cell can also hold an ant, which the world initialises via spawning the ants at the start of a game. 
@@ -360,5 +395,52 @@ The next component of the system is the world-related content. The world parser 
 \begin{center}
 \includegraphics[width=0.8\textwidth]{low-level-diagrams/class/world.png}
 \end{center}
+
+\begin{longtable}[c]{@{}p{0.2\textwidth}p{0.7\textwidth}@{}}
+\toprule
+& Ant Game: World \tabularnewline
+\midrule
+\texttt{WorldParser} & Has the purpose of reading a world specification from a file. \textbf{Note}: additional operation requirement --- this class needs to expose a method \texttt{validate\_for\_contest(World)} which checks that a given world conforms to the tournament world specifications. \tabularnewline
+\texttt{World} & Represents a game world and its associated state - that is, the world stores all cells and what they contain (food, markers, ants, rocks, \ldots) at any point. Exposes functionality to spawn and kill ants, check conditions on cells, find the adjacent hexagonal cell given a cell and direction. \tabularnewline
+\texttt{WorldGenerator} & Used for generating random game worlds which conform to the tournament world specifications. \tabularnewline
+\texttt{Cell} & The world is made up by a two-dimensional array of cells. Each cell contains information about what it holds - markers, ants, food particles. A cell instance exposes functionality for changing its state by adding and removing markers, ants, food. \tabularnewline
+\texttt{CellType} & An enumerated type which holds all the different possible cells as per requirements - rock, clear, red anthill, black anthill. \tabularnewline
+\texttt{Marker} & Notice that each marker holds not only the integer marker identifier, but also the associated colony - this is because cells store each colony's markers separately. \tabularnewline
+\texttt{Colony} & As per previous table. \tabularnewline
+\bottomrule
+\end{longtable}
+
+\subsubsection{Ant}
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{low-level-diagrams/class/ant.png}
+\end{center}
+
+\begin{longtable}[c]{@{}p{0.2\textwidth}p{0.7\textwidth}@{}}
+\toprule
+& Ant Game: Ant \tabularnewline
+\midrule
+\texttt{Ant} & This is where the main logic for changing the state of the game world happens. An ant stores its own state (meaning the next instruction to execute on the world, as well as the unique ant identifier, the colony of the ant, whether the ant is holding food, the current direction in which it is facing, how many turns it is resting for --- 0 if not resting). It also has access to its current cell and also the world. The ant exposes functionality to check if it is surrounded by 5 or more foe ants, to test whether it is currently resting. Most importantly, it exposes the \texttt{take\_turn()} method, which executes an instruction. This method delegates to the relevant private method based on the instruction type. Each of these methods use the local state of the world to change the world's state, as well as the ants own state. \tabularnewline
+\texttt{Direction} & This enumeration holds all possible hexagonal directions, as per the relevant section of the functional requirements. \tabularnewline
+\bottomrule
+\end{longtable}
+
+\subsubsection{Game}
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{low-level-diagrams/class/game.png}
+\end{center}
+
+\begin{longtable}[c]{@{}p{0.2\textwidth}p{0.7\textwidth}@{}}
+\toprule
+& Ant Game: Game \tabularnewline
+\midrule
+\texttt{Result} & A result is the outcome \textit{for a particular player} in a match. That is, for each result, there are three possible sets of two results: \{(player 1 win, player 2 loss), (player 2 win, player 1 loss), (player 1 draw, player 2 draw)\}. \tabularnewline
+\texttt{OutcomeType} & The possible outcomes for a player in a match - win, loss, draw. \tabularnewline
+\texttt{Match} & A match describes a pairing between two players on a world. One player is tied to the red colony of ants, and another player is tied to the black colony. The result of a match (\texttt{run\_match()}) is a set of two outcomes, one for each player. The job of the \texttt{run\_match()} method is to iterate 300,000 times over all the ants, making them take steps and then also conditions to see whether the ants die from being surrounded. The ant colony with the most food in the anthill is then declared the winner. \tabularnewline
+\texttt{Player} & A player essentially a programmatic model of an actual user. A user uploads an ant brain from the interface, and specifies a team name. They then can compete in either a tournament or a match. A player maintains a set of results, possibly from a single match or a tournament. \tabularnewline
+\texttt{Tournament} & A tournament can be treated as a collection of all possible matches as per functional requirements (see \texttt{Game/3}). The tournament simply creates matches between the players, and then executes them. Score counting is done as per requirement \texttt{Game/3}, and so is team elimination if drawing occurs. \tabularnewline
+\bottomrule
+\end{longtable}
 
 \end{document}

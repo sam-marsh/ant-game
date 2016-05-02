@@ -3,6 +3,8 @@ package antgame.core;
 import antgame.core.brain.Brain;
 
 /**
+ * Represents a colony of ants, with their associated colour and ant-brain.
+ *
  * @author Sam Marsh
  */
 public class Colony {
