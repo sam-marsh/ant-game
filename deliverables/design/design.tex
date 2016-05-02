@@ -335,7 +335,15 @@ This sequence diagram describes the actions of the world when interacting with t
 
 \subsection{Class Diagrams}
 
+The below diagram is an overview of the components which are described in much more detail in this section. Each of the components below is a `module of functionality'. The classes inside each module are highly related, whereas the interaction between the classes of separate modules have minimal coupling.
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{low-level-diagrams/class/components.png}
+\end{center}
+
 The class diagrams in this section have omitted getters and setters for brevity. After each diagram is a brief description of the purpose of each class involved.
+
+
 
 \subsubsection{Instructions}
 
@@ -437,10 +445,29 @@ The next component of the system is the world-related content. The world parser 
 \midrule
 \texttt{Result} & A result is the outcome \textit{for a particular player} in a match. That is, for each result, there are three possible sets of two results: \{(player 1 win, player 2 loss), (player 2 win, player 1 loss), (player 1 draw, player 2 draw)\}. \tabularnewline
 \texttt{OutcomeType} & The possible outcomes for a player in a match - win, loss, draw. \tabularnewline
-\texttt{Match} & A match describes a pairing between two players on a world. One player is tied to the red colony of ants, and another player is tied to the black colony. The result of a match (\texttt{run\_match()}) is a set of two outcomes, one for each player. The job of the \texttt{run\_match()} method is to iterate 300,000 times over all the ants, making them take steps and then also conditions to see whether the ants die from being surrounded. The ant colony with the most food in the anthill is then declared the winner. \tabularnewline
+\texttt{Match} & A match describes a pairing between two players on a world. One player is tied to the red colony of ants, and another player is tied to the black colony. The result of a match (\texttt{run\_match()}) is a set of two outcomes, one for each player. The job of the \texttt{run\_match()} method is to iterate 300,000 times over all the ants, making them take steps and then also checking to see whether the ants die from being surrounded. The ant colony with the most food in the anthill is then declared the winner. \tabularnewline
 \texttt{Player} & A player essentially a programmatic model of an actual user. A user uploads an ant brain from the interface, and specifies a team name. They then can compete in either a tournament or a match. A player maintains a set of results, possibly from a single match or a tournament. \tabularnewline
 \texttt{Tournament} & A tournament can be treated as a collection of all possible matches as per functional requirements (see \texttt{Game/3}). The tournament simply creates matches between the players, and then executes them. Score counting is done as per requirement \texttt{Game/3}, and so is team elimination if drawing occurs. \tabularnewline
 \bottomrule
 \end{longtable}
+
+\textbf{Note}: further to the above, an additional integration of the game with the world must be added to the current design. As per requirement \texttt{Game/2}, statistics must be produced for a game. This involves:
+\begin{itemize}
+\item integrating statistics tracking into the \texttt{Match\#run\_match()} method --- by examining the state changes occurring to the world after each match iteration, increment relevant local variables to track the statistics specified in \texttt{Game/2}.
+\item the tournament statistics should track the \textit{total} statistics over all games.
+\item these statistics should be accessible (by return value) to the interface. 
+\end{itemize}
+
+
+\subsubsection{Interface}
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{low-level-diagrams/class/gui.png}
+\end{center}
+
+\textbf{Start Screen}: the start screen is where the program initialises.
+
+
+
 
 \end{document}
