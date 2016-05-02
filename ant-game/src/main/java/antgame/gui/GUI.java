@@ -7,15 +7,22 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
+ * The program's GUI.
+ *
  * @author Sam Marsh
  */
 public class GUI extends JFrame {
 
-    public static final Font TITLE_FONT = new Font("Courier New", Font.BOLD, 20);
+    //the font to use for all titles
+    public static final Font TITLE_FONT = new Font("Arial", Font.BOLD, 20);
 
+    //the default width and height
     private static final int GUI_WIDTH = 800;
     private static final int GUI_HEIGHT = 600;
 
+    /**
+     * Initialises the GUI, adds all components.
+     */
     public GUI() {
         //set initial size
         setSize(GUI_WIDTH, GUI_HEIGHT);
@@ -26,8 +33,8 @@ public class GUI extends JFrame {
         //set title
         setTitle(AntGame.APPLICATION_NAME);
 
-        StartView start = new StartView(this);
-        setContentPane(start);
+        //add the content
+        setContentPane(new StartView(this));
     }
 
 }

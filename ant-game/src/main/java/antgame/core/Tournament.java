@@ -31,7 +31,9 @@ public class Tournament {
             {
                 for (Player playerj : players)
                 {
-                    runMatch((new Match(playeri, playerj, world))).incrementWins();
+                    MatchOutcome outcome = runMatch(new Match(playeri, playerj, world), 1000);
+                    playeri.addPoints(outcome.getRedPlayerOutcome().getResult().getPoints());
+                    playerj.addPoints(outcome.getBlackPlayerOutcome().getResult().getPoints());
                 }
             }
         }
@@ -39,9 +41,9 @@ public class Tournament {
         return null;
     }
     
-    private Player runMatch(Match match)
+    private MatchOutcome runMatch(Match match, int speed)
     {
-        return match.run();
+        return match.run(300000, speed);
     }
     
 }

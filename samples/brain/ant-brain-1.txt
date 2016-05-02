@@ -1,29 +1,31 @@
-Sense Here 1 8 FriendWithFood        ; state 0  - check if i have food, move to 1 if true and 2 if false
+Sense Here 1 8 FriendWithFood        ; state 0  - check if i have food, move to 1 if true and 8 if false
 Sense Here 2 3 Home                  ; state 1  - check if on anthill, with food
 Drop 0                               ; state 2  - drop the food and move back to initial state
-Sense LeftAhead 4 5 Marker 0         ; state 3  - check if 'follow this back' marker is to the left of me
-Turn Left 0                          ; state 4  - turn and move back to initial state
-Sense Ahead 6 7 Marker 0             ; state 5  - check if 'follow this back' marker is ahead of me
-Move 0 0                             ; state 6  - step in the marker's direction
-Turn Right 0                         ; state 7  - turn and move back to initial state
+Sense Ahead 4 5 Marker 0             ; state 3  - check if 'follow this back' marker is ahead of me
+Move 0 0                             ; state 4  - move and switch back to initial state
+Flip 1 6 7                           ; state 5  - padding - oops
+Turn Left 0                          ; state 6  - step in the marker's direction
+Turn Left 0                          ; state 7  - turn and move back to initial state
 Sense Here 9 10 Food                 ; state 8  - check if food on current cell
 PickUp 0 0                           ; state 9  - pick up food and return to initial state
-Sense Ahead 11 12 Food               ; state 10 - see if food is in ahead cell
-Move 0 0                             ; state 11 - move onto food
-Sense LeftAhead 13 14 Food           ; state 12 - see if food is in left-ahead cell
-Turn Left 0                          ; state 13 - turn towards food
-Sense RightAhead 15 16 Food          ; state 14 - see if food is in right-ahead cell
-Turn Right 0                         ; state 15 - turn towards food
-Flip 2 17 20                         ; state 16 - flip a coin
-Sense LeftAhead 18 19 Rock           ; state 17 - check for rock on left
-Turn Right 0                         ; state 18 - turn right if close to rock
-Turn Left 0                          ; state 19 - all clear, turn left
-Flip 2 21 24                         ; state 20 - flip a coin
-Sense RightAhead 22 23 Rock          ; state 21 - check for rock on right
-Turn Left 0                          ; state 22 - avoid rock
-Turn Right 0                         ; state 23 - all clear, turn right
-Sense Ahead 25 28 Rock               ; state 24 - check for rock ahead
-Flip 2 26 27                         ; state 25 - flip a coin
-Turn Left 0                          ; state 26 - turn left to avoid rock
-Turn Right 0                         ; state 27 - turn right to avoid rock
-Move 0 0                             ; state 28 - step forward
+Sense Ahead 11 13 Food               ; state 10 - see if food is in ahead cell
+Mark 0 12                            ; state 11
+Move 0 0                             ; state 12 - move onto food
+Sense LeftAhead 14 15 Food           ; state 13 - see if food is in left-ahead cell
+Turn Left 0                          ; state 14 - turn towards food
+Sense RightAhead 16 17 Food          ; state 15 - see if food is in right-ahead cell
+Turn Right 0                         ; state 16 - turn towards food
+Flip 2 18 21                         ; state 17 - flip a coin
+Sense LeftAhead 19 20 Rock           ; state 18 - check for rock on left
+Turn Right 0                         ; state 19 - turn right if close to rock
+Turn Left 0                          ; state 20 - all clear, turn left
+Flip 2 22 25                         ; state 21 - flip a coin
+Sense RightAhead 23 24 Rock          ; state 22 - check for rock on right
+Turn Left 0                          ; state 23 - avoid rock
+Turn Right 0                         ; state 24 - all clear, turn right
+Sense Ahead 26 29 Rock               ; state 25 - check for rock ahead
+Flip 2 27 28                         ; state 26 - flip a coin
+Turn Left 0                          ; state 27 - turn left to avoid rock
+Turn Right 0                         ; state 28 - turn right to avoid rock
+Mark 0 30                            ; state 29
+Move 0 0                             ; state 30 - step forward

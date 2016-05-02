@@ -6,7 +6,10 @@
 package antgame.core;
 
 import antgame.core.brain.Brain;
+import antgame.core.brain.parser.BrainParser;
 import java.io.File;
+import java.io.IOException;
+import java.text.ParseException;
 
 /**
  *
@@ -15,17 +18,23 @@ import java.io.File;
 public class Player {
     private final String name;
     private int wins;
-    private final File brainFile;
+    private final Brain  brain;
     
-    public Player(String name, File brainFile)
+    public Player(String name, Brain brain)
     {
         this.name = name;
-        this.brainFile = brainFile;
         wins = 0;
+        this.brain = brain;
     }
     
-    public void incrementWins()
+    public void addPoints(int points)
     {
-        wins++;
+        wins += points;
     }
+    
+    public Brain getBrain()
+    {
+        return brain; 
+    } 
+
 }

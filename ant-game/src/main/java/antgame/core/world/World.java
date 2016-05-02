@@ -36,6 +36,18 @@ public class World {
         this.ants = new LinkedList<>();
     }
 
+    public int width() {
+        return width;
+    }
+
+    public int height() {
+        return height;
+    }
+
+    public Cell cell(int x, int y) {
+        return cells[x][y]; //todo check bounds
+    }
+
     /**
      * Finds the cell adjacent to a given cell, in a given direction.
      *
@@ -122,8 +134,10 @@ public class World {
             for (int x = 0; x < width; ++x) {
                 if (cells[x][y].getType() == Cell.Type.ANTHILL_RED) {
                     ants.add(new Ant(id, red, this, cells[x][y]));
+                    ++id;
                 } else if (cells[x][y].getType() == Cell.Type.ANTHILL_BLACK) {
                     ants.add(new Ant(id, black, this, cells[x][y]));
+                    ++id;
                 }
             }
         }
@@ -149,41 +163,8 @@ public class World {
         ant.getCell().setFood(ant.getCell().getFoodAmount() + 3);
     }
 
-    /**
-     * Prints a world. Currently for debugging.
-     * TODO: maybe move this to a better location.
-     */
-    public void print() {
-        for (int y = 0; y < height; ++y) {
-            if (y % 2 == 1) System.out.print(' ');
-            for (int x = 0; x < width; ++x) {
-                Cell cell = cells[x][y];
-                switch (cell.getType()) {
-                    case CLEAR:
-                        if (cell.hasFood()) {
-                            System.out.print(cell.getFoodAmount());
-                        } else {
-                            System.out.print('.');
-                        }
-                        break;
-                    case ROCK:
-                        System.out.print('#');
-                        break;
-                    case ANTHILL_RED:
-                        System.out.print('+');
-                        break;
-                    case ANTHILL_BLACK:
-                        System.out.print('-');
-                        break;
-                }
-                System.out.print(' ');
-            }
-            System.out.println();
-        }
-    }
-
     private boolean even(int a) {
-        return a % 2 == 0;
+        return a % 2 == 1;
     }
 
     /**
