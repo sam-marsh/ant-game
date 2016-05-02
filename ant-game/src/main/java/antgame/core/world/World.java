@@ -5,7 +5,6 @@ import antgame.core.Colony;
 import antgame.core.Direction;
 import antgame.core.brain.instruction.Condition;
 
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -132,10 +131,10 @@ public class World {
     }
 
     /**
-     * @return an (unmodifiable) view of the ants in the world in ascending order of id
+     * @return list of Ants in the world
      */
-    public List<Ant> getAnts() {
-        return Collections.unmodifiableList(ants);
+    List<Ant> getAnts() {
+        return ants;
     }
 
     /**
@@ -185,6 +184,16 @@ public class World {
 
     private boolean even(int a) {
         return a % 2 == 0;
+    }
+
+    /**
+     * Returns The Cells in a World
+     * Used for Testing Purposes - To Test Cell Contents
+     * @return cells in the world
+     */
+    Cell[][] getCells()
+    {
+        return cells;
     }
 
 }

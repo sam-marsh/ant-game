@@ -42,7 +42,9 @@ public class BrainParserTest {
     @Test (expected = ParseException.class)
     public void testInvalid() throws IOException, ParseException {
 
-        Brain brain = BrainParser.parse(Colony.Colour.RED, new File(BrainParserTest.class.getResource("/brain/invalid.txt").getFile()));
+        Brain brain = BrainParser.parse(
+                new File(BrainParserTest.class.getResource("/brain/invalid.txt").getFile())
+        );
     }
 
 
@@ -52,7 +54,9 @@ public class BrainParserTest {
     @Test (expected = ParseException.class)
     public void testLarge() throws IOException, ParseException  {
 
-        Brain brain = BrainParser.parse(Colony.Colour.RED, new File(BrainParserTest.class.getResource("/brain/ant-brain-too-large.txt").getFile()));
+        Brain brain = BrainParser.parse(
+                new File(BrainParserTest.class.getResource("/brain/ant-brain-too-large.txt").getFile())
+        );
     }
 
 
@@ -63,7 +67,9 @@ public class BrainParserTest {
     @Test (expected = ParseException.class)
     public void testEmptyFile() throws IOException, ParseException {
 
-        Brain brain = BrainParser.parse(Colony.Colour.RED, new File(BrainParserTest.class.getResource("/brain/empty.txt").getFile()));
+        Brain brain = BrainParser.parse(
+                new File(BrainParserTest.class.getResource("/brain/empty.txt").getFile())
+        );
 
     }
 
@@ -73,8 +79,9 @@ public class BrainParserTest {
     @Test (expected = ParseException.class)
     public void testLength() throws IOException, ParseException  {
 
-        Brain brain = BrainParser.parse(Colony.Colour.RED, new File(BrainParserTest.class.getResource("/brain/ant-brain-invalid-sense-instruction.txt").getFile()));
-
+        Brain brain = BrainParser.parse(
+                new File(BrainParserTest.class.getResource("/brain/ant-brain-invalid-sense-instruction.txt").getFile())
+        );
 
     }
 
@@ -84,9 +91,9 @@ public class BrainParserTest {
     @Test (expected = ParseException.class)
     public void testOutofRange() throws IOException, ParseException {
 
-        Brain brain = BrainParser.parse(Colony.Colour.RED, new File(BrainParserTest.class.getResource("/brain/ant-brain-mark-out-range.txt").getFile()));
+        Brain brain = BrainParser.parse(
+                new File(BrainParserTest.class.getResource("/brain/ant-brain-mark-out-range.txt").getFile())
+        );
     }
-
-
 
 }

@@ -1,5 +1,6 @@
 package antgame.core.world;
 
+import antgame.core.Ant;
 import antgame.core.AntTest;
 import antgame.core.Colony;
 import antgame.core.Direction;
@@ -26,8 +27,7 @@ public class WorldTest {
     // Cells to Test World With
     private Cell rocky;
     private Cell clear;
-    private Cell anthill_red;
-    private Cell anthill_black;
+
 
     // Ant Colonies To Test World With
     private Colony redColony;
@@ -37,32 +37,59 @@ public class WorldTest {
     private Brain redBrain;
     private Brain blackBrain;
 
+    // Conditions
+    private Condition MarkerCondition;
+    private Condition FoodCondition;
+    private Condition FoeCondition;
+    private Condition FoeHomeCondition;
+    private Condition FoeMarkerCondition;
+    private Condition FoeFoodCondition;
+    private Condition FriendCondition;
+    private Condition FriendFoodCondition;
+    private Condition HomeCondition;
+    private Condition RockCondition;
+
+
+
+
+
 
     @Before
     public void setUp() throws Exception {
 
-        world = WorldParser.parse(new File(AntTest.class.getResource("/world/ant-world-1.txt").getFile()));
-
         clear = new Cell(Cell.Type.CLEAR,1,4);
         rocky = new Cell(Cell.Type.ROCK,0,3);
 
+
         //parse the red brain
         redBrain = BrainParser.parse(
-                Colony.Colour.RED,
                 new File(AntTest.class.getResource("/brain/ant-brain-1.txt").getFile())
         );
         redColony = new Colony(Colony.Colour.RED, redBrain);
 
         //parse the black brain
         blackBrain = BrainParser.parse(
-                Colony.Colour.BLACK,
                 new File(AntTest.class.getResource("/brain/ant-brain-1.txt").getFile())
         );
         blackColony = new Colony(Colony.Colour.BLACK, blackBrain);
 
+        //create the world
+        world = WorldParser.parse(
+                new File(AntTest.class.getResource("/world/ant-world-1.txt").getFile())
+        );
 
-        // Create The Ants for Testing Spawning, Murdering and Checking Ant Friend/Foe Conditions
-        world.spawnAnts(redColony, blackColony);
+        // Setup Test Conditions
+        MarkerCondition = new Condition(new Marker(3));
+        FoodCondition = new Condition(Condition.Type.FOOD);
+        FoeCondition = new Condition(Condition.Type.FOE);
+        FoeHomeCondition = new Condition(Condition.Type.FOE_HOME);
+        FoeMarkerCondition = new Condition(Condition.Type.FOE_MARKER);
+        FoeFoodCondition = new Condition(Condition.Type.FOE_WITH_FOOD);
+        FriendCondition = new Condition(Condition.Type.FRIEND);
+        FriendFoodCondition = new Condition(Condition.Type.FRIEND_WITH_FOOD);
+        HomeCondition = new Condition(Condition.Type.HOME);
+        RockCondition = new Condition(Condition.Type.ROCK);
+
 
 
     }
@@ -92,10 +119,66 @@ public class WorldTest {
     @Test
     public void check() throws Exception {
 
+        // Tests assume enemy ants are from the black colony
+        // Friendly ants are from the red colony
+
+        Cell friend = new Cell(Cell.Type.CLEAR,5,10);
+        Cell foe = new Cell(Cell.Type.CLEAR,7,10);
+
+        // Add Friendly Ant to World
+        world.getAnts().add(new Ant(4,redColony,world,friend));
+
+        // Add Enemy Ant to World
+        world.getAnts().add(new Ant(8,blackColony,world,foe));
+
+        // Test Checking for Friend
+        assertTrue(world.check(FriendCondition,redColony,friend));
+
+        // Test Checking for Enemy
+        assertTrue(world.check(FoeCondition,redColony,foe));
+
+        // Todo: Test Checking for Friend with Food
+
+
+
+        // Todo: Test Checking for Enemy with Food
+
+
+
+        // Test Checking for Food
+        // Cell [0][0] contains food in the particular ant world testing file
+        assertTrue(world.check(FoodCondition,redColony,world.getCells()[0][0]));
+
+
+        // Test Checking for Rock
+        assertTrue(world.check(RockCondition,redColony,rocky));
+
+
+        // Test Checking for Marker
+        // Create The Marker
+        Marker m = new Marker(3);
+        Cell marked = new Cell(Cell.Type.CLEAR,52,13);
+        marked.mark(redColony,m);
+
+        // add the marked cell to the world
+       world.getCells()[52][13] = marked;
+
+        // check if cell was marked
+        assertTrue(world.check(MarkerCondition,redColony,marked));
+
+
+        // Test Checking for Home
+        Cell home = new Cell(Cell.Type.ANTHILL_RED,0,5);
+        assertTrue(world.check(HomeCondition,redColony,home));
+
+        // Test Checking for Enemy Home
+        Cell enemy = new Cell(Cell.Type.ANTHILL_BLACK,0,6);
+        assertTrue(world.check(FoeHomeCondition,redColony,enemy));
+
     }
 
     /**
-     * Check if Ants of different colonies Are spawned correctly
+     * Todo: Check if Ants of different colonies Are spawned correctly
      * @see World#spawnAnts(Colony, Colony)
      * @throws Exception
      */
@@ -106,7 +189,7 @@ public class WorldTest {
 
 
     /**
-     * Tests When Ants Are Killed they are removed from the world and turn into food correctly
+     * Todo: Tests When Ants Are Killed they are removed from the world and turn into food correctly
      * @throws Exception
      */
     @Test
