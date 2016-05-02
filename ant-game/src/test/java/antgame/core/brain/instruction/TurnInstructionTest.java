@@ -58,7 +58,7 @@ public class TurnInstructionTest {
     public void testTurnInstruction() throws Exception {
 
         //turn instruction should be of type turn
-        assertEquals(Instruction.Type.SENSE, turn.getType());
+        assertEquals(Instruction.Type.TURN, turn.getType());
         //check that the instruction ID is what we set it to be before
         assertEquals(TURN_LINE_NUMBER, turn.getID());
         //both success and failure states should move to the single next state
