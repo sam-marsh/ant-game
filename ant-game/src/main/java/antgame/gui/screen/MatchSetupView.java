@@ -67,7 +67,7 @@ public class MatchSetupView extends View {
                         if (val == JFileChooser.APPROVE_OPTION) {
                             new Thread(() -> {
                                 try {
-                                    BrainParser.parse(Colony.Colour.RED, chooser.getSelectedFile());
+                                    BrainParser.parse(chooser.getSelectedFile());
                                 } catch (ParseException pe) {
                                     SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(
                                             context,

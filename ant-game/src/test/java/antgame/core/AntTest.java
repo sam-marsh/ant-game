@@ -49,14 +49,12 @@ public class AntTest {
     public void setUp() throws IOException, ParseException {
         //parse the red brain
         redBrain = BrainParser.parse(
-                Colony.Colour.RED,
                 new File(AntTest.class.getResource("/brain/ant-brain-1.txt").getFile())
         );
         redColony = new Colony(Colony.Colour.RED, redBrain);
 
         //parse the black brain
         blackBrain = BrainParser.parse(
-                Colony.Colour.BLACK,
                 new File(AntTest.class.getResource("/brain/ant-brain-1.txt").getFile())
         );
         blackColony = new Colony(Colony.Colour.BLACK, blackBrain);
