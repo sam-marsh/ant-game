@@ -18,34 +18,23 @@ import java.text.ParseException;
 public class Player {
     private final String name;
     private int wins;
-    private final File brainFile;
     private final Brain  brain;
     
-    public Player(String name, File brainFile) throws ParseException, IOException
+    public Player(String name, Brain brain)
     {
         this.name = name;
-        this.brainFile = brainFile;
         wins = 0;
-        brain = parseBrain();
+        this.brain = brain;
     }
     
-    public void incrementWins()
+    public void addPoints(int points)
     {
-        wins++;
-    }
-    
-    public File getBrainFile()
-    {
-        return brainFile;
+        wins += points;
     }
     
     public Brain getBrain()
     {
         return brain; 
     } 
-    
-    private Brain parseBrain() throws ParseException, IOException
-    {
-        return BrainParser.parse(brainFile);
-    }
+
 }

@@ -55,9 +55,19 @@ public class PlayerOutcome {
      */
     public enum Result {
 
-        WIN,
-        LOSS,
-        DRAW
+        WIN(2),
+        LOSS(0),
+        DRAW(1);
+
+        private final int points;
+
+        Result(int points) {
+            this.points = points;
+        }
+
+        public int getPoints() {
+            return points;
+        }
 
     }
 

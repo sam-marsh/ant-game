@@ -48,22 +48,5 @@ public class Game {
         return tournament.runTournament();
     }
     
-    public Player playMatch(Player player1, Player player2, File worldFile) throws ParseException, IOException
-    {
-        World world = null;
-        Match match = null;
-        if (worldFile != null)
-        {
-            world = WorldParser.parse(worldFile);
-        }
-        else
-        {
-            world = WorldBuilder.generateContestWorld();
-        }
-        
-        match = new Match(player1, player2, world);
-        return match.run(300000);
-    }
-    
     
 }

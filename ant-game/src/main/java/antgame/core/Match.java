@@ -15,7 +15,9 @@ import java.util.stream.Collectors;
  * @author Regan
  */
 public class Match {
-    
+
+    public static int NUM_ROUNDS = 300000;
+
     private final Player playerRed;
     private final Player playerBlack;
     private final World world;
@@ -27,20 +29,24 @@ public class Match {
         this.world = world;
     }
     
-    public MatchOutcome run(int rounds)
+    public MatchOutcome run(int rounds, int speed)
     {
         int redFood = 0;
         int blackFood = 0;
         
-        world.spawnAnts(new Colony(Colour.RED, playerRed.getBrain()), new Colony(Colour.RED, playerBlack.getBrain()));
+        world.spawnAnts(new Colony(Colour.RED, playerRed.getBrain()), new Colony(Colour.BLACK, playerBlack.getBrain()));
         for (int i = 0; i < rounds; i++)
         {
             Set<Ant> toRemove = world.getAnts().stream().filter(Ant::surrounded).collect(Collectors.toSet());
             toRemove.stream().forEach(world::murder);
 
             world.getAnts().forEach(Ant::step);
+
+            try {
+                Thread.sleep(100 / speed);
+            } catch (InterruptedException ignore) {}
         }
-        
+
         for (int x = 0; x < world.width(); x++)
         {
             for (int y = 0; y < world.height(); y++)

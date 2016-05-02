@@ -31,28 +31,17 @@ public class MatchView extends View {
     public MatchView(GUI context, Match match) {
         super(context);
         setLayout(new BorderLayout());
-        try {
-            match.world().spawnAnts(new Colony(Colony.Colour.RED, BrainParser.parse(
-                    new File("/Users/Sam/Projects/ant-game/ant-game/src/test/resources/brain/ant-brain-1.txt")
-            )), new Colony(Colony.Colour.BLACK, BrainParser.parse(
-                    new File("/Users/Sam/Projects/ant-game/ant-game/src/test/resources/brain/ant-brain-2.txt")
-            )));
-        } catch (ParseException | IOException e) {
-            e.printStackTrace();
-        }
         setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         add(new WorldPanel(match), BorderLayout.CENTER);
     }
 
     private class WorldPanel extends JPanel {
 
-        private Match match;
         private World world;
         private TexturePaint texture;
 
         private WorldPanel(Match match) {
             this.world = match.world();
-            this.match = match;
             setBorder(BorderFactory.createCompoundBorder(
                     BorderFactory.createBevelBorder(BevelBorder.LOWERED),
                     BorderFactory.createEmptyBorder(5, 5, 5, 5)
@@ -67,13 +56,8 @@ public class MatchView extends View {
             }
             new Thread(() -> {
                 while (true) {
-                    Set<Ant> remove = world.getAnts().parallelStream().filter(Ant::surrounded).collect(Collectors
-                            .toSet());
-                    remove.parallelStream().forEach(world::murder);
-                    world.getAnts().forEach(Ant::step);
-
                     try {
-                        Thread.sleep(1);
+                        Thread.sleep(10);
                         SwingUtilities.invokeLater(() -> {
                             revalidate();
                             repaint();

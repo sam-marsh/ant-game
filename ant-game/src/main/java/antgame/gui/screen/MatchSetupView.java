@@ -1,6 +1,8 @@
 package antgame.gui.screen;
 
 import antgame.core.Colony;
+import antgame.core.Match;
+import antgame.core.MatchOutcome;
 import antgame.core.Player;
 import antgame.core.brain.Brain;
 import antgame.core.brain.parser.BrainParser;
@@ -284,6 +286,11 @@ public class MatchSetupView extends View {
                     });
                 }
             }));
+            add(new CentrePanel(new JLabel("simulation speed"), new CentrePanel(new JSlider(1, 100) {
+                {
+                    addChangeListener((c) -> mb.speed = getValue());
+                }
+            })));
         }
 
     }
@@ -296,7 +303,15 @@ public class MatchSetupView extends View {
                 {
                     addActionListener(e -> {
                         if (m.complete() && p1.complete() && p2.complete()) {
-
+                            Match match = new Match(
+                                    new Player(p1.name, p1.brain),
+                                    new Player(p2.name, p2.brain),
+                                    m.world
+                            );
+                            context.setContentPane(new MatchView(context, match));
+                            context.revalidate();
+                            context.repaint();
+                            new Thread(() -> match.run(Match.NUM_ROUNDS, m.speed)).start();
                         } else {
                             JOptionPane.showMessageDialog(
                                     context,
@@ -326,6 +341,7 @@ public class MatchSetupView extends View {
     private class MatchBuilder {
 
         private World world;
+        private int speed = 50;
 
         private boolean complete() {
             return world != null;
