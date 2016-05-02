@@ -41,7 +41,7 @@ public class Tournament {
     
     private Player runMatch(Match match)
     {
-        return match.run();
+        return match.run(300000);
     }
     
 }
