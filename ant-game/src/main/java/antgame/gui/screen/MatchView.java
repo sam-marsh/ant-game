@@ -1,9 +1,7 @@
 package antgame.gui.screen;
 
-import antgame.core.Ant;
 import antgame.core.Colony;
 import antgame.core.Match;
-import antgame.core.brain.parser.BrainParser;
 import antgame.core.world.Cell;
 import antgame.core.world.World;
 import antgame.gui.GUI;
@@ -12,52 +10,84 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;
-import java.io.File;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.text.ParseException;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.security.AuthProvider;
 
 /**
+ * The view which shows an in-progress match.
+ *
  * @author Sam Marsh
  */
 public class MatchView extends View {
 
+    //the colors used to draw various cell types
     private static final Color COLOR_ROCKY_CELL = new Color(100, 57, 0);
     private static final Color COLOR_RED_ANTHILL_CELL = new Color(195, 80, 63);
     private static final Color COLOR_BLACK_ANTHILL_CELL = new Color(88, 88, 88);
     private static final Color COLOR_FOOD_CELL = Color.GREEN.darker().darker();
 
+    //the path to the image used as a background texture of the world
+    private static final String TEXTURE_RESOURCE_PATH = "/texture.jpg";
+
+    //how many times to update the screen per second
+    private static final int FRAMES_PER_SECOND = 30;
+
+    /**
+     * Creates a new match view and initialises the components.
+     *
+     * @param context the main frame
+     * @param match the match to view
+     */
     public MatchView(GUI context, Match match) {
         super(context);
+
+        //fill the centre and expand to fill the whole panel
         setLayout(new BorderLayout());
         setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+
+        //add the main panel
         add(new WorldPanel(match), BorderLayout.CENTER);
     }
 
+    /**
+     * A world panel displays the state of a world.
+     */
     private class WorldPanel extends JPanel {
 
+        //the world to view
         private World world;
-        private TexturePaint texture;
 
+        //used to draw the background
+        private Paint texture;
+
+        /**
+         * Creates a new world panel to visualise a world.
+         *
+         * @param match the match that contains the world
+         */
         private WorldPanel(Match match) {
             this.world = match.world();
+
+            //create a nice border to embed the world in
             setBorder(BorderFactory.createCompoundBorder(
                     BorderFactory.createBevelBorder(BevelBorder.LOWERED),
                     BorderFactory.createEmptyBorder(5, 5, 5, 5)
             ));
+
+            //load the texture
             try {
-                texture = new TexturePaint(
-                        ImageIO.read(MatchView.class.getResource("/texture.jpg")),
-                        new Rectangle(0, 0, 200, 200)
-                );
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+                BufferedImage img = ImageIO.read(MatchView.class.getResource(TEXTURE_RESOURCE_PATH));
+                texture = new TexturePaint(img, new Rectangle(0, 0, img.getWidth(), img.getHeight()));
+            } catch (IOException ignore) {}
+
+            //execute in parallel
             new Thread(() -> {
-                while (true) {
+                while (!match.finished()) {
                     try {
-                        Thread.sleep(10);
+                        //sleep so that we have 30fps
+                        Thread.sleep(1000 / FRAMES_PER_SECOND);
+                        //switch back to GUI thread and refresh
                         SwingUtilities.invokeLater(() -> {
                             revalidate();
                             repaint();
@@ -69,21 +99,26 @@ public class MatchView extends View {
             }).start();
         }
 
+        /**
+         * Runs when the panel is refreshed.
+         *
+         * @param g the graphics object
+         */
         @Override
         public void paintComponent(Graphics g) {
-            display((Graphics2D) g);
-        }
+            //convert to graphics2d for additional functionality
+            Graphics2D gfx = (Graphics2D) g;
 
-        private void display(Graphics2D gfx) {
+            //wipe everything
             double panelWidth = getWidth();
             double panelHeight = getHeight();
             gfx.clearRect(0, 0, (int) panelWidth, (int) panelHeight);
-            gfx.setColor(Color.BLACK);
-            gfx.fillRect(0, 0, (int) panelWidth, (int) panelHeight);
 
+            //number of cells
             int worldWidth = world.width();
             int worldHeight = world.height();
 
+            //the ratio between the width and height (with a little padding) is the cell width in pixels
             double cellWidth = panelWidth / worldWidth * 0.95;
             double cellHeight = panelHeight / worldHeight * 0.95;
 

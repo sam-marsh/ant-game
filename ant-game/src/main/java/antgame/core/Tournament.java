@@ -76,7 +76,8 @@ public class Tournament {
     }
     
     private MatchOutcome runMatch(Match match, int speed) {
-        return match.run(Match.NUM_ROUNDS, speed);
+        match.run(Match.NUM_ROUNDS, speed);
+        return match.getOutcome();
     }
     
 }

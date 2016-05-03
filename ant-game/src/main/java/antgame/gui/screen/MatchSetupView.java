@@ -2,7 +2,6 @@ package antgame.gui.screen;
 
 import antgame.core.Colony;
 import antgame.core.Match;
-import antgame.core.MatchOutcome;
 import antgame.core.Player;
 import antgame.core.brain.Brain;
 import antgame.core.brain.parser.BrainParser;

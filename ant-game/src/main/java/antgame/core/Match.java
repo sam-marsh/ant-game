@@ -23,6 +23,8 @@ public class Match {
     //The world this match takes place in
     private final World world;
 
+    private MatchOutcome outcome;
+
     /**
      * Creates a new Match using the supplied players and world
      *
@@ -43,7 +45,7 @@ public class Match {
      * @param rounds The number of rounds to run the match for (Usually NUM_ROUNDS at 300000)
      * @return The outcome (LOSS, WIN, DRAW) of the match
      */
-    public MatchOutcome run(int rounds, int speed)
+    public void run(int rounds, int speed)
     {
         int redFood = 0;
         int blackFood = 0;
@@ -78,22 +80,30 @@ public class Match {
         }
 
         if (redFood > blackFood) {
-            return new MatchOutcome(
+            outcome = new MatchOutcome(
                     new PlayerOutcome(playerRed, PlayerOutcome.Result.WIN, this),
                     new PlayerOutcome(playerBlack, PlayerOutcome.Result.LOSS, this)
             );
         } else if (blackFood > redFood) {
-            return new MatchOutcome(
+            outcome = new MatchOutcome(
                     new PlayerOutcome(playerRed, PlayerOutcome.Result.LOSS, this),
                     new PlayerOutcome(playerBlack, PlayerOutcome.Result.WIN, this)
             );
         } else {
-            return new MatchOutcome(
+            outcome = new MatchOutcome(
                     new PlayerOutcome(playerRed, PlayerOutcome.Result.DRAW, this),
                     new PlayerOutcome(playerBlack, PlayerOutcome.Result.DRAW, this)
             );
         }
 
+    }
+
+    public boolean finished() {
+        return outcome != null;
+    }
+
+    public MatchOutcome getOutcome() {
+        return outcome;
     }
 
     /**
