@@ -12,6 +12,8 @@ import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  *
@@ -29,9 +31,10 @@ public class Game {
      * @throws ParseException if any of the supplied world's specifications are invalid - Should be caught by UI?
      * @throws IOException if an I/O exception occurred in reading any of the supplied world file contents - Should be caught by UI?
      */
-    public Player playTournament(ArrayList<Player> players, ArrayList<File> worldFiles, int numOfWorlds) throws ParseException, IOException
+    public Player playTournament(Set<Player> players, Set<File> worldFiles, int numOfWorlds) throws
+            ParseException, IOException
     {
-        ArrayList<World> worlds = new ArrayList<>();
+        Set<World> worlds = new HashSet<>();
         Tournament tournament = null;
                 
         for (File worldFile : worldFiles)
