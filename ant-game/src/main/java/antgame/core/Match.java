@@ -28,12 +28,20 @@ public class Match {
     private final Player playerBlack;
     //The world this match takes place in
     private final World world;
+    //The container for the outcome of the match when it finishes
+    private MatchOutcome outcome;
+
+
+    /**Statistics variables**/
     //The ant hills belonging to the red colony in the match
     List<Cell> redAntHills = new LinkedList<>();
     //The ant hills belonging to the black colony in the match
     List<Cell> blackAntHills = new LinkedList<>();
+    //The number of red ant deaths
+    int murderedRedAnts;
+    //The number of black ant deaths
+    int murderedBlackAnts;
 
-    private MatchOutcome outcome;
 
     /**
      * Creates a new Match using the supplied players and world
@@ -53,7 +61,6 @@ public class Match {
      * Runs the match determining and returning the winner based on which colony has more food in their ant hills
      *
      * @param rounds The number of rounds to run the match for (Usually NUM_ROUNDS at 300000)
-     *
      */
     public void run(int rounds, int speed)
     {
@@ -87,9 +94,16 @@ public class Match {
         for (int i = 0; i < rounds; i++)
         {
             //Loop through the ants in the world (stream to handle dynamic removal) filtering ants that are surrounded
-            Set<Ant> toRemove = world.getAnts().stream().filter(Ant::surrounded).collect(Collectors.toSet());
-            //Murder each of the surrounded ants
-            toRemove.stream().forEach(world::murder);
+            for (Ant ant : world.getAnts())
+            {
+                //Murder each of the surrounded ants
+                if (ant.surrounded())
+                {
+                    statsIterateAntDeath(ant.getColony().getColour());
+                    world.murder(ant);
+                }
+            }
+
 
             //After ants have been murdered let the survivors step
             world.getAnts().forEach(Ant::step);
@@ -130,25 +144,19 @@ public class Match {
      * Checks if the match has finished or not
      * @return True if the match is finished, false otherwise.
      */
-    public boolean finished() {
-        return outcome != null;
-    }
+    public boolean finished() {return outcome != null;}
 
     /**
      * Gets the outcome of the match
      * @return The MatchOutcome produced at the end of the match
      */
-    public MatchOutcome getOutcome() {
-        return outcome;
-    }
+    public MatchOutcome getOutcome() {return outcome;}
 
     /**
      * Gets the match's World
      * @return The world this match takes place in
      */
-    public World world() {
-        return world;
-    }
+    public World world() {return world;}
 
     /**
      * Returns the amount of food in the supplied colours Ant Hills
@@ -174,5 +182,93 @@ public class Match {
         }
 
         return food;
+    }
+
+    /**
+     * Iterates the appropriate murdered ants stat based on the input colour
+     * @param colour The colour of the ant that was murdered
+     */
+    private void statsIterateAntDeath(Colour colour)
+    {
+        if (colour == Colour.RED)
+        {
+            murderedRedAnts++;
+        }
+        else if (colour == Colour.BLACK)
+        {
+            murderedBlackAnts++;
+        }
+    }
+
+    /**
+     * Gets the number of ant deaths on the supplied colour's side
+     * @param colour The team colour to check for
+     * @return The number of ant deaths of that colour
+     */
+    public int statsGetAntDeaths(Colour colour)
+    {
+        if (colour == Colour.RED)
+        {
+            return murderedRedAnts;
+        }
+        else
+        {
+            return murderedBlackAnts;
+        }
+    }
+
+    /**
+     * Gets the number of ants remaining of the supplied colour
+     * @param colour The team colour to check for
+     * @return The number of remaining ants of that colour
+     */
+    public int statsGetRemainingAnts(Colour colour)
+    {
+        if (colour == Colour.RED)
+        {
+            return redAntHills.size() - murderedRedAnts;
+        }
+        else
+        {
+            return blackAntHills.size() - murderedBlackAnts;
+        }
+    }
+
+    /**
+     * Gets the number of movements made by the ants of the supplied colour
+     * @param colour The colour of ants to check for
+     * @return The number of movements made by ants of that colour
+     */
+    public int statsGetMovements(Colour colour)
+    {
+        int movements = 0;
+        for (Ant ant : world.getAnts())
+        {
+            if (ant.getColony().getColour() == colour)
+            {
+                movements += ant.successfulMovements();
+            }
+        }
+
+        return movements;
+    }
+
+    /**
+     * Gets the number of markings left by ants of the supplied colour
+     * @param colour The colour of ants to check for
+     * @return The number of markings left by ants of that colour
+     */
+    public int statsGetMarkings(Colour colour)
+    {
+        int markings = 0;
+        for (Ant ant : world.getAnts())
+        {
+            if (ant.getColony().getColour() == colour)
+            {
+                markings += ant.markings();
+            }
+        }
+
+        return markings;
     }
 }

@@ -45,6 +45,12 @@ public class Ant {
     //the ant where this ant currently resides
     private Cell cell;
 
+    //the number of movements this ant has made successfully
+    private int successfulMovements;
+
+    //the number of markings left by this ant
+    private int markings;
+
     /**
      * Creates a new ant belonging to the specified colony. The ant places itself in the given cell,
      * that is, no 'manual' adding of this ant instance to a cell is required.
@@ -64,6 +70,8 @@ public class Ant {
         this.world = world;
         this.cell = cell;
         cell.setAnt(this);
+        successfulMovements = 0;
+        markings = 0;
     }
 
     /**
@@ -161,6 +169,7 @@ public class Ant {
         MarkInstruction mark = (MarkInstruction) insn;
         if (cell.mark(colony, mark.getMarker())) {
             insn = insn.success();
+            markings++;
         } else {
             insn = insn.failure();
         }
@@ -179,6 +188,7 @@ public class Ant {
             //start resting
             rest = REST_NUMBER_TURNS;
             insn = insn.success();
+            successfulMovements++;
         } else {
             insn = insn.failure();
         }
@@ -294,4 +304,15 @@ public class Ant {
     }
 
     public Instruction getState() { return insn; }
+
+    /**
+     * @return The number of successful movements
+     */
+    public int successfulMovements() {return successfulMovements;}
+
+    /**
+     * @return The of markings left by this ant
+     */
+    public int markings() {return markings;}
+
 }
