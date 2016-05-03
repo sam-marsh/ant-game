@@ -4,6 +4,8 @@ import antgame.core.Colony.Colour;
 import antgame.core.world.*;
 import antgame.core.world.Cell.Type;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -26,6 +28,10 @@ public class Match {
     private final Player playerBlack;
     //The world this match takes place in
     private final World world;
+    //The ant hills belonging to the red colony in the match
+    List<Cell> redAntHills = new LinkedList<>();
+    //The ant hills belonging to the black colony in the match
+    List<Cell> blackAntHills = new LinkedList<>();
 
     private MatchOutcome outcome;
 
@@ -52,11 +58,30 @@ public class Match {
     public void run(int rounds, int speed)
     {
         //Used to determine the winner of the match at the end
-        int redFood = 0;
-        int blackFood = 0;
+        int redFood;
+        int blackFood;
 
         //Populate the world with ants, using the appropriate player to form and supply new colonies
         world.spawnAnts(new Colony(Colour.RED, playerRed.getBrain()), new Colony(Colour.BLACK, playerBlack.getBrain()));
+
+
+        //Loop through the entire world, x and y going from 0 to the world's width and height respectively
+        for (int x = 0; x < world.width(); x++)
+        {
+            for (int y = 0; y < world.height(); y++)
+            {
+                //If the cell is an anthill, add it to the appropriate list of ant hills for stats and determining the winner
+                Cell curr = world.cell(x, y);
+                if (world.cell(x, y).getType() == Type.ANTHILL_RED)
+                {
+                    redAntHills.add(curr);
+                }
+                else if (world.cell(x, y).getType() == Type.ANTHILL_BLACK)
+                {
+                    blackAntHills.add(curr);
+                }
+            }
+        }
 
         //Loop for the supplied number of rounds
         for (int i = 0; i < rounds; i++)
@@ -74,32 +99,19 @@ public class Match {
             } catch (InterruptedException ignore) {}
         }
 
-        //Loop through the entire world, x and y going from 0 to the world's width and height respectively
-        for (int x = 0; x < world.width(); x++)
-        {
-            for (int y = 0; y < world.height(); y++)
-            {
-                //If the cell is an anthill, add the food present in it to the appropriate colour's food total
-                Cell curr = world.cell(x, y);
-                if (world.cell(x, y).getType() == Type.ANTHILL_RED)
-                {
-                    redFood += curr.getFoodAmount();
-                }
-                else if (world.cell(x, y).getType() == Type.ANTHILL_BLACK)
-                {
-                    blackFood += curr.getFoodAmount();
-                }
-            }
-        }
+
+        //Using statsGetFood
+        redFood = statsGetFood(Colour.RED);
+        blackFood = statsGetFood(Colour.BLACK);
 
         //If there's more red food, the red player wins
-        if (redFood > blackFood) {
+        if (redFood > statsGetFood(Colour.BLACK)) {
             outcome = new MatchOutcome(
                     new PlayerOutcome(playerRed, PlayerOutcome.Result.WIN, this),
                     new PlayerOutcome(playerBlack, PlayerOutcome.Result.LOSS, this)
             );
         //If there's more black food, the black player wins
-        } else if (blackFood > redFood) {
+        } else if (blackFood > statsGetFood(Colour.RED)) {
             outcome = new MatchOutcome(
                     new PlayerOutcome(playerRed, PlayerOutcome.Result.LOSS, this),
                     new PlayerOutcome(playerBlack, PlayerOutcome.Result.WIN, this)
@@ -136,5 +148,31 @@ public class Match {
      */
     public World world() {
         return world;
+    }
+
+    /**
+     * Returns the amount of food in the supplied colours Ant Hills
+     * @param colour The colour of which team's hills to check
+     * @return The amount of food in the team's ant hills
+     */
+    public int statsGetFood(Colour colour)
+    {
+        List<Cell> hillsToCheck = new LinkedList<>();
+        int food = 0;
+        if (colour == Colour.RED)
+        {
+            hillsToCheck = redAntHills;
+        }
+        else if (colour == Colour.BLACK)
+        {
+            hillsToCheck = blackAntHills;
+        }
+
+        for (Cell cell : hillsToCheck)
+        {
+            food += cell.getFoodAmount();
+        }
+
+        return food;
     }
 }
