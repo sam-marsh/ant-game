@@ -208,4 +208,9 @@ public class Cell {
 
     }
 
+    @Override
+    public Cell clone() throws CloneNotSupportedException {
+        return new Cell(getType(), getX(), getY());
+    }
+
 }

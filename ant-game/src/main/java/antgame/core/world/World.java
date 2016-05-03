@@ -177,4 +177,19 @@ public class World {
         return cells;
     }
 
+    @Override
+    public World clone() {
+        try {
+            Cell[][] cpy = new Cell[width][height];
+            for (int x = 0; x < width; ++x) {
+                for (int y = 0; y < height; ++y) {
+                    cpy[x][y] = cells[x][y].clone();
+                }
+            }
+            return new World(cpy);
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

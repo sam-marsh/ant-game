@@ -8,6 +8,7 @@ package antgame.core;
 import antgame.core.world.World;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -32,6 +33,19 @@ public class Tournament {
     public Tournament(Set<Player> players, Set<World> worlds) {
         this.players = players;
         this.worlds = worlds;
+    }
+
+    public Set<Match> getMatches() {
+        Set<Match> matches = new HashSet<>();
+        for (World world : worlds) {
+            for (Player player1 : players) {
+                for (Player player2 : players) {
+                    matches.add(new Match(player1, player2, world.clone()));
+                    matches.add(new Match(player2, player1, world.clone()));
+                }
+            }
+        }
+        return matches;
     }
 
     /**
