@@ -214,16 +214,38 @@ public class WorldTest {
 
         world.spawnAnts(redColony,blackColony);
 
+
+        // Tests That an Ant from the Black Colony was spawned correctly
+        /// The Cell representing the first Ant is a black anthill cell
+        assertEquals(blackColony,world.getAnts().get(0).getColony());
+
+        // Tests That an Ant from the Red Colony was spawned correctly
+        // The Cell representing the 200th Ant is a red anthill cell
+        assertEquals(redColony,world.getAnts().get(200).getColony());
     }
 
 
     /**
-     * Todo: Tests When Ants Are Killed they are removed from the world and turn into food correctly
+     * Tests When Ants Are Killed they are removed from the world and turn into food correctly
      * @throws Exception
      */
     @Test
     public void murder() throws Exception {
 
+        // Spawn The Ants
+        world.spawnAnts(redColony,blackColony);
+
+
+        Cell antCell = world.getAnts().get(0).getCell();
+
+        // Ant is still alive
+        assertTrue(antCell.hasAnt());
+
+        // Kill The Ant
+        world.murder(world.getAnts().get(0));
+
+        // Ant's Cell has turned into food
+        assertTrue(antCell.hasFood());
     }
 
 }
