@@ -147,7 +147,7 @@ public class World {
     /**
      * @return list of Ants in the world
      */
-    List<Ant> getAnts() {
+    public List<Ant> getAnts() {
         return ants;
     }
 
