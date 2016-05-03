@@ -1,6 +1,6 @@
 package antgame.core.brain.parser;
 
-import antgame.core.Colony;
+
 import antgame.core.brain.Brain;
 import antgame.core.brain.instruction.Instruction;
 import org.junit.Test;
