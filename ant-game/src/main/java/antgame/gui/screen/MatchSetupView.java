@@ -112,10 +112,15 @@ public class MatchSetupView extends View {
     }
 
     /**
-     * The panel for
+     * The panel for configuring a player's options.
      */
     private class PlayerSetupPanel extends JPanel {
 
+        /**
+         *
+         * @param pb
+         * @param psp
+         */
         private PlayerSetupPanel(PlayerBuilder pb, PlayerStatusPanel psp) {
             setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
             setBorder(new BevelBorder(BevelBorder.LOWERED));

@@ -142,7 +142,7 @@ public class MatchView extends View {
             //loop through every cell
             for (int y = 0; y < worldHeight; ++y) {
                 //if the y-index is odd, indent x by a bit more
-                xOffset += (y % 2 == 1 ? cellSize : 0);
+                double newOffset = xOffset + (y % 2 == 1 ? cellSize : 0);
 
                 for (int x = 0; x < worldWidth; ++x) {
                     //the colour to fill this cell with
@@ -184,7 +184,7 @@ public class MatchView extends View {
 
                     //fill in the cell
                     gfx.fillOval(
-                            (int) (x * cellSize + xOffset), (int) (y * cellSize + yOffset),
+                            (int) (x * cellSize + newOffset), (int) (y * cellSize + yOffset),
                             (int) cellSize, (int) cellSize
                     );
                 }
