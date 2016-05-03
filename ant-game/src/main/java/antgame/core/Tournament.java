@@ -12,19 +12,32 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
+ * A tournament between any number of players on any number of worlds
+ * Each player plays every other player on each side (red or black) on every world
  *
  * @author Regan
  */
 public class Tournament {
-    
+
+    //The set of players in the tournament
     private Set<Player> players;
+    //The set of worlds the matches in the tournament will be played on
     private Set<World> worlds;
-    
+
+    /**
+     * Creates a new tournament and assignes the supplied players and worlds
+     * @param players The players that will participate in the tournament
+     * @param worlds The worlds the matches will be played on
+     */
     public Tournament(Set<Player> players, Set<World> worlds) {
         this.players = players;
         this.worlds = worlds;
     }
-    
+
+    /**
+     * Runs the tournament determining the winner.
+     * @return The winning Player in the tournament
+     */
     public Player runTournament() {
 
         //run a match between every player on every world as both red and black
@@ -74,7 +87,13 @@ public class Tournament {
             return tournament.runTournament();
         }
     }
-    
+
+    /**
+     * Runs the supplied Match and returns the outcome
+     * @param match The Match to run
+     * @param speed The speed at which to run the match
+     * @return The outcome of the run match
+     */
     private MatchOutcome runMatch(Match match, int speed) {
         match.run(Match.NUM_ROUNDS, speed);
         return match.getOutcome();
