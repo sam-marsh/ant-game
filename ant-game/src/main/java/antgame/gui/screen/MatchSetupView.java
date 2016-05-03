@@ -111,6 +111,9 @@ public class MatchSetupView extends View {
         add(new StartGameButton(m1, p1, p2), constraints);
     }
 
+    /**
+     * The panel for
+     */
     private class PlayerSetupPanel extends JPanel {
 
         private PlayerSetupPanel(PlayerBuilder pb, PlayerStatusPanel psp) {
