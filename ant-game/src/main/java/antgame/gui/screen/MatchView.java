@@ -118,26 +118,36 @@ public class MatchView extends View {
             int worldWidth = world.width();
             int worldHeight = world.height();
 
-            //the ratio between the width and height (with a little padding) is the cell width in pixels
-            double cellWidth = panelWidth / worldWidth * 0.95;
-            double cellHeight = panelHeight / worldHeight * 0.95;
+            double cellSize;
 
-            cellWidth = cellHeight = Math.min(cellWidth, cellHeight);
-            int yOffset = (int) (Math.abs(panelHeight - (cellHeight * worldHeight)) / 2);
-            int xOffset = (int) (Math.abs(panelWidth - (cellWidth * worldWidth)) / 2);
+            {
+                //the ratio between the width and height (with a little padding) is the cell width in pixels
+                double cellWidth = panelWidth / worldWidth * 0.95;
+                double cellHeight = panelHeight / worldHeight * 0.95;
+                //use a 1-1 ratio for the cell 'squares'
+                cellSize = Math.min(cellWidth, cellHeight);
+            }
 
+            //calculate the offsets based on the difference between the panel size and the world size
+            int yOffset = (int) (Math.abs(panelHeight - (cellSize * worldHeight)) / 2);
+            int xOffset = (int) (Math.abs(panelWidth - (cellSize * worldWidth)) / 2);
+
+            //fill in the background
             gfx.setPaint(texture);
             gfx.fillRect(
-                    xOffset + (int) cellWidth / 2, yOffset,
-                    (int) (cellWidth * worldWidth),
-                    (int) (cellHeight * worldHeight)
+                    xOffset + (int) cellSize / 2, yOffset,
+                    (int) (cellSize * worldWidth), (int) (cellSize * worldHeight)
             );
 
+            //loop through every cell
             for (int y = 0; y < worldHeight; ++y) {
-                double offset = xOffset + (y % 2 == 1 ? cellWidth : 0);
+                //if the y-index is odd, indent x by a bit more
+                double newOffset = xOffset + (y % 2 == 1 ? cellSize : 0);
 
                 for (int x = 0; x < worldWidth; ++x) {
+                    //the colour to fill this cell with
                     Color cellColour = null;
+
                     Cell cell = world.cell(x, y);
                     switch (cell.getType()) {
                         case ROCK:
@@ -151,10 +161,12 @@ public class MatchView extends View {
                             break;
                     }
 
+                    //blend together the two colours if has food as well
                     if (cell.hasFood()) {
                         cellColour = blend(cellColour, COLOR_FOOD_CELL, 0.5f);
                     }
 
+                    //if has ant, override the colour
                     if (cell.hasAnt()) {
                         if (cell.getAnt().getColony().getColour() == Colony.Colour.RED) {
                             cellColour = Color.RED;
@@ -163,22 +175,17 @@ public class MatchView extends View {
                         }
                     }
 
+                    //if the cell is empty, ignore
                     if (cellColour == null)
                         continue;
 
+                    //set the fill colour to the above
                     gfx.setColor(cellColour);
 
+                    //fill in the cell
                     gfx.fillOval(
-                            (int) (x * cellWidth + offset), (int) (y * cellHeight + yOffset),
-                            (int) cellWidth, (int) cellHeight
-                    );
-
-                    Color current = gfx.getColor();
-                    gfx.setColor(new Color(current.getRed(), current.getGreen(), current.getBlue(), 50));
-
-                    gfx.drawOval(
-                            (int) (x * cellWidth + offset), (int) (y * cellHeight + yOffset),
-                            (int) cellWidth, (int) cellHeight
+                            (int) (x * cellSize + newOffset), (int) (y * cellSize + yOffset),
+                            (int) cellSize, (int) cellSize
                     );
                 }
             }
@@ -186,8 +193,17 @@ public class MatchView extends View {
 
     }
 
-    //http://stackoverflow.com/questions/19398238/how-to-mix-two-int-colors-correctly
-    private Color blend( Color c1, Color c2, float ratio ) {
+    /**
+     * Blends two colours together in a nice way.
+     * Originally from: http://stackoverflow.com/questions/19398238/how-to-mix-two-int-colors-correctly
+     * Slightly modified.
+     *
+     * @param c1 the first colour
+     * @param c2 the second colour
+     * @param ratio how much of the first colour to use from 0-1
+     * @return a blend of the two colours
+     */
+    private Color blend(Color c1, Color c2, float ratio ) {
         if (c1 == null) return c2;
         if (c2 == null) return c1;
 

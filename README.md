@@ -23,20 +23,20 @@ Software Engineering project.
 - [x] Requirements
   - [x] Functional
   - [x] Non-functional
-- [ ] Modelling
+- [x] Modelling
   - [x] High-level
-  - [ ] Low-level
-    - [ ] UML (need class diagrams)
+  - [x] Low-level
+    - [x] UML
     - [x] Sequence diagrams
 - [ ] Software
   - [x] Ant-brain parser
   - [x] Ant-world parser
-  - [ ] GUI
+  - [x] GUI
   - [x] Random-world generator
-  - [ ] Two-player game
+  - [x] Two-player game
   - [ ] Tournament
   - [x] Custom ant-brain
 - [ ] Testing
   - [x] Specification
   - [ ] Tests
-- [ ] Report (at end)
+- [x] Report
