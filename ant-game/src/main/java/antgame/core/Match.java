@@ -14,7 +14,11 @@ import java.util.stream.Collectors;
  */
 public class Match {
 
+    //number of iterations
     public static int NUM_ROUNDS = 300000;
+
+    //match speed is from 1-100
+    public static int DEFAULT_MATCH_SPEED = 50;
 
     //The player to be assigned to the red colony within the match
     private final Player playerRed;
