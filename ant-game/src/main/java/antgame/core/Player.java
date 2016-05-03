@@ -6,35 +6,41 @@
 package antgame.core;
 
 import antgame.core.brain.Brain;
-import antgame.core.brain.parser.BrainParser;
-import java.io.File;
-import java.io.IOException;
-import java.text.ParseException;
 
 /**
  *
  * @author Regan
  */
-public class Player {
+public class Player implements Comparable<Player> {
+
     private final String name;
-    private int wins;
     private final Brain  brain;
-    
+    private int points;
+
     public Player(String name, Brain brain)
     {
         this.name = name;
-        wins = 0;
+        points = 0;
         this.brain = brain;
     }
     
     public void addPoints(int points)
     {
-        wins += points;
+        this.points += points;
     }
     
     public Brain getBrain()
     {
         return brain; 
-    } 
+    }
+
+    @Override
+    public int compareTo(Player o) {
+        return points - o.points;
+    }
+
+    public int points() {
+        return points;
+    }
 
 }

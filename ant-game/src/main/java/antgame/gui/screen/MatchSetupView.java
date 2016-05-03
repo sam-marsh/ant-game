@@ -286,7 +286,7 @@ public class MatchSetupView extends View {
                     });
                 }
             }));
-            add(new CentrePanel(new JLabel("simulation speed"), new CentrePanel(new JSlider(1, 100) {
+            add(new CentrePanel(new JLabel("simulation speed"), new CentrePanel(new JSlider(1, 101) {
                 {
                     addChangeListener((c) -> mb.speed = getValue());
                 }
