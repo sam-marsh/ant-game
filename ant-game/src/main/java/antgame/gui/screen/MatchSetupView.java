@@ -344,26 +344,38 @@ public class MatchSetupView extends View {
     }
 
     /**
-     *
+     * The button for starting a game.
      */
     private class StartGameButton extends JPanel {
 
+        /**
+         * Creates a start-game button.
+         *
+         * @param m the match to start
+         * @param p1 the player 1 (red)
+         * @param p2 the player 2 (black)
+         */
         private StartGameButton(MatchBuilder m, PlayerBuilder p1, PlayerBuilder p2) {
             setLayout(new FlowLayout());
             add(new JButton("start") {
                 {
                     addActionListener(e -> {
+                        //check if complete
                         if (m.complete() && p1.complete() && p2.complete()) {
+                            //create a match
                             Match match = new Match(
                                     new Player(p1.name, p1.brain),
                                     new Player(p2.name, p2.brain),
                                     m.world
                             );
+                            //switch to match view and repaint
                             context.setContentPane(new MatchView(context, match));
                             context.revalidate();
                             context.repaint();
+                            //run in new thread
                             new Thread(() -> match.run(Match.NUM_ROUNDS, m.speed)).start();
                         } else {
+                            //give an error - not complete
                             JOptionPane.showMessageDialog(
                                     context,
                                     "setup not complete",
@@ -377,6 +389,9 @@ public class MatchSetupView extends View {
         }
     }
 
+    /**
+     * Simple class for storing incomplete player properties.
+     */
     private class PlayerBuilder {
 
         private String name;
@@ -389,14 +404,18 @@ public class MatchSetupView extends View {
 
     }
 
+    /**
+     * Simple class for storing match properties.
+     */
     private class MatchBuilder {
 
         private World world;
-        private int speed = 50;
+        private int speed = Match.DEFAULT_MATCH_SPEED;
 
         private boolean complete() {
             return world != null;
         }
 
     }
+
 }
