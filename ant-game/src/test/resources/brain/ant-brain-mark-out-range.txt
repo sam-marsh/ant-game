@@ -1,0 +1,29 @@
+Mark 10 2                            ; state 1  - Set mark in current cell and go to state 2.
+Sense Here 2 3 Home                  ; state 2  - check if on anthill, with food
+Drop 0                               ; state 3  - drop the food and move back to initial state
+Sense LeftAhead 4 5 Marker 0         ; state 4  - check if 'follow this back' marker is to the left of me
+Turn Left 0                          ; state 5  - turn and move back to initial state
+Sense Ahead 6 7 Marker 0             ; state 6  - check if 'follow this back' marker is ahead of me
+Move 0 0                             ; state 7  - step in the marker's direction
+Turn Right 0                         ; state 8  - turn and move back to initial state
+Sense Here 9 10 Food                 ; state 9  - check if food on current cell
+PickUp 0 0                           ; state 10  - pick up food and return to initial state
+Sense Ahead 11 12 Food               ; state 11 - see if food is in ahead cell
+Move 0 0                             ; state 12 - move onto food
+Sense LeftAhead 13 14 Food           ; state 13 - see if food is in left-ahead cell
+Turn Left 0                          ; state 14 - turn towards food
+Sense RightAhead 15 16 Food          ; state 15 - see if food is in right-ahead cell
+Turn Right 0                         ; state 16 - turn towards food
+Flip 2 17 20                         ; state 17 - flip a coin
+Sense LeftAhead 18 19 Rock           ; state 18 - check for rock on left
+Turn Right 0                         ; state 19 - turn right if close to rock
+Turn Left 0                          ; state 20 - all clear, turn left
+Flip 2 21 24                         ; state 21 - flip a coin
+Sense RightAhead 22 23 Rock          ; state 22 - check for rock on right
+Turn Left 0                          ; state 23 - avoid rock
+Turn Right 0                         ; state 24 - all clear, turn right
+Sense Ahead 25 28 Rock               ; state 25 - check for rock ahead
+Flip 2 26 27                         ; state 26 - flip a coin
+Turn Left 0                          ; state 27 - turn left to avoid rock
+Turn Right 0                         ; state 28 - turn right to avoid rock
+Move 0 0                             ; state 29 - step forward

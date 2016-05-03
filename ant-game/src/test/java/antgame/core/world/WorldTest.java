@@ -212,6 +212,8 @@ public class WorldTest {
     @Test
     public void spawnAnts() throws Exception {
 
+        world.spawnAnts(redColony,blackColony);
+
     }
 
 
