@@ -112,14 +112,22 @@ public class MatchSetupView extends View {
     }
 
     /**
-     * The panel for
+     * The panel for configuring a player's options.
      */
     private class PlayerSetupPanel extends JPanel {
 
+        /**
+         * Creates a new player setup panel - one for red, one for black.
+         *
+         * @param pb the incomplete player to update with user data
+         * @param psp the status panel to update
+         */
         private PlayerSetupPanel(PlayerBuilder pb, PlayerStatusPanel psp) {
+            //fill centre
             setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
             setBorder(new BevelBorder(BevelBorder.LOWERED));
             add(Box.createVerticalGlue());
+            //add title containing player type
             add(new CentrePanel(new JLabel("black player") {
                 {
                     if (pb.colour == Colony.Colour.RED) {
@@ -129,6 +137,7 @@ public class MatchSetupView extends View {
                     setFont(GUI.TITLE_FONT);
                 }
             }));
+            //add option to set name
             add(new CentrePanel(new JButton("set name") {
                 {
                     addActionListener((e) -> {
@@ -143,6 +152,7 @@ public class MatchSetupView extends View {
                     });
                 }
             }));
+            //add option to upload ant brain
             add(new CentrePanel(new JButton("upload your ant-brain") {
                 {
                     addActionListener((e) -> {
@@ -179,11 +189,21 @@ public class MatchSetupView extends View {
 
     }
 
+    /**
+     * A panel to display whether the match setup is complete or not.
+     */
     private class MatchStatusPanel extends JPanel {
 
+        //the incomplete match to add data to
         private final MatchBuilder match;
+        //the label indicating the status
         private final JLabel world;
 
+        /**
+         * Creates a new status panel, monitoring the progress of a match setup.
+         *
+         * @param builder the incomplete match setup
+         */
         private MatchStatusPanel(MatchBuilder builder) {
             this.match = builder;
             this.world = new JLabel("world");
@@ -204,13 +224,24 @@ public class MatchSetupView extends View {
 
     }
 
-
+    /**
+     * A panel indicating the status of a player's setup. Whether the player has added
+     * a name and brain yet.
+     */
     private class PlayerStatusPanel extends JPanel {
 
+        //the incomplete player
         private final PlayerBuilder player;
+        //the label showing whether the name has been added
         private final JLabel name;
+        //the label showing whether the brain has been added
         private final JLabel brain;
 
+        /**
+         * Creates a new status panel for displaying whether a user has completed their team setup.
+         *
+         * @param builder the incomplete player
+         */
         private PlayerStatusPanel(PlayerBuilder builder) {
             this.player = builder;
 
@@ -228,6 +259,9 @@ public class MatchSetupView extends View {
             add(new CentrePanel(brain));
         }
 
+        /**
+         * Called when the status of the player builder changes.
+         */
         public void refresh() {
             if (player.name != null) {
                 name.setForeground(Color.GREEN);
@@ -247,16 +281,27 @@ public class MatchSetupView extends View {
 
     }
 
+    /**
+     * A panel for configuration of general match settings, like the world and the playback speed.
+     */
     private class MatchConfigurationPanel extends JPanel {
 
+        /**
+         * Creates a new match configuration panel.
+         *
+         * @param mb the incomplete match settings
+         * @param msp the status panel for displaying progress
+         */
         private MatchConfigurationPanel(MatchBuilder mb, MatchStatusPanel msp) {
             setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
             setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+            //add title
             add(new CentrePanel(new JLabel("configuration") {
                 {
                     setFont(GUI.TITLE_FONT);
                 }
             }));
+            //add a button to upload the world
             add(new CentrePanel(new JButton("upload ant world") {
                 {
                     addActionListener(e -> {
@@ -288,6 +333,7 @@ public class MatchSetupView extends View {
                     });
                 }
             }));
+            //add a slider to set the game speed
             add(new CentrePanel(new JLabel("simulation speed"), new CentrePanel(new JSlider(1, 101) {
                 {
                     addChangeListener((c) -> mb.speed = getValue());
@@ -297,24 +343,39 @@ public class MatchSetupView extends View {
 
     }
 
+    /**
+     * The button for starting a game.
+     */
     private class StartGameButton extends JPanel {
 
+        /**
+         * Creates a start-game button.
+         *
+         * @param m the match to start
+         * @param p1 the player 1 (red)
+         * @param p2 the player 2 (black)
+         */
         private StartGameButton(MatchBuilder m, PlayerBuilder p1, PlayerBuilder p2) {
             setLayout(new FlowLayout());
             add(new JButton("start") {
                 {
                     addActionListener(e -> {
+                        //check if complete
                         if (m.complete() && p1.complete() && p2.complete()) {
+                            //create a match
                             Match match = new Match(
                                     new Player(p1.name, p1.brain),
                                     new Player(p2.name, p2.brain),
                                     m.world
                             );
+                            //switch to match view and repaint
                             context.setContentPane(new MatchView(context, match));
                             context.revalidate();
                             context.repaint();
+                            //run in new thread
                             new Thread(() -> match.run(Match.NUM_ROUNDS, m.speed)).start();
                         } else {
+                            //give an error - not complete
                             JOptionPane.showMessageDialog(
                                     context,
                                     "setup not complete",
@@ -328,6 +389,9 @@ public class MatchSetupView extends View {
         }
     }
 
+    /**
+     * Simple class for storing incomplete player properties.
+     */
     private class PlayerBuilder {
 
         private String name;
@@ -340,14 +404,18 @@ public class MatchSetupView extends View {
 
     }
 
+    /**
+     * Simple class for storing match properties.
+     */
     private class MatchBuilder {
 
         private World world;
-        private int speed = 50;
+        private int speed = Match.DEFAULT_MATCH_SPEED;
 
         private boolean complete() {
             return world != null;
         }
 
     }
+
 }
