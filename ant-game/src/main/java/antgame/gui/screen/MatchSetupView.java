@@ -75,7 +75,7 @@ public class MatchSetupView extends View {
         constraints.weightx = constraints.weighty = 0.01;
         add(new CentrePanel(new JLabel() {
             {
-                setText("checklist");
+                setText("Checklist");
                 setFont(GUI.TITLE_FONT);
             }
         }), constraints);
@@ -128,21 +128,21 @@ public class MatchSetupView extends View {
             setBorder(new BevelBorder(BevelBorder.LOWERED));
             add(Box.createVerticalGlue());
             //add title containing player type
-            add(new CentrePanel(new JLabel("black player") {
+            add(new CentrePanel(new JLabel("Black") {
                 {
                     if (pb.colour == Colony.Colour.RED) {
                         setForeground(Color.RED);
-                        setText("red player");
+                        setText("Red");
                     }
                     setFont(GUI.TITLE_FONT);
                 }
             }));
             //add option to set name
-            add(new CentrePanel(new JButton("set name") {
+            add(new CentrePanel(new JButton("Set Name") {
                 {
                     addActionListener((e) -> {
                         String result = JOptionPane.showInputDialog(
-                                context, "enter your name", "name",
+                                context, "Enter your name:", "Name",
                                 JOptionPane.QUESTION_MESSAGE
                         );
                         if (result != null) {
@@ -153,7 +153,7 @@ public class MatchSetupView extends View {
                 }
             }));
             //add option to upload ant brain
-            add(new CentrePanel(new JButton("upload your ant-brain") {
+            add(new CentrePanel(new JButton("Upload Brain") {
                 {
                     addActionListener((e) -> {
                         JFileChooser chooser = new JFileChooser();
@@ -166,16 +166,16 @@ public class MatchSetupView extends View {
                                 } catch (ParseException pe) {
                                     SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(
                                             context,
-                                            "error parsing brain: " +
+                                            "Error parsing brain: " +
                                                     pe.getMessage() + " on line " + pe.getErrorOffset(),
-                                            "parsing error",
+                                            "Parsing error",
                                             JOptionPane.ERROR_MESSAGE
                                     ));
                                 } catch (IOException ioe) {
                                     SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(
                                             context,
-                                            "error reading from file: " + ioe.getMessage(),
-                                            "i/o error",
+                                            "Error reading from file: " + ioe.getMessage(),
+                                            "I/O error",
                                             JOptionPane.ERROR_MESSAGE
                                     ));
                                 }
@@ -206,7 +206,7 @@ public class MatchSetupView extends View {
          */
         private MatchStatusPanel(MatchBuilder builder) {
             this.match = builder;
-            this.world = new JLabel("world");
+            this.world = new JLabel("World");
             world.setForeground(INCOMPLETE_COLOUR);
             setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
             add(new CentrePanel(world));
@@ -214,10 +214,10 @@ public class MatchSetupView extends View {
 
         private void refresh() {
             if (match.world != null) {
-                world.setText("world: uploaded");
+                world.setText("World: uploaded!");
                 world.setForeground(Color.GREEN);
             } else {
-                world.setText("world");
+                world.setText("World");
                 world.setForeground(INCOMPLETE_COLOUR);
             }
         }
@@ -247,11 +247,11 @@ public class MatchSetupView extends View {
 
             setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-            this.name = new JLabel("name");
+            this.name = new JLabel("Name");
             name.setForeground(INCOMPLETE_COLOUR);
             name.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-            this.brain = new JLabel("brain");
+            this.brain = new JLabel("Brain");
             brain.setForeground(INCOMPLETE_COLOUR);
             brain.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -265,17 +265,17 @@ public class MatchSetupView extends View {
         public void refresh() {
             if (player.name != null) {
                 name.setForeground(Color.GREEN);
-                name.setText("name: " + player.name);
+                name.setText("Name: " + player.name);
             } else {
                 name.setForeground(INCOMPLETE_COLOUR);
-                name.setText("name");
+                name.setText("Name");
             }
             if (player.brain != null) {
                 brain.setForeground(Color.GREEN);
-                brain.setText("brain: uploaded");
+                brain.setText("Brain: uploaded!");
             } else {
                 brain.setForeground(INCOMPLETE_COLOUR);
-                brain.setText("brain");
+                brain.setText("Brain");
             }
         }
 
@@ -296,13 +296,13 @@ public class MatchSetupView extends View {
             setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
             setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
             //add title
-            add(new CentrePanel(new JLabel("configuration") {
+            add(new CentrePanel(new JLabel("Configuration") {
                 {
                     setFont(GUI.TITLE_FONT);
                 }
             }));
             //add a button to upload the world
-            add(new CentrePanel(new JButton("upload ant world") {
+            add(new CentrePanel(new JButton("Upload Ant-World") {
                 {
                     addActionListener(e -> {
                         JFileChooser chooser = new JFileChooser();
@@ -315,16 +315,16 @@ public class MatchSetupView extends View {
                                 } catch (ParseException pe) {
                                     SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(
                                             context,
-                                            "error parsing brain: " +
+                                            "Error parsing world: " +
                                                     pe.getMessage() + " on line " + pe.getErrorOffset(),
-                                            "parsing error",
+                                            "Parsing Error",
                                             JOptionPane.ERROR_MESSAGE
                                     ));
                                 } catch (IOException ioe) {
                                     SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(
                                             context,
-                                            "error reading from file: " + ioe.getMessage(),
-                                            "i/o error",
+                                            "Error reading from file: " + ioe.getMessage(),
+                                            "I/O Error",
                                             JOptionPane.ERROR_MESSAGE
                                     ));
                                 }
@@ -334,7 +334,7 @@ public class MatchSetupView extends View {
                 }
             }));
             //add a slider to set the game speed
-            add(new CentrePanel(new JLabel("simulation speed"), new CentrePanel(new JSlider(1, 101) {
+            add(new CentrePanel(new JLabel("Simulation Speed"), new CentrePanel(new JSlider(1, 101) {
                 {
                     addChangeListener((c) -> mb.speed = getValue());
                 }
@@ -357,7 +357,7 @@ public class MatchSetupView extends View {
          */
         private StartGameButton(MatchBuilder m, PlayerBuilder p1, PlayerBuilder p2) {
             setLayout(new FlowLayout());
-            add(new JButton("start") {
+            add(new JButton("Start") {
                 {
                     addActionListener(e -> {
                         //check if complete
@@ -378,8 +378,8 @@ public class MatchSetupView extends View {
                             //give an error - not complete
                             JOptionPane.showMessageDialog(
                                     context,
-                                    "setup not complete",
-                                    "incomplete",
+                                    "Setup not complete!",
+                                    "Incomplete!",
                                     JOptionPane.ERROR_MESSAGE
                             );
                         }

@@ -11,7 +11,7 @@ import java.util.Set;
  *
  * @author Sam Marsh
  */
-public class Cell {
+public class Cell implements Cloneable {
 
     //rocky or clear or anthill?
     private final Type type;
@@ -47,6 +47,10 @@ public class Cell {
         this.food = 0;
         this.x = x;
         this.y = y;
+    }
+
+    public Cell(Cell toClone) {
+        this(toClone.getType(), toClone.getX(), toClone.getY());
     }
 
     /**
@@ -125,9 +129,6 @@ public class Cell {
      * @return the ant contained in the cell
      */
     public Ant getAnt() {
-        if (ant == null) {
-            throw new NullPointerException("no ant in cell");
-        }
         return ant;
     }
 
@@ -150,6 +151,12 @@ public class Cell {
             throw new AssertionError("no ant to remove");
         }
         ant = null;
+    }
+
+    public int numMarkings(Colony colony) {
+        if (colony.getColour() == Colony.Colour.RED)
+            return redMarkers.size();
+        return blackMarkers.size();
     }
 
     /**
@@ -206,11 +213,6 @@ public class Cell {
         ANTHILL_RED,
         ANTHILL_BLACK
 
-    }
-
-    @Override
-    public Cell clone() throws CloneNotSupportedException {
-        return new Cell(getType(), getX(), getY());
     }
 
 }

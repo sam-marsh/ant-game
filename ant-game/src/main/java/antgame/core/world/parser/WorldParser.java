@@ -35,21 +35,27 @@ public class WorldParser {
      * Parses a world from an ordered list of lines.
      *
      * @param lines the list of strings making up a user world specification
+     * @param name the name of the world
      * @return a world with the representation described by the passed argument
      * @throws ParseException if the user world specification is invalid
      */
-    public static World parse(List<String> lines) throws ParseException {
+    private static World parse(List<String> lines, String name) throws ParseException {
         int sizex;
         int sizey;
         try {
             sizex = Integer.parseInt(lines.get(0));
         } catch (NumberFormatException nfe) {
-            throw new ParseException("expected world size in x direction, instead got " + lines.get(0), 0);
+            String line = lines.get(0);
+            String cut = line.length() > 5 ? line.subSequence(0, 5) + "..." : line;
+            throw new ParseException("expected world size in x direction, instead got " + cut, 0
+            );
         }
         try {
             sizey = Integer.parseInt(lines.get(1));
         } catch (NumberFormatException nfe) {
-            throw new ParseException("expected world size in y direction, instead got " + lines.get(1), 1);
+            String line = lines.get(1);
+            String cut = line.length() > 5 ? line.subSequence(0, 5) + "..." : line;
+            throw new ParseException("expected world size in y direction, instead got " + cut, 1);
         }
 
         Cell[][] cells = new Cell[sizex][sizey];
@@ -100,7 +106,7 @@ public class WorldParser {
             }
 
         }
-        return new World(cells);
+        return new World(cells, name);
     }
 
     /**
@@ -112,7 +118,7 @@ public class WorldParser {
      * @throws IOException if an I/O exception occurred in reading the file contents
      */
     public static World parse(File file) throws ParseException, IOException {
-        return parse(new ArrayList<>(Files.readAllLines(file.toPath())));
+        return parse(new ArrayList<>(Files.readAllLines(file.toPath())), file.getName());
     }
 
 }

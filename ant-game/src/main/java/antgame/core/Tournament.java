@@ -6,10 +6,9 @@
 package antgame.core;
 
 import antgame.core.world.World;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.Set;
+import javafx.util.Pair;
+
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -35,17 +34,16 @@ public class Tournament {
         this.worlds = worlds;
     }
 
-    public Set<Match> getMatches() {
-        Set<Match> matches = new HashSet<>();
-        for (World world : worlds) {
-            for (Player player1 : players) {
-                for (Player player2 : players) {
-                    matches.add(new Match(player1, player2, world.clone()));
-                    matches.add(new Match(player2, player1, world.clone()));
+    public Set<Pair<Player, Player>> getPairings() {
+        Set<Pair<Player, Player>> pairings = new HashSet<>();
+        for (Player player1 : players) {
+            for (Player player2 : players) {
+                if (!player1.equals(player2)) {
+                    pairings.add(new Pair<>(player1, player2));
                 }
             }
         }
-        return matches;
+        return pairings;
     }
 
     /**
@@ -112,5 +110,13 @@ public class Tournament {
         match.run(Match.NUM_ROUNDS, speed);
         return match.getOutcome();
     }
-    
+
+    public int numWorlds() {
+        return worlds.size();
+    }
+
+    public Set<World> worlds() {
+        return worlds;
+    }
+
 }

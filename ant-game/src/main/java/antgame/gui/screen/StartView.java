@@ -46,7 +46,7 @@ public class StartView extends View {
         }));
 
         //add a label
-        add(new CentrePanel(new JLabel("start a new game below...") {
+        add(new CentrePanel(new JLabel("Start a new game below...") {
             {
                 setFont(GUI.TITLE_FONT);
             }
@@ -56,7 +56,7 @@ public class StartView extends View {
         add(new CentrePanel(new MatchButton(), new TournamentButton()));
 
         //add another label
-        add(new CentrePanel(new JLabel("...or, generate a random contest world") {
+        add(new CentrePanel(new JLabel("...or, generate a random contest world.") {
             {
                 setFont(GUI.TITLE_FONT);
             }
@@ -77,7 +77,7 @@ public class StartView extends View {
          * Initialises the match button's components.
          */
         private MatchButton() {
-            setText("two-player match");
+            setText("Two-Player Match");
             addActionListener(e -> {
                 context.setContentPane(new MatchSetupView(context));
                 context.revalidate();
@@ -96,7 +96,7 @@ public class StartView extends View {
          * Initialises the tournament button's properties.
          */
         private TournamentButton() {
-            setText("tournament");
+            setText("Tournament");
             addActionListener(e -> {
                 context.setContentPane(new TournamentSetupView(context));
                 context.revalidate();
@@ -115,10 +115,10 @@ public class StartView extends View {
          * Initialises the properties of this button.
          */
         private WorldGeneratorButton() {
-            setText("generate world");
+            setText("Generate World");
             addActionListener(e -> {
                 //disable button to indicate it is working
-                setText("please wait...");
+                setText("Please wait...");
                 setEnabled(false);
 
                 //execute in parallel
@@ -130,7 +130,7 @@ public class StartView extends View {
                     //switch back to gui thread
                     SwingUtilities.invokeLater(() -> {
                         //re-enable button
-                        setText("generate world");
+                        setText("Generate World");
                         setEnabled(true);
 
                         //save the file
@@ -143,7 +143,7 @@ public class StartView extends View {
                                 JOptionPane.showMessageDialog(
                                         context,
                                         e1.getMessage(),
-                                        "failed to save",
+                                        "Failed to Save!",
                                         JOptionPane.ERROR_MESSAGE
                                 );
                             }

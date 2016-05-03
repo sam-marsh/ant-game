@@ -73,4 +73,27 @@ public class Player implements Comparable<Player> {
         return points;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Player player = (Player) o;
+
+        return points == player.points && name.equals(player.name) && brain.equals(player.brain);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name.hashCode();
+        result = 31 * result + brain.hashCode();
+        result = 31 * result + points;
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return name;
+    }
+
 }

@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author Sam Marsh
  */
-public class World {
+public class World implements Cloneable {
 
     //the cells that the world contains
     private final Cell[][] cells;
@@ -24,16 +24,32 @@ public class World {
     private final int width;
     private final int height;
 
+    private final String name;
+
     /**
      * Creates a new world from the given cell array.
      *
      * @param cells an array describing the cells that make up the world
+     * @param name a concise name to identify this world
      */
-    public World(Cell[][] cells) {
+    public World(Cell[][] cells, String name) {
         this.cells = cells;
         this.width = cells.length;
         this.height = cells[0].length;
+        this.name = name;
         this.ants = new LinkedList<>();
+    }
+
+    public World(World toClone) {
+        this(new Cell[toClone.width()][toClone.height()], toClone.name);
+        int w = toClone.width();
+        int h = toClone.height();
+        for (int y = 0; y < h; ++y) {
+            for (int x = 0; x < w; ++x) {
+                cells[x][y] = new Cell(toClone.cell(x, y));
+                cells[x][y].setFood(toClone.cell(x, y).getFoodAmount());
+            }
+        }
     }
 
     public int width() {
@@ -178,18 +194,8 @@ public class World {
     }
 
     @Override
-    public World clone() {
-        try {
-            Cell[][] cpy = new Cell[width][height];
-            for (int x = 0; x < width; ++x) {
-                for (int y = 0; y < height; ++y) {
-                    cpy[x][y] = cells[x][y].clone();
-                }
-            }
-            return new World(cpy);
-        } catch (CloneNotSupportedException e) {
-            throw new RuntimeException(e);
-        }
+    public String toString() {
+        return name;
     }
 
 }

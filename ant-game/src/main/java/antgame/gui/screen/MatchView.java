@@ -1,14 +1,19 @@
 package antgame.gui.screen;
 
+import antgame.core.Ant;
 import antgame.core.Colony;
+import antgame.core.ColonyStatisticsTracker;
 import antgame.core.Match;
 import antgame.core.world.Cell;
 import antgame.core.world.World;
 import antgame.gui.GUI;
+import antgame.gui.util.CentrePanel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -48,6 +53,58 @@ public class MatchView extends View {
 
         //add the main panel
         add(new WorldPanel(match), BorderLayout.CENTER);
+
+        //add who is playing at the top
+        add(new CentrePanel(
+                new JLabel() {
+                    {
+                        setForeground(Color.RED);
+                        setText(match.getRedPlayer().toString());
+                    }
+                },
+                new JLabel() {
+                    {
+                        setForeground(Color.GRAY);
+                        setText("vs.");
+                    }
+                },
+                new JLabel() {
+                    {
+                        setForeground(Color.BLACK);
+                        setText(match.getBlackPlayer().toString());
+                    }
+                },
+                new JLabel() {
+                    {
+                        setForeground(Color.GRAY);
+                        setText("on world " + match.world().toString());
+                    }
+                }
+        ), BorderLayout.NORTH);
+
+        StatisticsPanel red = new StatisticsPanel(match.redStatistics());
+        StatisticsPanel black = new StatisticsPanel(match.blackStatistics());
+        add(red, BorderLayout.WEST);
+        add(black, BorderLayout.EAST);
+
+        //execute in parallel
+        new Thread(() -> {
+            while (!match.finished()) {
+                try {
+                    //sleep so that we have 30fps
+                    Thread.sleep(1000 / FRAMES_PER_SECOND);
+                    red.refresh();
+                    black.refresh();
+                    //switch back to GUI thread and refresh
+                    SwingUtilities.invokeLater(() -> {
+                        revalidate();
+                        repaint();
+                    });
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
     /**
@@ -80,23 +137,6 @@ public class MatchView extends View {
                 BufferedImage img = ImageIO.read(MatchView.class.getResource(TEXTURE_RESOURCE_PATH));
                 texture = new TexturePaint(img, new Rectangle(0, 0, img.getWidth(), img.getHeight()));
             } catch (IOException ignore) {}
-
-            //execute in parallel
-            new Thread(() -> {
-                while (!match.finished()) {
-                    try {
-                        //sleep so that we have 30fps
-                        Thread.sleep(1000 / FRAMES_PER_SECOND);
-                        //switch back to GUI thread and refresh
-                        SwingUtilities.invokeLater(() -> {
-                            revalidate();
-                            repaint();
-                        });
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }).start();
         }
 
         /**
@@ -167,8 +207,9 @@ public class MatchView extends View {
                     }
 
                     //if has ant, override the colour
-                    if (cell.hasAnt()) {
-                        if (cell.getAnt().getColony().getColour() == Colony.Colour.RED) {
+                    Ant ant;
+                    if ((ant = cell.getAnt()) != null) {
+                        if (ant.getColony().getColour() == Colony.Colour.RED) {
                             cellColour = Color.RED;
                         } else {
                             cellColour = Color.BLACK;
@@ -185,10 +226,47 @@ public class MatchView extends View {
                     //fill in the cell
                     gfx.fillOval(
                             (int) (x * cellSize + newOffset), (int) (y * cellSize + yOffset),
-                            (int) cellSize, (int) cellSize
+                            (int) Math.max(2, cellSize), (int) Math.max(2, cellSize)
                     );
                 }
             }
+        }
+
+    }
+
+    private static class StatisticsPanel extends JPanel {
+
+        private final ColonyStatisticsTracker tracker;
+        private final JLabel headerLabel;
+        private final JLabel antsAlive;
+        private final JLabel foodInAntHill;
+        private final JLabel markingsCount;
+
+        public StatisticsPanel(ColonyStatisticsTracker tracker) {
+            this.tracker = tracker;
+            this.headerLabel = new JLabel("--- Statistics ---");
+            this.antsAlive = new JLabel();
+            this.foodInAntHill = new JLabel();
+            this.markingsCount = new JLabel();
+
+            setBorder(new CompoundBorder(new BevelBorder(BevelBorder.LOWERED), new EmptyBorder(5, 5, 5, 5)));
+            setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+            headerLabel.setForeground(tracker.colony().getColour() == Colony.Colour.RED ? Color.RED : Color.BLACK);
+            antsAlive.setForeground(Color.GRAY);
+            foodInAntHill.setForeground(Color.GRAY);
+            markingsCount.setForeground(Color.GRAY);
+
+            add(new CentrePanel(headerLabel));
+            add(new CentrePanel(antsAlive));
+            add(new CentrePanel(foodInAntHill));
+            add(new CentrePanel(markingsCount));
+        }
+
+        public void refresh() {
+            antsAlive.setText("Ants: " + tracker.getNumAliveAnts());
+            foodInAntHill.setText("Score: " + tracker.getFoodInAntHill());
+            markingsCount.setText("Markings: " + tracker.getMarkingsCount());
         }
 
     }

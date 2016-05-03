@@ -346,7 +346,7 @@ public class WorldBuilder {
      * @return a world consisting of the cells built
      */
     private World build() {
-        return new World(cells);
+        return new World(cells, "built-world-" + System.currentTimeMillis());
     }
 
     /**

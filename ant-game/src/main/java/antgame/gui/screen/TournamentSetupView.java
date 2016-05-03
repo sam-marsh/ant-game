@@ -1,5 +1,6 @@
 package antgame.gui.screen;
 
+import antgame.core.Match;
 import antgame.core.Player;
 import antgame.core.Tournament;
 import antgame.core.brain.Brain;
@@ -26,6 +27,7 @@ public class TournamentSetupView extends View {
 
     private DefaultListModel<WorldSetup> worldModel;
     private DefaultListModel<PlayerSetup> playerModel;
+    private int speed = Match.DEFAULT_MATCH_SPEED;
 
     /**
      * Creates a new tournament setup screen and initialises the components.
@@ -53,9 +55,12 @@ public class TournamentSetupView extends View {
         constraints.gridx = 0;
         constraints.gridy = 1;
         constraints.gridwidth = 2;
-        constraints.fill = GridBagConstraints.NONE;
         constraints.weightx = 0;
         constraints.weighty = 0;
+        constraints.fill = GridBagConstraints.NONE;
+        add(new ConfigurationPanel(), constraints);
+
+        constraints.gridy = 2;
         add(new CentrePanel(new TournamentStartButton()), constraints);
     }
 
@@ -223,13 +228,13 @@ public class TournamentSetupView extends View {
                     PlayerSetup cast = (PlayerSetup) setup;
                     players.add(new Player(cast.name, cast.brain));
                 }
-                Set<World> worlds = new HashSet<World>();
+                Set<World> worlds = new HashSet<>();
                 for (Object setup : worldModel.toArray()) {
                     WorldSetup cast = (WorldSetup) setup;
                     worlds.add(cast.world);
                 }
                 Tournament tournament = new Tournament(players, worlds);
-                context.setContentPane(new TournamentView(context, tournament));
+                context.setContentPane(new TournamentView(context, tournament, speed));
                 context.revalidate();
                 context.repaint();
             });
@@ -297,6 +302,19 @@ public class TournamentSetupView extends View {
         @Override
         public String toString() {
             return worldFile;
+        }
+
+    }
+
+    private class ConfigurationPanel extends JPanel {
+
+        private ConfigurationPanel() {
+            setLayout(new BorderLayout());
+            add(new CentrePanel(new JLabel("Simulation Speed"), new CentrePanel(new JSlider(1, 101) {
+                {
+                    addChangeListener((c) -> speed = getValue());
+                }
+            })));
         }
 
     }
