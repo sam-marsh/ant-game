@@ -32,10 +32,14 @@ public class WorldTest {
     // Ant Colonies To Test World With
     private Colony redColony;
     private Colony blackColony;
+    private Colony redPickupColony;
+    private Colony blackPickupColony;
 
     // Brains of Ants
     private Brain redBrain;
     private Brain blackBrain;
+    private Brain redPickUpBrain;
+    private Brain blackPickUpBrain;
 
     // Conditions
     private Condition MarkerCondition;
@@ -57,7 +61,7 @@ public class WorldTest {
     @Before
     public void setUp() throws Exception {
 
-        clear = new Cell(Cell.Type.CLEAR,1,4);
+        clear = new Cell(Cell.Type.CLEAR,1,5);
         rocky = new Cell(Cell.Type.ROCK,0,3);
 
 
@@ -65,13 +69,29 @@ public class WorldTest {
         redBrain = BrainParser.parse(
                 new File(AntTest.class.getResource("/brain/ant-brain-1.txt").getFile())
         );
+
+        //parse the red brain with a single pickup instruction to test FriendFood Condition
+        redPickUpBrain = BrainParser.parse(
+                new File(AntTest.class.getResource("/brain/ant-pick-up-test.txt").getFile())
+        );
+
         redColony = new Colony(Colony.Colour.RED, redBrain);
+        redPickupColony = new Colony(Colony.Colour.RED,redPickUpBrain);
+
 
         //parse the black brain
         blackBrain = BrainParser.parse(
                 new File(AntTest.class.getResource("/brain/ant-brain-1.txt").getFile())
         );
+
+        //parse the black brain with a single pickup instruction to test FoeFood Condition
+        blackPickUpBrain = BrainParser.parse(
+                new File(AntTest.class.getResource("/brain/ant-pick-up-test.txt").getFile())
+        );
+
         blackColony = new Colony(Colony.Colour.BLACK, blackBrain);
+        blackPickupColony = new Colony(Colony.Colour.BLACK, blackPickUpBrain);
+
 
         //create the world
         world = WorldParser.parse(
@@ -125,24 +145,31 @@ public class WorldTest {
         Cell friend = new Cell(Cell.Type.CLEAR,5,10);
         Cell foe = new Cell(Cell.Type.CLEAR,7,10);
 
-        // Add Friendly Ant to World
-        world.getAnts().add(new Ant(4,redColony,world,friend));
+        // Add Friendly Ant to World - Using Red Pickup Colony To Test FriendFood Condition
+        world.getAnts().add(new Ant(4,redPickupColony,world,friend));
 
-        // Add Enemy Ant to World
-        world.getAnts().add(new Ant(8,blackColony,world,foe));
+        // Add Enemy Ant to World - Using Black Colony
+        world.getAnts().add(new Ant(8,blackPickupColony,world,foe));
 
         // Test Checking for Friend
-        assertTrue(world.check(FriendCondition,redColony,friend));
+        assertTrue(world.check(FriendCondition,redPickupColony,friend));
 
         // Test Checking for Enemy
         assertTrue(world.check(FoeCondition,redColony,foe));
 
-        // Todo: Test Checking for Friend with Food
+        // Add Food to A Friendly Ant's Cell
+        world.getAnts().get(0).getCell().setFood(3);
+        // Tell the Ant to Pick The Food Up
+        world.getAnts().get(0).pickUp();
+        // Check if the Friendly Ant Has Food
+        assertTrue(world.check(FriendFoodCondition,redPickupColony,friend));
 
 
 
-        // Todo: Test Checking for Enemy with Food
-
+        // Test Checking for Enemy with Food
+        world.getAnts().get(1).getCell().setFood(4);
+        world.getAnts().get(1).pickUp();
+        assertTrue(world.check(FoeFoodCondition,blackPickupColony,friend));
 
 
         // Test Checking for Food

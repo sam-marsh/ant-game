@@ -187,7 +187,7 @@ public class Ant {
     /**
      * Carries out a pick up instruction.
      */
-    private void pickUp() {
+    public void pickUp() {
         PickUpInstruction pickUp = (PickUpInstruction) insn;
         if (cell.hasFood()) {
             cell.setFood(cell.getFoodAmount() - 1);
