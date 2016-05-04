@@ -46,3 +46,9 @@ task testZip(type: Zip) {
 }
 
 task zipAll(dependsOn: ['testZip', 'sourceZip', 'documentationZip'])
+
+jar {
+    manifest {
+        attributes('Main-Class': 'antgame.AntGame')
+    }
+}
