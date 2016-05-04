@@ -39,13 +39,19 @@ task sourceZip(type: Zip) {
     destinationDir = new File('../deliverables/')
 }
 
+task testResultsZip(type: Zip) {
+    classifier = 'test-results'
+    from 'build/reports/tests'
+    destinationDir = new File('../deliverables/')
+}
+
 task testZip(type: Zip) {
     classifier = 'test-source'
     from sourceSets.test.allJava
     destinationDir = new File('../deliverables/')
 }
 
-task zipAll(dependsOn: ['testZip', 'sourceZip', 'documentationZip'])
+task zipAll(dependsOn: ['testZip', 'sourceZip', 'documentationZip', 'testResultsZip'])
 
 jar {
     manifest {
