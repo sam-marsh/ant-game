@@ -2,20 +2,24 @@ package antgame.core;
 
 import antgame.core.Colony.Colour;
 import antgame.core.world.*;
-import antgame.core.world.Cell.Type;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * A match between two supplied players.
- * Once match has been constructed call run() which returns the winning player.
+ * A match between two supplied players. Once constructed call {@link #run(int, int)}, which iterates
+ * continually until the match is complete. Then the outcome of the match can be obtained using
+ * {@link #outcome()}.
+ *
  * @author Regan Ware
  */
 public class Match {
 
     //number of iterations
     public static int NUM_ROUNDS = 300000;
+
+    //max playback speed of a match
+    public static int MAXIMUM_MATCH_SPEED = 100;
 
     //match speed is from 1-100
     public static int DEFAULT_MATCH_SPEED = 50;
@@ -53,11 +57,17 @@ public class Match {
         this.blackStatisticsTracker = new ColonyStatisticsTracker(blackColony, world);
     }
 
-    public Player getRedPlayer() {
+    /**
+     * @return the player that has the red colony in this match
+     */
+    public Player redPlayer() {
         return playerRed;
     }
 
-    public Player getBlackPlayer() {
+    /**
+     * @return the player that has the black colony in this match
+     */
+    public Player blackPlayer() {
         return playerBlack;
     }
 
@@ -65,7 +75,7 @@ public class Match {
      * Runs the match determining and returning the winner based on which colony has more food in their ant hills
      *
      * @param rounds The number of rounds to run the match for (Usually NUM_ROUNDS at 300000)
-     *
+     * @param speed the speed to run the match - from 1 to 100 (or more to not pause between steps at all)
      */
     public void run(int rounds, int speed)
     {
@@ -87,12 +97,12 @@ public class Match {
             blackStatisticsTracker.update();
 
             try { //Manually slow down simulation for display purposes
-                if (speed < DEFAULT_MATCH_SPEED) Thread.sleep(100 / speed);
+                if (speed < MAXIMUM_MATCH_SPEED) Thread.sleep(100 / speed);
             } catch (InterruptedException ignore) {}
         }
 
-        int redFood = redStatisticsTracker.getFoodInAntHill();
-        int blackFood = blackStatisticsTracker.getFoodInAntHill();
+        int redFood = redStatisticsTracker.foodInAntHill();
+        int blackFood = blackStatisticsTracker.foodInAntHill();
 
         //If there's more red food, the red player wins
         if (redFood > blackFood) {
@@ -116,16 +126,23 @@ public class Match {
 
     }
 
+    /**
+     * @return current match statistics for the red player
+     */
     public ColonyStatisticsTracker redStatistics() {
         return redStatisticsTracker;
     }
 
+    /**
+     * @return current match statistics for the black player
+     */
     public ColonyStatisticsTracker blackStatistics() {
         return blackStatisticsTracker;
     }
 
     /**
-     * Checks if the match has finished or not
+     * Checks if the match has finished or not.
+     *
      * @return True if the match is finished, false otherwise.
      */
     public boolean finished() {
@@ -133,15 +150,17 @@ public class Match {
     }
 
     /**
-     * Gets the outcome of the match
-     * @return The MatchOutcome produced at the end of the match
+     * Gets the outcome of the match.
+     *
+     * @return The {@link MatchOutcome} produced at the end of the match
      */
-    public MatchOutcome getOutcome() {
+    public MatchOutcome outcome() {
         return outcome;
     }
 
     /**
-     * Gets the match's World
+     * Gets the match's {@link World}.
+     *
      * @return The world this match takes place in
      */
     public World world() {

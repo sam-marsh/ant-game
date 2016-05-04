@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
  * A tournament between any number of players on any number of worlds
  * Each player plays every other player on each side (red or black) on every world
  *
- * @author Regan
+ * @author Regan Ware
  */
 public class Tournament {
 
@@ -34,14 +34,22 @@ public class Tournament {
         this.worlds = worlds;
     }
 
+    /**
+     * A 'pairing' of two players indicates that they will play each other. The first
+     * player in the pair plays as red, and the second as black.
+     *
+     * @return all pairings between every player in the tournament
+     */
     public Set<Pair<Player, Player>> getPairings() {
         Set<Pair<Player, Player>> pairings = new HashSet<>();
         for (Player player1 : players) {
-            for (Player player2 : players) {
-                if (!player1.equals(player2)) {
-                    pairings.add(new Pair<>(player1, player2));
-                }
-            }
+            //add all other players
+            pairings.addAll(
+                    players.stream()
+                            .filter(player2 -> !player1.equals(player2))
+                            .map(player2 -> new Pair<>(player1, player2))
+                            .collect(Collectors.toList())
+            );
         }
         return pairings;
     }
@@ -51,7 +59,6 @@ public class Tournament {
      * @return The winning Player in the tournament
      */
     public Player runTournament() {
-
         //run a match between every player on every world as both red and black
         for (World world : worlds) {
             for (Player player1 : players) {
@@ -108,13 +115,19 @@ public class Tournament {
      */
     private MatchOutcome runMatch(Match match, int speed) {
         match.run(Match.NUM_ROUNDS, speed);
-        return match.getOutcome();
+        return match.outcome();
     }
 
+    /**
+     * @return the number of worlds used in this tournament
+     */
     public int numWorlds() {
         return worlds.size();
     }
 
+    /**
+     * @return the worlds used in this tournament
+     */
     public Set<World> worlds() {
         return worlds;
     }

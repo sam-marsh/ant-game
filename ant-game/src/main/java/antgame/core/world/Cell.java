@@ -56,6 +56,7 @@ public class Cell implements Cloneable {
     /**
      * Adds a marker to this cell.
      *
+     * @param colony the colony to mark with
      * @param marker the marker to add
      * @return true if the cell did not already contain the marker
      */
@@ -70,6 +71,7 @@ public class Cell implements Cloneable {
     /**
      * Removes a marker from this cell.
      *
+     * @param colony the colony to remove this marker for
      * @param marker the marker to remove
      * @return true if the cell contained the marker
      */
@@ -98,6 +100,7 @@ public class Cell implements Cloneable {
     /**
      * Checks if this cell contains a particular marker.
      *
+     * @param colony the colony to find the marker for
      * @param marker the marker to check for
      * @return true if the cell contains the marker
      */

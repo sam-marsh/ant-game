@@ -17,7 +17,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.security.AuthProvider;
+import java.text.DecimalFormat;
 
 /**
  * The view which shows an in-progress match.
@@ -43,8 +43,9 @@ public class MatchView extends View {
      *
      * @param context the main frame
      * @param match the match to view
+     * @param fps the number of frames per second to update the match view
      */
-    public MatchView(GUI context, Match match) {
+    public MatchView(GUI context, Match match, int fps) {
         super(context);
 
         //fill the centre and expand to fill the whole panel
@@ -59,7 +60,7 @@ public class MatchView extends View {
                 new JLabel() {
                     {
                         setForeground(Color.RED);
-                        setText(match.getRedPlayer().toString());
+                        setText(match.redPlayer().toString());
                     }
                 },
                 new JLabel() {
@@ -71,7 +72,7 @@ public class MatchView extends View {
                 new JLabel() {
                     {
                         setForeground(Color.BLACK);
-                        setText(match.getBlackPlayer().toString());
+                        setText(match.blackPlayer().toString());
                     }
                 },
                 new JLabel() {
@@ -92,7 +93,7 @@ public class MatchView extends View {
             while (!match.finished()) {
                 try {
                     //sleep so that we have 30fps
-                    Thread.sleep(1000 / FRAMES_PER_SECOND);
+                    Thread.sleep(1000 / fps);
                     red.refresh();
                     black.refresh();
                     //switch back to GUI thread and refresh
@@ -107,6 +108,15 @@ public class MatchView extends View {
         }).start();
     }
 
+    /**
+     * Creates a new match view with the default number of frames per second.
+     *
+     * @param context the main frame
+     * @param match the match to view
+     */
+    public MatchView(GUI context, Match match) {
+        this(context, match, FRAMES_PER_SECOND);
+    }
     /**
      * A world panel displays the state of a world.
      */
@@ -234,20 +244,39 @@ public class MatchView extends View {
 
     }
 
+    /**
+     * A panel for viewing team statistics.
+     */
     private static class StatisticsPanel extends JPanel {
 
+        //the format to use for large numbers
+        private static final DecimalFormat FORMAT = new DecimalFormat("##,###");
+
+        //the tracker for getting statistics data
         private final ColonyStatisticsTracker tracker;
+
+        //the title
         private final JLabel headerLabel;
+
+        //number of ants still alive
         private final JLabel antsAlive;
+
+        //current food in the colony's ant hill
         private final JLabel foodInAntHill;
+
+        //the number of markings left
         private final JLabel markingsCount;
 
-        public StatisticsPanel(ColonyStatisticsTracker tracker) {
+        //the number of movements made
+        private final JLabel movementsMade;
+
+        private StatisticsPanel(ColonyStatisticsTracker tracker) {
             this.tracker = tracker;
-            this.headerLabel = new JLabel("--- Statistics ---");
+            this.headerLabel = new JLabel("----- Statistics -----");
             this.antsAlive = new JLabel();
             this.foodInAntHill = new JLabel();
             this.markingsCount = new JLabel();
+            this.movementsMade = new JLabel();
 
             setBorder(new CompoundBorder(new BevelBorder(BevelBorder.LOWERED), new EmptyBorder(5, 5, 5, 5)));
             setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -256,17 +285,20 @@ public class MatchView extends View {
             antsAlive.setForeground(Color.GRAY);
             foodInAntHill.setForeground(Color.GRAY);
             markingsCount.setForeground(Color.GRAY);
+            movementsMade.setForeground(Color.GRAY);
 
             add(new CentrePanel(headerLabel));
             add(new CentrePanel(antsAlive));
             add(new CentrePanel(foodInAntHill));
             add(new CentrePanel(markingsCount));
+            add(new CentrePanel(movementsMade));
         }
 
-        public void refresh() {
-            antsAlive.setText("Ants: " + tracker.getNumAliveAnts());
-            foodInAntHill.setText("Score: " + tracker.getFoodInAntHill());
-            markingsCount.setText("Markings: " + tracker.getMarkingsCount());
+        private void refresh() {
+            antsAlive.setText("Ants: " + FORMAT.format(tracker.numAliveAnts()));
+            foodInAntHill.setText("Score: " + FORMAT.format(tracker.foodInAntHill()));
+            markingsCount.setText("Markings: " + FORMAT.format(tracker.markingsMade()));
+            movementsMade.setText("Movements: " + FORMAT.format(tracker.movementsMade()));
         }
 
     }

@@ -48,7 +48,7 @@ public class Ant {
     //the number of movements this ant has made successfully
     private int successfulMovements;
 
-    //the number of markings left by this ant
+    //the number of markingsMade left by this ant
     private int markings;
 
     /**
@@ -311,8 +311,8 @@ public class Ant {
     public int successfulMovements() {return successfulMovements;}
 
     /**
-     * @return The of markings left by this ant
+     * @return The of markingsMade left by this ant
      */
-    public int markings() {return markings;}
+    public int markingsMade() {return markings; }
 
 }

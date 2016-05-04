@@ -17,7 +17,7 @@ public class GUI extends JFrame {
     public static final Font TITLE_FONT = new Font("Arial", Font.BOLD, 20);
 
     //the default width and height
-    private static final int GUI_WIDTH = 800;
+    private static final int GUI_WIDTH = 1000;
     private static final int GUI_HEIGHT = 600;
 
     /**

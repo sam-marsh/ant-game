@@ -61,7 +61,8 @@ public class World implements Cloneable {
     }
 
     public Cell cell(int x, int y) {
-        return cells[x][y]; //todo check bounds
+        validate(x, y);
+        return cells[x][y];
     }
 
     /**
@@ -179,23 +180,35 @@ public class World implements Cloneable {
         ant.getCell().setFood(ant.getCell().getFoodAmount() + 3);
     }
 
+    /**
+     * @param a an integer
+     * @return {@code true} if a is even, otherwise {@code false}
+     */
     private boolean even(int a) {
         return a % 2 == 1;
-    }
-
-    /**
-     * Returns The Cells in a World
-     * Used for Testing Purposes - To Test Cell Contents
-     * @return cells in the world
-     */
-    Cell[][] getCells()
-    {
-        return cells;
     }
 
     @Override
     public String toString() {
         return name;
+    }
+
+    /**
+     * Direct access to cells. Use sparingly.
+     *
+     * @return the cells
+     */
+    Cell[][] getCells() {
+        return cells;
+    }
+
+    private void validate(int x, int y) {
+        if (x < 0 || x >= width()) {
+            throw new IllegalArgumentException("x must be in range 0.." + (width() - 1));
+        }
+        if (y < 0 || y >= height()) {
+            throw new IllegalArgumentException("y must be in range 0.." + (height() - 1));
+        }
     }
 
 }

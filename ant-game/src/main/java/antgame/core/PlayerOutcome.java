@@ -59,12 +59,21 @@ public class PlayerOutcome {
         LOSS(0),
         DRAW(1);
 
+        //the number of points gained for this result
         private final int points;
 
+        /**
+         * Creates a new result type from a match/tournament.
+         *
+         * @param points the number gained for this result
+         */
         Result(int points) {
             this.points = points;
         }
 
+        /**
+         * @return the number of points gained for this outcome
+         */
         public int getPoints() {
             return points;
         }

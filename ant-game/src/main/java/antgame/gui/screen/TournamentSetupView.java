@@ -64,19 +64,30 @@ public class TournamentSetupView extends View {
         add(new CentrePanel(new TournamentStartButton()), constraints);
     }
 
+    /**
+     * The view for adding/removing players from the tournament.
+     */
     private class PlayerListView extends JPanel {
 
+        /**
+         * Creates a new player list for adding/removing players.
+         */
         private PlayerListView() {
+            //setup layer and border as always
             setLayout(new BorderLayout());
             setBorder(BorderFactory.createCompoundBorder(
                     BorderFactory.createEmptyBorder(5, 5, 5, 5),
                     BorderFactory.createBevelBorder(BevelBorder.LOWERED)
             ));
+
+            //title
             add(new CentrePanel(new JLabel("Players") {
                 {
                     setFont(GUI.TITLE_FONT);
                 }
             }), BorderLayout.NORTH);
+
+            //create list model and list, add to centre of panel
             playerModel = new DefaultListModel<>();
             JList<PlayerSetup> list = new JList<>(playerModel);
             add(new JPanel() {
@@ -90,10 +101,13 @@ public class TournamentSetupView extends View {
                 }
             }, BorderLayout.CENTER);
 
+            //create add button and add associated functionality
             JButton addPlayerButton = new JButton("Add") {
                 {
                     addActionListener(e -> {
                         PlayerSetup pb = new PlayerSetup();
+
+                        //ask for name
                         pb.name = JOptionPane.showInputDialog(
                                 context,
                                 "What is your name?",
@@ -102,6 +116,8 @@ public class TournamentSetupView extends View {
                         );
                         if (pb.name == null)
                             return;
+
+                        //load ant brain file
                         JFileChooser chooser = new JFileChooser();
                         int val = chooser.showOpenDialog(context);
                         if (val == JFileChooser.APPROVE_OPTION) {
@@ -134,30 +150,43 @@ public class TournamentSetupView extends View {
                 }
             };
 
+            //remove button
             JButton removePlayerButton = new JButton("Remove") {
                 {
                     addActionListener(e -> list.getSelectedValuesList().forEach(playerModel::removeElement));
                 }
             };
 
+            //add it all together
             add(new CentrePanel(addPlayerButton, removePlayerButton), BorderLayout.SOUTH);
         }
 
     }
 
+    /**
+     * Similar to the player list view - add and remove worlds from this tournament.
+     */
     private class WorldListView extends JPanel {
 
+        /**
+         * Creates a new list view for adding/removing worlds.
+         */
         private WorldListView() {
+            //set layout and border
             setLayout(new BorderLayout());
             setBorder(BorderFactory.createCompoundBorder(
                     BorderFactory.createEmptyBorder(5, 5, 5, 5),
                     BorderFactory.createBevelBorder(BevelBorder.LOWERED)
             ));
+
+            //title
             add(new CentrePanel(new JLabel("Worlds") {
                 {
                     setFont(GUI.TITLE_FONT);
                 }
             }), BorderLayout.NORTH);
+
+            //list setup
             worldModel = new DefaultListModel<>();
             JList<WorldSetup> list = new JList<>(worldModel);
             add(new JPanel() {
@@ -171,10 +200,13 @@ public class TournamentSetupView extends View {
                 }
             }, BorderLayout.CENTER);
 
+            //button for adding a world
             JButton addPlayerButton = new JButton("Add") {
                 {
                     addActionListener(e -> {
                         WorldSetup ws = new WorldSetup();
+
+                        //parse the world file
                         JFileChooser chooser = new JFileChooser();
                         int val = chooser.showOpenDialog(context);
                         if (val == JFileChooser.APPROVE_OPTION) {
@@ -207,21 +239,31 @@ public class TournamentSetupView extends View {
                 }
             };
 
+            //the remove button to get rid of a world
             JButton removePlayerButton = new JButton("Remove") {
                 {
                     addActionListener(e -> list.getSelectedValuesList().forEach(worldModel::removeElement));
                 }
             };
 
+            //add buttons at bottom
             add(new CentrePanel(addPlayerButton, removePlayerButton), BorderLayout.SOUTH);
         }
 
     }
 
+    /**
+     * The button for initiating the tournament.
+     */
     private class TournamentStartButton extends JButton {
 
+        /**
+         * Creates a tournament start button and sets up event functionality.
+         */
         private TournamentStartButton() {
             setText("Start");
+
+            //convert user data to tournament object, switch to tournament view
             addActionListener(e -> {
                 Set<Player> players = new HashSet<>();
                 for (Object setup : playerModel.toArray()) {
@@ -242,10 +284,19 @@ public class TournamentSetupView extends View {
 
     }
 
-    private class PlayerSetup {
+    /**
+     * A half-built player - not quite there! Used for storing player data as a user adds each attribute
+     * one by one.
+     */
+    private static class PlayerSetup {
 
+        //the name of the player
         private String name;
+
+        //the parsed brain object
         private Brain brain;
+
+        //where the brain was loaded from
         private String brainFile;
 
         @Override
@@ -268,6 +319,11 @@ public class TournamentSetupView extends View {
             return result;
         }
 
+        /**
+         * Used for looking nice in the list.
+         *
+         * @return the string representation of the player
+         */
         @Override
         public String toString() {
             return name + ": " + brainFile;
@@ -275,9 +331,15 @@ public class TournamentSetupView extends View {
 
     }
 
-    private class WorldSetup {
+    /**
+     * Similar to above - an incomplete world.
+     */
+    private static class WorldSetup {
 
+        //the world object (parsed)
         private World world;
+
+        //the world file
         private String worldFile;
 
         @Override
@@ -306,10 +368,18 @@ public class TournamentSetupView extends View {
 
     }
 
+    /**
+     * The bottom panel for changing global tournament settings.
+     */
     private class ConfigurationPanel extends JPanel {
 
+        /**
+         * Creates a configuration panel for the tournament and initialises components and events.
+         */
         private ConfigurationPanel() {
             setLayout(new BorderLayout());
+
+            //when slider value changes, change the match speed to the new value
             add(new CentrePanel(new JLabel("Simulation Speed"), new CentrePanel(new JSlider(1, 101) {
                 {
                     addChangeListener((c) -> speed = getValue());

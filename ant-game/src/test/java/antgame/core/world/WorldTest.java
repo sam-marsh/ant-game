@@ -205,7 +205,7 @@ public class WorldTest {
     }
 
     /**
-     * Todo: Check if Ants of different colonies Are spawned correctly
+     * TODO: Check if Ants of different colonies Are spawned correctly
      * @see World#spawnAnts(Colony, Colony)
      * @throws Exception
      */

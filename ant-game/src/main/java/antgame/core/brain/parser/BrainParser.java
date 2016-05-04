@@ -1,6 +1,5 @@
 package antgame.core.brain.parser;
 
-import antgame.core.Colony;
 import antgame.core.brain.Brain;
 import antgame.core.brain.instruction.*;
 import antgame.core.world.Marker;
@@ -9,15 +8,16 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.text.ParseException;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * Parses a list of instructions represented by strings, and returns an ant-brain finite state machine which acts as
  * specified by the instructions.
  *
- * To parse a {@link List} of strings into a {@link Brain}, use the static
- * {@link BrainParser#parse(Colony.Colour, File)} method. Alternatively, a brain can be parsed directly from a file
- * using {@link BrainParser#parse(Colony.Colour, File)}
+ * To parse a {@link File} into a {@link Brain}, use the static {@link BrainParser#parse(File)} method.
  *
  * @author Sam Marsh
  */
