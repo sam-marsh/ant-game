@@ -3,7 +3,7 @@ plugins {
     id "com.github.kt3k.coveralls" version "2.5.0"
 }
 
-version '1.0-SNAPSHOT'
+version '1.0'
 
 apply plugin: 'java'
 
@@ -24,5 +24,25 @@ jacocoTestReport {
 
 task documentation(type: Javadoc) {
     source = sourceSets.main.allJava
-    destinationDir = new File('../deliverables/javadoc/')
+    destinationDir = new File('../quality-manual/documentation/source-code/javadoc/')
 }
+
+task documentationZip(type: Zip) {
+    classifier = 'javadoc'
+    from '../quality-manual/documentation/source-code/javadoc'
+    destinationDir = new File('../deliverables/')
+}
+
+task sourceZip(type: Zip) {
+    classifier = 'source-code'
+    from sourceSets.main.allJava
+    destinationDir = new File('../deliverables/')
+}
+
+task testZip(type: Zip) {
+    classifier = 'test-code'
+    from sourceSets.test.allJava
+    destinationDir = new File('../deliverables/')
+}
+
+task zipAll(dependsOn: ['testZip', 'sourceZip', 'documentationZip'])
