@@ -458,16 +458,88 @@ The next component of the system is the world-related content. The world parser 
 \item these statistics should be accessible (by return value) to the interface. 
 \end{itemize}
 
+\subsection{Interface}
 
-\subsubsection{Interface}
+The interface design is left up to the discretion of the programmers, however the properties of the interface are shown in this section. The interface will be composed of several `screens', detailed on the following pages.
+
+\subsubsection{Start Screen}
 
 \begin{center}
-\includegraphics[width=0.8\textwidth]{low-level-diagrams/class/gui.png}
+\includegraphics[width=\textwidth]{low-level-diagrams/interface/start-screen}
 \end{center}
 
-\textbf{Start Screen}: the start screen is where the program initialises.
+\begin{itemize}
+\item The \texttt{Start Game} button will switch the screen to the game setup screen.
+\item The \texttt{Start Tournament} button will switch the screen to the tournament setup screen.
+\item The \texttt{Create Contest World} button will generate a random valid contest world and save it to file, using a file chooser dialog to let the user choose the save location and name.
+\end{itemize}
 
+\subsubsection{Game Setup Screen}
 
+\begin{center}
+\includegraphics[width=\textwidth]{low-level-diagrams/interface/game-setup-screen}
+\end{center}
 
+\begin{itemize}
+\item The teams should be able to input a name into the text input boxes, which should set the team name.
+\item The teams should be able to click the \texttt{Upload Ant Brain} button --- at which point a file chooser dialog should pop up, allowing the user to select their ant brain. Upon selection, the ant brain should be parsed --- if failed, the parsing error message should be shown to the user.
+\item The input at the bottom is for the user to set how often the world view should refresh on the GUI (an integer).
+\item Upon clicking the `Compete!' button, the screen should transition to the game screen. 
+\end{itemize}
+
+\subsubsection{Game Screen}
+
+\begin{center}
+\includegraphics[width=\textwidth]{low-level-diagrams/interface/game-screen}
+\end{center}
+
+\begin{itemize}
+\item The game screen shall show the state of the game world (differentiating between ants, food cells, obstacles, anthills) every \texttt{n} turns as specified in the previous screen.
+\item The turn number and team points (food in anthills) are shown on the right, along with the player names.
+\end{itemize}
+
+\subsubsection{Game Statistics Screen}
+
+\begin{center}
+\includegraphics[width=\textwidth]{low-level-diagrams/interface/game-statistics-screen}
+\end{center}
+
+\begin{itemize}
+\item The winner of the match should be displayed at the top. If it is a draw, it will say `Draw!' instead.
+\item Each statistics view for each team will contain all of the statistics required from the functional requirements.
+\item The button in the bottom right will bring the user back to the start screen.
+\end{itemize}
+
+\subsubsection{Tournament Setup Screen}
+
+\begin{center}
+\includegraphics[width=\textwidth]{low-level-diagrams/interface/tournament-setup-screen}
+\end{center}
+
+\begin{itemize}
+\item Teams can be added and removed from a list. When the \texttt{Add} button is clicked, an input dialog pops up asking for a user's name. Then a file chooser pops up asking for the user's ant brain file. The file is parsed - as always, if a parsing error occurs it is displayed to the user. A string representation of the team is added to the list.
+\item The remove button removes a team from the list.
+\item The world list behaves identically, except no name dialog appears.
+\item The \texttt{Complete} dialog transitions the screen to the tournament screen.
+\end{itemize}
+
+\subsubsection{Tournament Screen}
+
+\begin{itemize}
+\item The tournament screen is the same as the two-player game screen, except that after each game the screen transitions to the game screen for the next match.
+\end{itemize}
+
+\subsubsection{Tournament Statistics Screen}
+
+\begin{center}
+\includegraphics[width=\textwidth]{low-level-diagrams/interface/tournament-statistics-screen}
+\end{center}
+
+\begin{itemize}
+\item The left panel is a listing of all matches, in order of execution. Upon double-clicking a mini-dialog pops up showing the statistics for that game (identically to the game statistics panel).
+\item The score table on the right is a listing of the team and their points, in descending order.
+\item The header at the top is the winner of the tournament.
+\item The button in the bottom right is takes the user back to the start screen.
+\end{itemize}
 
 \end{document}

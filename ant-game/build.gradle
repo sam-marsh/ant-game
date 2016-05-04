@@ -34,13 +34,13 @@ task documentationZip(type: Zip) {
 }
 
 task sourceZip(type: Zip) {
-    classifier = 'source-code'
+    classifier = 'main-source'
     from sourceSets.main.allJava
     destinationDir = new File('../deliverables/')
 }
 
 task testZip(type: Zip) {
-    classifier = 'test-code'
+    classifier = 'test-source'
     from sourceSets.test.allJava
     destinationDir = new File('../deliverables/')
 }
