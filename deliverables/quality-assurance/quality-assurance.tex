@@ -507,6 +507,122 @@ non-food items. \tabularnewline
 \bottomrule
 \end{longtable}
 
+\subsection{Summary of Results}
+
+Further details are available in the file \texttt{Test Results.zip}.
+
+\begin{center}
+\begin{longtable}[c]{@{}p{0.05\textwidth} p{0.2\textwidth} p{0.1\textwidth} p{0.2\textwidth} p{0.2\textwidth} p{0.1\textwidth}@{}}
+\toprule
+Ref. & Description & Inputs & Expected & Actual &
+Passed\tabularnewline
+\midrule
+\endhead
+1 & (Randomizer) A Random number is generated & A Seed number- 12345 & A
+Random number from a set of declared numerical values & A Random number
+from a set of declared numerical values & 18/4/16\tabularnewline
+2 & (Brain) Getting a valid instruction from the Brain & A valid `drop'
+instruction loaded into the Brain & Drop instruction from Brain
+(getInstructionGraph) & Drop instruction from Brain (getInstructionGraph) & 2/5/16\tabularnewline
+3 & (Brain) Brain Parser parsing a given valid file & A valid ant brain
+file & Parses the file correctly & Parses the file correctly & 2/5/16
+\tabularnewline
+4 & (Brain) Brain Parser parsing a given invalid file & An invalid ant
+brain file & Return a parse exception (error message) & Return a parse
+exception (error message) & 2/5/16 \tabularnewline
+5 & (Brain) Brain Parser parsing a given (too) large file & A (too)
+large ant brain file & Return a parse exception (error message) & Return
+a parse exception (error message) & 2/5/16 \tabularnewline
+6 & (Brain) Brain Parser parsing a given empty file & An empty file &
+Return a parse exception (error message) & Return a parse exception
+(error message) & 2/5/16 \tabularnewline
+7 & (Brain) Brain Parser parsing a given instruction of invalid length &
+A file with invalid instruction length & Return a parse exception (error
+message) & Return a parse exception (error message) & 2/5/16
+\tabularnewline
+8 & (Brain) Brain Parser parsing a given out of range marker instruction
+& A file with an invalid marker instruction & Return a parse exception
+(error message) & Return a parse exception (error message) & 2/5/16
+\tabularnewline
+9 & (Brain) Conditions are each of correct type & Multiple (Different)
+Conditions & Correct respective condition types & Correct respective
+condition types & 1/5/16 \tabularnewline
+10 & Marker set properly in the Marker condition & & A (relevant) Marker
+& A (Relevant) Marker & 1/5/16 \tabularnewline
+11 & Error returned if attempt to get a marker from a condition other
+than marker condition & & Returns an assertion error & Returns an
+assertion error & 1/5/16 \tabularnewline
+12 & Drop instruction methods work correctly & & Correct instruction ID
+and correct following states (success/failure) & Correct instruction ID
+and correct following states (success/failure) & 1/5/16 \tabularnewline
+13 & Flip instruction methods work correctly & & Correct instruction ID
+and correct following states (success/failure) & Correct instruction ID
+and correct following states (success/failure) & 1/5/16 \tabularnewline
+14 & Mark instruction methods work correctly & & Correct instruction ID
+and correct following states (success/failure) & Correct instruction ID
+and correct following states (success/failure) & 1/5/16 \tabularnewline
+15 & Move instruction methods work correctly & & Correct instruction ID
+and correct following states (success/failure) & Correct instruction ID
+and correct following states (success/failure) & 1/5/16 \tabularnewline
+16 & Pickup instruction methods work correctly & & Correct instruction
+ID and correct following states (success/failure) & Correct instruction
+ID and correct following states (success/failure) & 1/5/16
+\tabularnewline
+17 & Sense instruction methods work correctly & & Correct instruction ID
+and correct following states (success/failure) & Correct instruction ID
+and correct following states (success/failure) & 1/5/16 \tabularnewline
+18 & Turn instruction methods work correctly & & Correct instruction ID
+and correct following states (success/failure) & Correct instruction ID
+and correct following states (success/failure) & 1/5/16 \tabularnewline
+19 & Unmark instruction methods work correctly & & Correct instruction
+ID and correct following states (success/failure) & Correct instruction
+ID and correct following states (success/failure) & 1/5/16
+\tabularnewline
+20 & Flip instruction range equals upper bound of random generated
+number & 45 & 45 & 45 & 1/5/16 \tabularnewline
+21 & Mark instruction corresponds to correct set marker & Mark
+instruction & Marker m & Marker m & 1/5/16 \tabularnewline
+22 & Sense Instruction returns correct designated direction & Direction:
+Ahead & Direction: Ahead & Direction: Ahead & 1/5/16 \tabularnewline
+23 & Sense Instruction can return set condition & Condition:
+MarkerCondition & Condition: MarkerCondition & Condition:
+MarkerCondition & 1/5/16 \tabularnewline
+24 & Turn Instruction returns correct designated direction & Turn
+Instruction & Direction: Left & Direction: Left & 1/5/16
+\tabularnewline
+25 & Unmark instruction corresponds to correct referred marker & Unmark
+Instruction & Marker m removed & Marker m removed & 1/5/16
+\tabularnewline
+26 & WorldParser parsing a given valid world file & A valid world file &
+Parses the file correctly (Height 150, Width 150) & Parses the file
+correctly (Height 150, Width 150) & 3/5/16 \tabularnewline
+27 & WorldParser parsing a given invalid world file & A invalid world
+file & Return a parse exception (error message) & Return a parse
+exception (error message) & 3/5/16 \tabularnewline
+28 & WorldParser parsing a given world file that's too large & A world
+file that's too large & Return a parse exception (error message) &
+Return a parse exception (error message) & 3/5/16 \tabularnewline
+29 & Tests whether an adjacent cell in a certain direction to a
+designated clear cell is of correct status (i.e. in this case, Rocky) &
+Clear cell at (1,4) & Type: Rocky & Type: Rocky & 3/5/16
+\tabularnewline
+30 & Ants are spawned correctly & Spawn Black AND Red ants & Red Ants
+are spawned at red anthill, Black ants are spawned at black anthill &
+Red Ants are spawned at red anthill, Black ants are spawned at black
+anthill & 3/5/16 \tabularnewline
+31 & When ants are killed, they're removed from the world and turned
+into food & & Same cell where murdered ant was, now only contains food &
+Same cell where murdered ant was, now only contains food & 3/5/16
+\tabularnewline
+32 & Whether World can correctly identify sense conditions of ants in
+regards to Friends, Foes, Food, Rocks and Markers & & Correct respective
+types of conditions should be returned and ant behaviour should somewhat
+reflect this & Correct respective types of conditions should be returned
+and ant behaviour should somewhat reflect this & 3/5/16 \tabularnewline
+\bottomrule
+\end{longtable}
+\end{center}
+
 \section{Acceptance Criteria}\label{acceptance-criteria}
 
 \subsection{Introduction}\label{introduction}
