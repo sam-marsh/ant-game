@@ -1,42 +1,7 @@
 # ant-game [![Build Status](https://travis-ci.com/sam-marsh/ant-game.svg?token=CCrKyBuYvjm5pmqE92zK&branch=master)](https://travis-ci.com/sam-marsh/ant-game) [![Coverage Status](https://coveralls.io/repos/github/sam-marsh/ant-game/badge.svg?branch=master&t=oY01EU)](https://coveralls.io/github/sam-marsh/ant-game?branch=master)
 
-Software Engineering project.
+A competitive strategy game between two or more players.
 
-## Links
+Each of the players design an *ant brain*, which is a file containing instructions for ants to carry out in a simulated ant world. The ant brains will contain instructions on how the ants will react based on their current state and the local environment. Once loaded into the program, two colonies of ants compete in a simulated ant-world to bring as much food as possible back to their anthill. The ant world contains obstacles, food, and the two opposing anthills. Ants are able to leave markers for other ants to sense, and can also kill opponent ants by surrounding them. The game is won by the ant colony which obtains the most food.
 
-- [The Ant Game](https://studydirect.sussex.ac.uk/mod/resource/view.php?id=893702)
-- [Quality Manual](http://users.sussex.ac.uk/~mfb21/se/project/quality.html)
-
-## Group 9: Members
-
-- 21505959: Marsh, Samuel
-- 21302879: Oluwakanmi, Jeremiah
-- 21401526: Read, Daniel
-- 21201414: Sadeghpour, Arsalan
-- 21401562: Tossavainen, Kea
-- 21401546: Ware, Regan
-
-## Deliverables
-
-- [x] Project Plan
-- [x] Meeting Minutes
-- [x] Requirements
-  - [x] Functional
-  - [x] Non-functional
-- [x] Modelling
-  - [x] High-level
-  - [x] Low-level
-    - [x] UML
-    - [x] Sequence diagrams
-- [ ] Software
-  - [x] Ant-brain parser
-  - [x] Ant-world parser
-  - [x] GUI
-  - [x] Random-world generator
-  - [x] Two-player game
-  - [ ] Tournament
-  - [x] Custom ant-brain
-- [ ] Testing
-  - [x] Specification
-  - [ ] Tests
-- [x] Report
+![two-player-match](deliverables/evidence/two-player-match.png)
