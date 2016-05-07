@@ -1,4 +1,4 @@
-# ant-game [![Build Status](https://travis-ci.com/sam-marsh/ant-game.svg?token=CCrKyBuYvjm5pmqE92zK&branch=master)](https://travis-ci.com/sam-marsh/ant-game) [![Coverage Status](https://coveralls.io/repos/github/sam-marsh/ant-game/badge.svg?branch=master&t=oY01EU)](https://coveralls.io/github/sam-marsh/ant-game?branch=master)
+# ant-game [![Build Status](https://travis-ci.org/sam-marsh/ant-game.svg?branch=master)](https://travis-ci.com/sam-marsh/ant-game) [![Coverage Status](https://coveralls.io/repos/github/sam-marsh/ant-game/badge.svg?branch=master&t=oY01EU)](https://coveralls.io/github/sam-marsh/ant-game?branch=master)
 
 A competitive strategy game between two or more players.
 
